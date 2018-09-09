@@ -2,13 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link type="text/css" href="resources/index.css" rel="stylesheet" />
-    <link rel="stylesheet" href="resources/bootstrap.min.css" />
-    <script src="resources/jquery.min.js"></script>
-    <script src="resources/bootstrap.min.js"></script>
-    <title>Rent.me | Registreeri</title>
+    <head>
+        <title>Rent.me | Registreeri</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="resources/style.css" />
+        <link rel="stylesheet" href="resources/bootstrap.min.css" />
+        <script src="resources/jquery.min.js"></script>
+        <script src="resources/bootstrap.min.js"></script>
+    </head>
 </head>
 <body>
     <ul>
@@ -17,48 +19,36 @@
     <li><a href="rendi">Rendi</a></li>
     </ul>
 
-    <form class="form-horizontal" action='' method="POST">
-        <fieldset>
-            <h2 class="form-register-heading">Registeeri</h2>
+    <div class="container-fluid">
+        <div class="form-signin">
+            <div class="form-group col-sm-4 mx-auto text-center"></div>
+            <div class="form-group col-sm-4">
+                <h3 class="form-signin-heading">Registreeri</h3>
 
-            <div class="control-group">
-                <label class="control-label"  for="username">Kasutajanimi</label>
-                <div class="controls">
-                    <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
-                    <p class="help-block">Kasutajanimi võib sisaldada vaid tähti ja numbreid</p>
-                </div>
+                <label for="inputUsername" class="sr-only" >Email</label>
+                <input type="username" id="inputUsername" class="form-control" placeholder="Kasutajanimi" required autofocus>
+
+                <label for="inputEmail" class="sr-only" >Email</label>
+                <input type="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+                <label for="inputPassword" class="sr-only">Parool</label>
+                <input type="password" id="inputPassword" class="form-control" placeholder="Parool" required>
+                <label for="inputPasswordConfirm" class="sr-only">Kinnita parool</label>
+                <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Parool (kinnita)" required>
+                <button class="btn btn-md btn-primary btn-block mx-auto text-center" type="submit">Registreeri</button>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="container-fluid">
+        <footer class="page-footer font-small blue">
+
+            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                Rent Me OÜ
             </div>
 
-            <div class="control-group">
-                <label class="control-label" for="email">E-mail</label>
-                <div class="controls">
-                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
-                    <p class="help-block">Siseta oma e-mail</p>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label" for="password">Parool</label>
-                <div class="controls">
-                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-                    <p class="help-block">Parool peab olema vähemalt 4 tähemärgi pikkune</p>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <label class="control-label"  for="password_confirm">Parool (Kinnita)</label>
-                <div class="controls">
-                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
-                    <p class="help-block">Palun kinnita oma parool</p>
-                </div>
-            </div>
-
-            <div class="control-group">
-                <div class="controls">
-                    <button class="btn btn-success">Registeeri</button>
-                </div>
-            </div>
-        </fieldset>
-    </form>
+        </footer>
+    </div>
 </body>
 </html>
