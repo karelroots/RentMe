@@ -11,10 +11,54 @@
     <title>Rent.me | Registreeri</title>
 </head>
 <body>
-<ul>
-<li><a href="index">Kodu</a></li>
-<li><a href="rendile">Anna Rendile</a></li>
-<li><a href="rendi">Rendi</a></li>
-</ul>
+    <ul>
+    <li><a href="index">Kodu</a></li>
+    <li><a href="rendile">Anna Rendile</a></li>
+    <li><a href="rendi">Rendi</a></li>
+    </ul>
+
+    <form class="form-horizontal" action='' method="POST">
+        <fieldset>
+            <h2 class="form-register-heading">Registeeri</h2>
+
+            <div class="control-group">
+                <label class="control-label"  for="username">Kasutajanimi</label>
+                <div class="controls">
+                    <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                    <p class="help-block">Kasutajanimi võib sisaldada vaid tähti ja numbreid</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="email">E-mail</label>
+                <div class="controls">
+                    <input type="text" id="email" name="email" placeholder="" class="input-xlarge">
+                    <p class="help-block">Siseta oma e-mail</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label" for="password">Parool</label>
+                <div class="controls">
+                    <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
+                    <p class="help-block">Parool peab olema vähemalt 4 tähemärgi pikkune</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <label class="control-label"  for="password_confirm">Parool (Kinnita)</label>
+                <div class="controls">
+                    <input type="password" id="password_confirm" name="password_confirm" placeholder="" class="input-xlarge">
+                    <p class="help-block">Palun kinnita oma parool</p>
+                </div>
+            </div>
+
+            <div class="control-group">
+                <div class="controls">
+                    <button class="btn btn-success">Registeeri</button>
+                </div>
+            </div>
+        </fieldset>
+    </form>
 </body>
 </html>
