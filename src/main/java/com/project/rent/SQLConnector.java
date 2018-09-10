@@ -1,7 +1,5 @@
 package com.project.rent;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
