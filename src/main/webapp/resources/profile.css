@@ -32,13 +32,13 @@ p {
 }
 
 .button-box {
-   text-align: center;
-   margin-top: 20px;
-   align: center;
+    text-align: center;
+    margin-top: 20px;
+    align: center;
 }
 
 .page-footer {
-    position:absolute;
+    position:fixed;
     bottom:0;
     width:100%;
     height:60px;   // Footeri kõrgus
