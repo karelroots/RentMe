@@ -13,4 +13,6 @@ public class RentApplicationTests {
 	public void contextLoads() {
 	}
 
+	// Test commit 
+
 }
