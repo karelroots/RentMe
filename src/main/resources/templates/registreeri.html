@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <head>
         <title>Rent.me | Registreeri</title>
@@ -14,46 +13,63 @@
 </head>
 <body>
     <ul>
-    <li><a href="index">Kodu</a></li>
+    <li><a href="/login">Kodu</a></li>
     </ul>
 
     <div class="container">
-        <div class="col-sm-4 mx-auto text-center"></div>
-        <div class="col-sm-4 mx-auto text-center">
+        <div class="col-sm-3 mx-auto text-center"></div>
+        <div class="col-sm-5 mx-auto text-center">
             <h1>Rent.me</h1>
         </div>
     </div>
 
     <div class="container-fluid">
-        <div class="form-signin">
+        <div class="row">
+        <form autocomplete="off" action="#" th:action="@{/registreeri}"
+              th:object="${user}" method="post" class="form-horizontal"
+              role="form">
             <div class="form-group col-sm-4 mx-auto text-center"></div>
             <div class="form-group col-sm-4">
                 <h3 class="form-signin-heading">Registreeri end kasutajaks</h3>
 
-                <label for="inputUsername" class="sr-only" >Kasutajanimi</label>
-                <input type="username" id="inputUsername" class="form-control" placeholder="Kasutajanimi" required autofocus>
+                <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                       class="validation-message"></label>
+                <input type="text" th:field="*{name}" class="form-control" placeholder="Eesnimi" required autofocus/>
 
-                <label for="inputEmail" class="sr-only" >Email</label>
-                <input type="email" id="inputEmail" class="form-control" placeholder="E-maili aaddress" required autofocus>
+                <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                       class="validation-message"></label>
+                <input type="text" th:field="*{lastName}" class="form-control" placeholder="perenimi" required autofocus/>
 
-                <label for="inputPassword" class="sr-only">Parool</label>
-                <input type="password" id="inputPassword" class="form-control" placeholder="Parool" required>
-                <label for="inputPasswordConfirm" class="sr-only">Kinnita parool</label>
-                <input type="password" id="inputPasswordConfirm" class="form-control" placeholder="Parool (kinnita)" required>
+                <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
+                       class="validation-message"></label>
+                <input type="text" th:field="*{username}" class="form-control" placeholder="Kasutajanimi" required autofocus/>
+
+                <label	th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
+                          class="validation-message"></label>
+                <input type="text" th:field="*{email}" class="form-control" placeholder="E-maili aaddress" required/>
+
+                <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
+                <input type="password" th:field="*{password}" class="form-control" placeholder="Parool" required />
+
+                <!--<label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="validation-message"></label>
+                <input type="password" th:field="*{confirmPassword}" class="form-control" placeholder="Parool (kinnita)" required>-->
+
                 <button class="btn btn-md btn-primary btn-block mx-auto text-center" type="submit">Saada</button>
+
+                <span th:utext="${successMessage}"></span>
             </div>
+
         </div>
+        </form>
     </div>
 
 
-    <div class="container-fluid">
-        <footer class="page-footer font-small blue">
+    <footer class="page-footer font-small blue">
 
-            <div class="footer-copyright text-center py-3">© 2018 Copyright:
-                Rent Me OÜ
-            </div>
+        <div class="footer-copyright text-center py-1">© 2018 Copyright:
+            Rent Me OÜ
+        </div>
 
-        </footer>
-    </div>
+    </footer>
 </body>
 </html>

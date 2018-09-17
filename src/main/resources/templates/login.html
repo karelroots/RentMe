@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Rent.me</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -12,7 +11,7 @@
 </head>
 <body>
     <ul>
-        <li><a href="index">Kodu</a></li>
+        <li><a href="/login">Kodu</a></li>
     </ul>
 
     <div class="container">
@@ -23,35 +22,37 @@
     </div>
 
     <div class="container-fluid">
-        <div class="form-signin">
+
+        <form autocomplete="off" action="#" th:action="@{/login}" method="POST" class="form-signin">
             <div class="form-group col-sm-4 mx-auto text-center"></div>
                 <div class="form-group col-sm-4">
                     <h3 class="form-signin-heading">Logi sisse</h3>
-                    <label for="inputEmail" class="sr-only" >Email</label>
-                    <input type="email" id="inputEmail" class="form-control" placeholder="E-maili aadress" required autofocus>
+                    <input type="text" id="email" name="email"  th:placeholder="Email"
+                           class="form-control" /> <br/>
+                    <input type="password"  th:placeholder="Parool"
+                           id="password" name="password" class="form-control" /> <br />
 
-                    <label for="inputPassword" class="sr-only">Parool</label>
-                    <input type="password" id="inputPassword" class="form-control" placeholder="Parool" required>
+                    <div class="error" align="center" th:if="${#httpServletRequest.getParameter('error') != null}"
+                         th:with="errorMsg=#{login.badCredentials}">
+                </div>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="remember-me"> Jäta mind meelde
                         </label>
                     </div>
-                    <button class="btn btn-md btn-primary btn-block mx-auto text-center" type="submit">Logi sisse</button>
+                    <button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Login" type="Submit">Logi sisse</button>
                     <a class="btn btn-md btn-primary btn-block mx-auto text-center" href="registreeri" role="button">Registreeri</a>
                 </div>
+        </form>
+    </div>
+
+
+    <footer class="page-footer font-small blue">
+
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            Rent Me OÜ
         </div>
-    </div>
 
-
-    <div class="container-fluid">
-        <footer class="page-footer font-small blue">
-
-            <div class="footer-copyright text-center py-3">© 2018 Copyright:
-                Rent Me OÜ
-            </div>
-
-        </footer>
-    </div>
+    </footer>
 </body>
 </html>
