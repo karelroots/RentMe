@@ -27,7 +27,9 @@
     <hr>
     <div class="container">
         <div class="row">
-            <div class="col-sm-10"><h1>Kasutajanimi</h1></div>
+            <div class="col-sm-10">
+                <h1><label th:object="${user}" th:text="*{name}"></label></h1>
+            </div>
         </div>
         <div class="row">
             <div class="col-sm-3"><!--left col-->
@@ -70,19 +72,23 @@
                     <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
                 </ul>-->
 
-                <form class="form" action="##" method="post" id="registrationForm">
+                <form class="form" action="#" method="post" th:object="${user}">
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <label for="eesnimi"><h4>Eesnimi</h4></label>
-                            <input type="text" class="form-control" name="first_name" id="eesnimi" placeholder="eesnimi" title="enter your first name if any.">
+                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
+                                   class="validation-message"></label>
+                            <input type="text" th:field="*{name}" class="form-control" id="eesnimi" th:placeholder="*{name}" required autofocus/>
                         </div>
                     </div>
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="perenimi"><h4>Perenimi</h4></label>
-                            <input type="text" class="form-control" name="last_name" id="perenimi" placeholder="perenimi" title="enter your last name if any.">
+                                <label for="perenimi"><h4>Perenimi</h4></label>
+                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
+                                   class="validation-message"></label>
+                            <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="perenimi" th:placeholder="*{lastName}"  title="enter your last name if any.">
                         </div>
                     </div>
 
@@ -90,28 +96,22 @@
 
                         <div class="col-xs-6">
                             <label for="telefon"><h4>Telefon</h4></label>
-                            <input type="text" class="form-control" name="phone" id="telefon" placeholder="+372 12345678" title="sisesta oma telefoni number">
+                            <input type="text" th:field="*{telephone}" class="form-control" name="phone" id="telefon" th:placeholder="*{telephone}" title="sisesta oma telefoni number">
                         </div>
                     </div>
 
-                   <!-- <div class="form-group">
-                        <div class="col-xs-6">
-                            <label for="mobile"><h4>Mobile</h4></label>
-                            <input type="text" class="form-control" name="mobile" id="mobile" placeholder="enter mobile number" title="enter your mobile number if any.">
-                        </div>
-                    </div>-->
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <label for="email"><h4>Email</h4></label>
-                            <input type="email" class="form-control" name="email" id="email" placeholder="sinu@email.ee" title="lisa e-mail">
+                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email" th:placeholder="*{email}" title="lisa e-mail">
                         </div>
                     </div>
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <label for="email"><h4>Asukoht</h4></label>
-                            <input type="email" class="form-control" id="location" placeholder="asukoht" title="lisa asukoht">
+                            <input type="text" th:field="*{location}" class="form-control" id="location" th:placeholder="*{location}" title="lisa asukoht">
                         </div>
                     </div>
 
@@ -119,15 +119,15 @@
 
                         <div class="col-xs-6">
                             <label for="parool"><h4>Parool</h4></label>
-                            <input type="password" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool">
+                            <input type="password" th:field="*{password}" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool">
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="yhikas"><h4>Ühikas</h4></label>
-                            <input type="yhikas" class="form-control" id="yhikas" placeholder="ühikas" title="lisa ühikas">
+                            <label for="username"><h4>Kasutajanimi</h4></label>
+                            <input type="text" th:field="*{username}" class="form-control" id="username" th:placeholder="*{username}" title="lisa ühikas">
                         </div>
                     </div>
 
@@ -135,9 +135,11 @@
 
                         <div class="col-xs-6">
                             <label for="kinnitus"><h4>Kinnita parool</h4></label>
-                            <input type="password" class="form-control" name="password2" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool">
+                            <input type="password" th:field="*{confirmPassword}" class="form-control" name="password2" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool">
                         </div>
                     </div>
+
+                    <span th:utext="${successMessage}"></span>
 
                     <div class="form-group">
                         <div class="col-xs-12">

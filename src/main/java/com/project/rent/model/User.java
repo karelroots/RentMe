@@ -28,10 +28,10 @@ public class User {
     @Length(min = 5, message = "*Your password must have at least 5 characters")
     @NotEmpty(message = "*Please provide your password")
     private String password;
-    /*@Column(name = "confirmPassword")
+    @Column(name = "confirmPassword")
     @Length(min = 5, message = "*Your password must have at least 5 characters")
-    @NotEmpty(message = "*Please confirm your password")
-    private String confirmPassword;*/
+    //@NotEmpty(message = "*Please confirm your password")
+    private String confirmPassword;
     @Column(name = "name")
     @NotEmpty(message = "*Please provide your name")
     private String name;
@@ -40,8 +40,8 @@ public class User {
     private String lastName;
     @Column(name = "telephone")
     private String telephone;
-    @Column(name = "asukoht")
-    private String asukoht;
+    @Column(name = "location")
+    private String location;
     @Column(name = "active")
     private int active;
     @ManyToMany(cascade = CascadeType.ALL)
