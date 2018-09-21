@@ -27,7 +27,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebSecurity
 //@EnableOAuth2Client
-public class SecurityConf extends WebSecurityConfigurerAdapter {
+public class SecurityConf extends WebSecurityConfigurerAdapter { // siin määrame ära erinevatele lehtedele ligipääsu
 
     @Autowired
     private BCryptPasswordEncoder bCryptPasswordEncoder;

@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "users")
+@Table(name = "user_role") //andmetabel, mis ühendab kasutajad mingi konkreetse rolliga
 public class UserRole {
     @Id
     @Column(name = "user_id")

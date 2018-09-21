@@ -6,7 +6,7 @@ import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Integer> {
+public interface RoleRepository extends JpaRepository<Role, Integer> { // siin asuvad meetodid, mille abil saame Role tabelist andmeid otsida
     Role findByRole(String roll);
 
 }

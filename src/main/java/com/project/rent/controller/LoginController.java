@@ -14,7 +14,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @Controller
-public class LoginController {
+public class LoginController { //siin töötavad meetodid, mis kuvavad konkreetseid html lehti ja määrame ära, ka mida erinevate vormide POST-imisel tehakse
 
     @Autowired
     private UserService userService;

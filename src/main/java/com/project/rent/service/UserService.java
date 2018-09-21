@@ -17,11 +17,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 
 @Service("userService")
-public class UserService {
+public class UserService { // meetodid kasutajatega toimingute tegemiseks
 
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private UserRoleRepository userRoleRepository;
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
@@ -30,7 +29,6 @@ public class UserService {
                        BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
-        this.userRoleRepository = userRoleRepository;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
     }
 
@@ -38,7 +36,7 @@ public class UserService {
         return userRepository.findByEmail(email);
     }
 
-    public void saveUser(User user) {
+    public void saveUser(User user) { //funktsioon, mis salvestab antud kasutaja andmed andmebaasi
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
         Role userRole = roleRepository.findByRole("ADMIN");
@@ -46,16 +44,16 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void updateUser(int userId, User user) {
-        int originalId = userId;
-        User existingUser = userRepository.findById(originalId);
-        UserRole existingRole = userRoleRepository.findByUserId(originalId);
-        userRoleRepository.delete(existingRole);
-        userRepository.delete(existingUser);
-        user.setId(originalId);
-        //userRoleRepository.save(existingRole);
-        userRepository.save(user);
-        userRoleRepository.save(existingRole);
+    public void updateUser(int userId, User user) { //funktsioon, mis uuendab kasutaja andmeid andmebaasis, kasutades html vormist võetud infot
+        User existingUser = userRepository.findById(userId); //leiame olemasoleva kasutaja andmebaasis
+        existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); //uuendame kõik andmed vastavalt uutele
+        existingUser.setName(user.getName());
+        existingUser.setEmail(user.getEmail());
+        existingUser.setLastName(user.getLastName());
+        existingUser.setLocation(user.getLocation());
+        existingUser.setTelephone(user.getTelephone());
+        existingUser.setUsername(user.getUsername());
+        userRepository.save(existingUser);
     }
 
 }

@@ -6,7 +6,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @SpringBootApplication
-public class RentApplication {
+public class RentApplication { //peaklass
 
 	public static void main(String[] args) throws Exception {
         SpringApplication.run(RentApplication.class, args);
