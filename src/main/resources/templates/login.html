@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Rent.me</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="resources/bootstrap.min.css" />
     <script src="resources/jquery.min.js"></script>
     <script src="resources/bootstrap.min.js"></script>
+    <script src="resources/funktsioonid.js"></script>
 </head>
 <body>
     <ul>
@@ -32,9 +33,9 @@
                     <input type="password"  th:placeholder="Parool"
                            id="password" name="password" class="form-control" /> <br />
 
-                    <div class="error" align="center" th:if="${#httpServletRequest.getParameter('error') != null}"
-                         th:with="errorMsg=#{login.badCredentials}">
-                </div>
+                    <div class="error" align="center" th:if="${#httpServletRequest.getParameter('error') != null}">
+                    <label>Selliste andmetega kasutajat ei eksisteeri</label>
+                    </div>
                     <div class="checkbox">
                         <label>
                             <input type="checkbox" value="remember-me"> Jäta mind meelde
@@ -48,13 +49,16 @@
         </form>
     </div>
 
+    <div class="container-fluid">
+        <footer class="page-footer font-small blue">
 
-    <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-2">© 2018 Copyright:
+                Rent Me OÜ
+            </div>
 
-        <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            Rent Me OÜ
-        </div>
+        </footer>
+    </div>
 
-    </footer>
+
 </body>
 </html>

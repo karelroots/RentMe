@@ -2,12 +2,10 @@ package com.project.rent.controller;
 
 import com.project.rent.model.User;
 import com.project.rent.service.UserService;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,9 +25,8 @@ public class ProfiiliController {
     public ModelAndView profiil(){
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        User user = userService.findUserByEmail(auth.getName());
-        /*modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-        modelAndView.addObject("adminMessage","Ligipääs ainult administraatori õigustega");*/
+        User user = userService.findUserByEmail(auth.getName()); //leiame kasutaja objekt
+
         modelAndView.addObject(user);
         modelAndView.setViewName("profiil");
         return modelAndView;
@@ -50,26 +47,15 @@ public class ProfiiliController {
             }
             modelAndView.setViewName("profiil");
         } else {
-            modelAndView.addObject(user);
             modelAndView.setViewName("profiil");
             this.userService.updateUser(originalId, user);
             System.out.println("save success");
+            modelAndView.addObject("user", user);
             modelAndView.addObject("successMessage", "Kasutaja andmed on muudetud!");
         }
 
 
         return modelAndView;
     }
-
-   /* @RequestMapping(value="/profile/save", params={"save"})
-    public String saveProfile(
-            final User kasutaja, final BindingResult bindingResult, final ModelMap model) {
-        if (bindingResult.hasErrors()) {
-            return "profile";
-        }
-        this.userService.saveUser(kasutaja);
-        model.clear();
-        return "redirect:/profile";
-    }*/
 
 }

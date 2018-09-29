@@ -47,4 +47,16 @@ public class User {
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name = "user_role", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
     private Set<Role> roles;
+    private String avatarName;
+
+    public boolean isAdmin() { //kas kasutajal on roll ADMIN?
+        if(!roles.isEmpty()) {
+            for (Role role : getRoles()) {
+                if (role.getRole().equals("ADMIN")) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
 }

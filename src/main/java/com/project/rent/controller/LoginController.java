@@ -60,7 +60,7 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
             userService.saveUser(user);
             System.out.println("kasutaja salvestatud");
             modelAndView.addObject("successMessage", "Kasutaja on registreeritud!");
-            modelAndView.addObject("user", new User()); //"user", user?
+            modelAndView.addObject("user", new User()); //et saaks uue kasutaja registreerida
             modelAndView.setViewName("registreeri");
 
         }

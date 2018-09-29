@@ -51,3 +51,7 @@ h3 {
 .form-group {
     float: none;
 }
+
+input#pic-sub {
+    position:fixed;
+}

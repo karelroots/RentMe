@@ -26,35 +26,4 @@ public class Ese {
     @Column(columnDefinition = "kirjeldus")
     private String kirjeldus;
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getNimi() {
-        return nimi;
-    }
-
-    public void setNimi(String nimi) {
-        this.nimi = nimi;
-    }
-
-    public String getTüüp() {
-        return tüüp;
-    }
-
-    public void setTüüp(String tüüp) {
-        this.tüüp = tüüp;
-    }
-
-    public String getKirjeldus() {
-        return kirjeldus;
-    }
-
-    public void setKirjeldus(String kirjeldus) {
-        this.kirjeldus = kirjeldus;
-    }
 }

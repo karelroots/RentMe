@@ -9,8 +9,8 @@ import org.springframework.validation.Validator;
 public class PasswordValidator implements Validator{
 
     @Override
-    public boolean supports(Class clazz) {
-        //just validate the Customer instances
+    public boolean supports(Class<?> clazz) {
+        //Valideerime kasutaja
         return User.class.isAssignableFrom(clazz);
     }
 
@@ -25,7 +25,7 @@ public class PasswordValidator implements Validator{
 
         User user = (User)target;
 
-        if(!(user.getPassword().equals(user.getPassword()))){
+        if(!(user.getPassword().equals(user.getConfirmPassword()))){
             errors.rejectValue("password", "notmatch.password");
         }
 

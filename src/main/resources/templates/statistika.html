@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Rent.me | Statistika</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,11 +8,13 @@
     <link rel="stylesheet" href="resources/bootstrap.min.css" />
     <script src="resources/jquery.min.js"></script>
     <script src="resources/bootstrap.min.js"></script>
+    <script src="resources/funktsioonid.js"></script>
 </head>
 <body>
     <ul>
-        <li><a href="index">Kodu</a></li>
-        <li id="logout"><a class="active" href="#logout">Logout</a></li>
+        <li><a href="/profiil">Kodu</a></li>
+        <li><a href="rentimine">Rentimine</a></li>
+        <li id="logout"><a class="active" href="/logout">Logout</a></li>
     </ul>
 
     <div class="container">
@@ -22,12 +24,49 @@
         </div>
     </div>
 
+    <div class="container">
+        <div class="row">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h3 class="panel-title">Registreeritud Kasutajad</h3>
+                </div>
+                <table class="table">
+                    <thead>
+                    <tr id="Pealkirjad">
+                        <th>#</th>
+                        <th>Eesnimi</th>
+                        <th>Perenimi</th>
+                        <th>Kasutajanimi</th>
+                        <th>Email</th>
+                        <th>Aktiivne</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="user : ${users}">
+                        <td th:text="${user.id}">1</td>
+                        <td th:text="${user.name}">Nimi</td>
+                        <td th:text="${user.lastName}">Perenimi</td>
+                        <td th:text="${user.username}">Kasutajanimi</td>
+                        <td th:text="${user.email}">email@email.ee</td>
+                        <td th:text="${user.active}">1</td>
+                        <td><button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Deactivate" type="Submit">Deaktiveeri</button></td>
+                    </tr>
+                    <tr>
+                        <td>Kokku:</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
     <div class="container-fluid">
         <footer class="page-footer font-small blue">
 
-            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <div class="footer-copyright text-center py-2">© 2018 Copyright:
                 Rent Me OÜ
             </div>
+
         </footer>
     </div>
 </body>

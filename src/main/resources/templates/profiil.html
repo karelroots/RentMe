@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Rent.me | Profiil</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -8,12 +8,18 @@
     <link rel="stylesheet" href="resources/bootstrap.min.css" />
     <script src="resources/jquery.min.js"></script>
     <script src="resources/bootstrap.min.js"></script>
+    <script src="resources/funktsioonid.js"></script>
 </head>
 
 <body>
     <ul>
         <li><a href="#">Kodu</a></li>
         <li><a href="rentimine">Rentimine</a></li>
+        <div th:with="isAdmin = ${user.isAdmin()}"> <!--näitame ainult administraatorile-->
+            <div th:if="${isAdmin}">
+                <li><a href="statistika">Statistika</a></li>
+            </div>
+        </div>
         <li id="logout"><a class="active" href="/logout">Logout</a></li>
     </ul>
 
@@ -25,117 +31,120 @@
     </div>
 
     <hr>
-    <div class="container">
+    <div class="container" id="cont1">
         <div class="row">
             <div class="col-sm-10">
-                <h1><label th:object="${user}" th:text="*{name}"></label></h1>
+                <h1><label th:text="${user.username}"></label></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-3">
 
 
-                <div class="text-center">
-                    <img src="resources/avatar.png" class="avatar img-circle img-thumbnail" alt="profiilipilt">
+                <div class="text-center" th:object="${user}">
+                    <img th:src="@{resources/avatars/{image}(image=${user.avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/>
                     <h6>Muuda profiilipilti</h6>
-                    <input type="file" class="text-center center-block file-upload">
-                </div></hr><br>
+                    <form class="form" action="profiil/upload" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" class="text-center center-block file-upload">
+
+                        <input type="submit" class="text-left" value="Salvesta" th:onsubmit="'submitRefresh();'" />
+
+                    </form>
+                </div><br>
 
 
-               <!-- <div class="panel panel-default">
-                    <div class="panel-heading">Veebileht <i class="fa fa-link fa-1x"></i></div>
-                    <div class="panel-body"><a href="http://leht.ee">leht.ee</a></div>
-                </div>-->
-
-
-               <!-- <ul class="list-group">
-                    <li class="list-group-item text-muted">Activity <i class="fa fa-dashboard fa-1x"></i></li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Rendile</strong></span> 125</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Rendil</strong></span> 13</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
-                    <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
-                </ul>-->
-
-                <!--<div class="panel panel-default">
-                    <div class="panel-heading">Social Media</div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Kasutaja Statistika</div>
                     <div class="panel-body">
-                        <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>Pakkumisi: 0</td>
+                                    <!--<td th:text=""></td> Pakkumiste arv-->
+                                </tr>
+                                <tr>
+                                    <td>Soove: 0</td>
+                                    <!--<td th:text=""></td> Soovide arv-->
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div>-->
+                </div>
 
-            </div><!--/col-3-->
+
+            </div>
 
             <div class="col-sm-9">
-                <!--<ul class="nav nav-tabs">
-                    <li class="active"><a data-toggle="tab" href="#home">Home</a></li>
-                    <li><a data-toggle="tab" href="#messages">Menu 1</a></li>
-                    <li><a data-toggle="tab" href="#settings">Menu 2</a></li>
-                </ul>-->
 
-                <form class="form" action="#" method="post" th:object="${user}">
+
+                <form class="form" id="frmProfiil" method="post" th:object="${user}" th:onsubmit="'submitRefresh();'">
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="eesnimi"><h4>Eesnimi</h4></label>
-                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
-                                   class="validation-message"></label>
+                            <h4><label for="eesnimi">Eesnimi</label></h4>
+                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
                             <input type="text" th:field="*{name}" class="form-control" id="eesnimi" th:placeholder="*{name}" required autofocus/>
                         </div>
                     </div>
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                                <label for="perenimi"><h4>Perenimi</h4></label>
-                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
-                                   class="validation-message"></label>
-                            <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="perenimi" th:placeholder="*{lastName}"  title="enter your last name if any.">
+                            <h4><label for="perenimi">Perenimi</label></h4>
+                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"></label>
+                            <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="perenimi" th:placeholder="*{lastName}"  title="enter your last name if any." required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="telefon"><h4>Telefon</h4></label>
-                            <input type="text" th:field="*{telephone}" class="form-control" name="phone" id="telefon" th:placeholder="*{telephone}" title="sisesta oma telefoni number">
+                            <h4><label for="telefon">Telefon</label></h4>
+                            <label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="validation-message"></label>
+                            <input type="text" th:field="*{telephone}" class="form-control" name="phone" id="telefon" th:placeholder="*{telephone}" title="sisesta oma telefoni number" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="email"><h4>Email</h4></label>
-                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email" th:placeholder="*{email}" title="lisa e-mail">
+                            <h4><label for="email">Email</label></h4>
+                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
+                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email" th:placeholder="*{email}" title="lisa e-mail" required>
                         </div>
                     </div>
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="email"><h4>Asukoht</h4></label>
-                            <input type="text" th:field="*{location}" class="form-control" id="location" th:placeholder="*{location}" title="lisa asukoht">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-
-                        <div class="col-xs-6">
-                            <label for="parool"><h4>Parool</h4></label>
-                            <input type="password" th:field="*{password}" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool">
+                            <h4><label for="email">Asukoht</label></h4>
+                            <label th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="validation-message"></label>
+                            <input type="text" th:field="*{location}" class="form-control" id="location" th:placeholder="*{location}" title="lisa asukoht" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="username"><h4>Kasutajanimi</h4></label>
-                            <input type="text" th:field="*{username}" class="form-control" id="username" th:placeholder="*{username}" title="lisa ühikas">
+                            <h4><label for="parool">Parool</label></h4>
+                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
+                            <input type="password" th:field="*{password}" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <label for="kinnitus"><h4>Kinnita parool</h4></label>
-                            <input type="password" th:field="*{confirmPassword}" class="form-control" name="password2" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool">
+                            <h4><label for="username">Kasutajanimi</label></h4>
+                            <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message"></label>
+                            <input type="text" th:field="*{username}" class="form-control" id="username" th:placeholder="*{username}" title="lisa kasutajanimi" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+
+                        <div class="col-xs-6">
+                            <h4><label for="kinnitus">Parool (kinnitus)</label></h4>
+                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
+                            <input type="password" th:field="*{confirmPassword}" class="form-control" name="password2" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool" required>
                         </div>
                     </div>
 
@@ -150,20 +159,22 @@
                     </div>
                 </form>
 
+
              </div><!--/col-sm9-->
 
         </div><!--/row-->
+
     </div><!--/container-->
 
+    <div class="container-fluid">
+        <footer class="page-footer font-small blue">
 
-    <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-2">© 2018 Copyright:
+                Rent Me OÜ
+            </div>
 
-        <div class="footer-copyright text-center py-2">© 2018 Copyright:
-            Rent Me OÜ
-        </div>
-
-    </footer>
-
+        </footer>
+    </div>
 
 </body>
 </html>
