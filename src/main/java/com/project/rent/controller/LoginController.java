@@ -3,7 +3,6 @@ package com.project.rent.controller;
 import com.project.rent.model.User;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -45,8 +44,7 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
         User userExists = userService.findUserByEmail(user.getEmail());
-        System.out.println(user.getEmail()); //debug
-        System.out.println(user.getPassword());
+
         if (userExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
@@ -63,7 +61,7 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
             modelAndView.setViewName("registreeri");
         } else {
             userService.saveUser(user);
-            String recipientAddress = user.getEmail();
+            /*String recipientAddress = user.getEmail();
             String subject = "Registreerimise kinnitus";
             String message = "Tere, "+user.getName()+"Olete registreerinud kasutaja keskonnas Rent.Me kasutajanimega "+user.getUsername();
 
@@ -71,7 +69,7 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
             email.setTo(recipientAddress);
             email.setSubject(subject);
             email.setText(message);
-            mailSender.send(email);
+            mailSender.send(email);*/
             System.out.println("kasutaja salvestatud");
             modelAndView.addObject("successMessage", "Kasutaja on registreeritud!");
             modelAndView.addObject("user", new User()); //et saaks uue kasutaja registreerida

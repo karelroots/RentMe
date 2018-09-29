@@ -3,7 +3,6 @@ package com.project.rent.controller;
 import com.project.rent.model.User;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

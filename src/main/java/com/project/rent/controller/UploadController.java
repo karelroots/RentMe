@@ -11,7 +11,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.io.IOException;
-import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -40,7 +39,6 @@ public class UploadController {
 
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER+ file.getOriginalFilename());
-            System.out.println(path.toString());
             Files.write(path, bytes);
             userService.saveAvatar(file.getOriginalFilename(), userService.findUserByEmail(auth.getName())); //salvestame kasutaja avatari info
 
