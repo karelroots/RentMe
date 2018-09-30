@@ -5,7 +5,7 @@
 
 	<groupId>com.project</groupId>
 	<artifactId>rent</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1</version>
     <packaging>war</packaging>
 
 	<name>rent</name>

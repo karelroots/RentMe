@@ -21,9 +21,9 @@ public class UploadController {
     @Autowired
     UserService userService;
 
-    //Save the uploaded file to this folder
-    private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"\\src\\main\\webapp\\resources\\avatars\\";
-
+    // Üleslaetava faili kataloog
+    private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"\\src\\main\\webapp\\resources\\avatars\\"; //TESTSYSTEM
+    //private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/avatars/"; //DEPLOYMENT
     @PostMapping("profiil/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
@@ -40,7 +40,7 @@ public class UploadController {
             byte[] bytes = file.getBytes();
             Path path = Paths.get(UPLOADED_FOLDER+ file.getOriginalFilename());
             Files.write(path, bytes);
-            userService.saveAvatar(file.getOriginalFilename(), userService.findUserByEmail(auth.getName())); //salvestame kasutaja avatari info
+            userService.saveAvatar(file.getOriginalFilename(), userService.findUserByEmail(auth.getName())); // salvestame kasutaja avatari info andmebaasi
 
 
             redirectAttributes.addFlashAttribute("message",
