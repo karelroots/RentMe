@@ -14,8 +14,8 @@
     <ul>
         <li><a href="#">Kodu</a></li>
         <li><a href="rentimine">Rentimine</a></li>
-        <div th:with="isAdmin = ${user.isAdmin()}"> <!--näitame ainult administraatorile-->
-            <div th:if="${isAdmin}">
+        <div> <!--näitame ainult administraatorile-->
+            <div>
                 <li><a href="statistika">Statistika</a></li>
             </div>
         </div>
@@ -33,20 +33,20 @@
     <div class="container" id="cont1">
         <div class="row">
             <div class="col-sm-10">
-                <h1><label th:text="${user.username}"></label></h1>
+                <h1><label>karelr</label></h1>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-3">
 
 
-                <div class="text-center" th:object="${user}">
+                <div class="text-center">
                     <img th:src="@{resources/avatars/{image}(image=${user.avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/>
                     <h6>Muuda profiilipilti</h6>
                     <form class="form" action="profiil/upload" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" class="text-center center-block file-upload">
 
-                        <input type="submit" class="text-left" value="Salvesta" th:onsubmit="'submitRefresh();'" />
+                        <input type="submit" class="text-left" value="Salvesta" onsubmit="submitRefresh();" />
 
                     </form>
                 </div><br>
@@ -57,14 +57,14 @@
                     <div class="panel-body">
                         <table>
                             <tbody>
-                                <tr>
-                                    <td>Pakkumisi: 0</td>
-                                    <!--<td th:text=""></td> Pakkumiste arv-->
-                                </tr>
-                                <tr>
-                                    <td>Soove: 0</td>
-                                    <!--<td th:text=""></td> Soovide arv-->
-                                </tr>
+                            <tr>
+                                <td>Pakkumisi: 0</td>
+                                <!--<td th:text=""></td> Pakkumiste arv-->
+                            </tr>
+                            <tr>
+                                <td>Soove: 0</td>
+                                <!--<td th:text=""></td> Soovide arv-->
+                            </tr>
                             </tbody>
                         </table>
                     </div>
@@ -76,21 +76,21 @@
             <div class="col-sm-9">
 
 
-                <form class="form" id="frmProfiil" method="post" th:object="${user}" th:onsubmit="'submitRefresh();'">
+                <form class="form" id="frmProfiil" method="post" onsubmit="submitRefresh();">
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <h4><label for="eesnimi">Eesnimi</label></h4>
-                            <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
-                            <input type="text" th:field="*{name}" class="form-control" id="eesnimi" th:placeholder="*{name}" required autofocus/>
+
+                            <input type="text" class="form-control" id="eesnimi" placeholder="Karel" required autofocus name="name" value="Karel"/>
                         </div>
                     </div>
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <h4><label for="perenimi">Perenimi</label></h4>
-                            <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"></label>
-                            <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="perenimi" th:placeholder="*{lastName}"  title="enter your last name if any." required>
+
+                            <input type="text" class="form-control" name="lastName" id="perenimi" placeholder="Roots"  title="enter your last name if any." required value="Roots">
                         </div>
                     </div>
 
@@ -98,8 +98,8 @@
 
                         <div class="col-xs-6">
                             <h4><label for="telefon">Telefon</label></h4>
-                            <label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="validation-message"></label>
-                            <input type="text" th:field="*{telephone}" class="form-control" name="phone" id="telefon" th:placeholder="*{telephone}" title="sisesta oma telefoni number" required>
+
+                            <input type="text" class="form-control" name="telephone" id="telefon" placeholder="123456" title="sisesta oma telefoni number" required value="123456">
                         </div>
                     </div>
 
@@ -107,16 +107,16 @@
 
                         <div class="col-xs-6">
                             <h4><label for="email">Email</label></h4>
-                            <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
-                            <input type="email" th:field="*{email}" class="form-control" name="email" id="email" th:placeholder="*{email}" title="lisa e-mail" disabled>
+
+                            <input type="email" class="form-control" name="email" id="email" placeholder="karelroots@gmail.com" title="lisa e-mail" required value="karelroots@gmail.com">
                         </div>
                     </div>
                     <div class="form-group">
 
                         <div class="col-xs-6">
                             <h4><label for="email">Asukoht</label></h4>
-                            <label th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="validation-message"></label>
-                            <input type="text" th:field="*{location}" class="form-control" id="location" th:placeholder="*{location}" title="lisa asukoht" required>
+
+                            <input type="text" class="form-control" id="location" placeholder="Tartu" title="lisa asukoht" required name="location" value="Tartu">
                         </div>
                     </div>
 
@@ -124,8 +124,8 @@
 
                         <div class="col-xs-6">
                             <h4><label for="parool">Parool</label></h4>
-                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-                            <input type="password" th:field="*{password}" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool" required>
+
+                            <input type="password" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool" required value="">
                         </div>
                     </div>
 
@@ -133,8 +133,8 @@
 
                         <div class="col-xs-6">
                             <h4><label for="username">Kasutajanimi</label></h4>
-                            <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message"></label>
-                            <input type="text" th:field="*{username}" class="form-control" id="username" th:placeholder="*{username}" title="lisa kasutajanimi" required>
+
+                            <input type="text" class="form-control" id="username" placeholder="karelr" title="lisa kasutajanimi" required name="username" value="karelr">
                         </div>
                     </div>
 
@@ -142,12 +142,12 @@
 
                         <div class="col-xs-6">
                             <h4><label for="kinnitus">Parool (kinnitus)</label></h4>
-                            <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-                            <input type="password" th:field="*{confirmPassword}" class="form-control" name="password2" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool" required>
+
+                            <input type="password" class="form-control" name="confirmPassword" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool" required value="">
                         </div>
                     </div>
 
-                    <span th:utext="${successMessage}"></span>
+                    <span></span>
 
                     <div class="form-group">
                         <div class="col-xs-12">
@@ -159,7 +159,7 @@
                 </form>
 
 
-             </div><!--/col-sm9-->
+            </div><!--/col-sm9-->
 
         </div><!--/row-->
 

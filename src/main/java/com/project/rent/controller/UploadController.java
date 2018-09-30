@@ -31,8 +31,20 @@ public class UploadController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("message", "Please select a file to upload");
+            redirectAttributes.addFlashAttribute("message", "Vali üleslaadimiseks fail");
             return "redirect:/profiil";
+        } else {
+            try {
+                System.out.println(file.getOriginalFilename());
+
+                String filetype = file.getOriginalFilename().split(".")[1].toLowerCase();
+                if(!filetype.equals("jpg") || !filetype.equals("png")) {
+                    redirectAttributes.addFlashAttribute("message", "Failiformaat peab olema JPG või PNG");
+                    return "redirect:/profiil";
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
         }
 
         try {
@@ -41,10 +53,6 @@ public class UploadController {
             Path path = Paths.get(UPLOADED_FOLDER+ file.getOriginalFilename());
             Files.write(path, bytes);
             userService.saveAvatar(file.getOriginalFilename(), userService.findUserByEmail(auth.getName())); // salvestame kasutaja avatari info andmebaasi
-
-
-            redirectAttributes.addFlashAttribute("message",
-                    "You successfully uploaded '" + file.getOriginalFilename() + "'");
 
         } catch (IOException e) {
             e.printStackTrace();

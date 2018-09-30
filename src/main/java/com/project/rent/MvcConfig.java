@@ -66,31 +66,4 @@ public class MvcConfig implements WebMvcConfigurer { //siin määrame ära oad
         return bCryptPasswordEncoder;
     }
 
-    /*@Bean
-    public ResourceBundleMessageSource messageSource() {
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-        messageSource.setBasename("Messages");
-        return messageSource;
-    }*/
-
-   /* @Bean
-    public FilterRegistrationBean oauth2ClientFilterRegistration(
-            OAuth2ClientContextFilter filter) {
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(filter);
-        registration.setOrder(-100);
-        return registration;
-    }*/
-
-
-  /*  @Override
-    public void addViewControllers(ViewControllerRegistry registry) {
-        //registry.addViewController("/index").setViewName("index");
-        //registry.addViewController("/").setViewName("index");
-        registry.addViewController("/profiil").setViewName("profiil");
-        registry.addViewController("/rentimine").setViewName("rentimine");
-        //registry.addViewController("/registreeri").setViewName("registreeri");
-        registry.addViewController("/statistika").setViewName("statistika");
-    }*/
-
 }

@@ -3,7 +3,6 @@ package com.project.rent.controller;
 import com.project.rent.model.User;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -19,9 +18,6 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
 
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private JavaMailSender mailSender;
 
     @RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
     public ModelAndView login(){
@@ -61,15 +57,6 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
             modelAndView.setViewName("registreeri");
         } else {
             userService.saveUser(user);
-            /*String recipientAddress = user.getEmail();
-            String subject = "Registreerimise kinnitus";
-            String message = "Tere, "+user.getName()+"Olete registreerinud kasutaja keskonnas Rent.Me kasutajanimega "+user.getUsername();
-
-            SimpleMailMessage email = new SimpleMailMessage();
-            email.setTo(recipientAddress);
-            email.setSubject(subject);
-            email.setText(message);
-            mailSender.send(email);*/
             System.out.println("kasutaja salvestatud");
             modelAndView.addObject("successMessage", "Kasutaja on registreeritud!");
             modelAndView.addObject("user", new User()); //et saaks uue kasutaja registreerida

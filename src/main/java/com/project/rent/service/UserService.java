@@ -48,13 +48,11 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
         existingUser.setLastName(user.getLastName());
 
         String location = user.getLocation();
-        System.out.println(location);
         if(user.getLocation() != null) {
             existingUser.setLocation(location);
         }
 
         String telephone = user.getTelephone();
-        System.out.println(telephone);
         if(telephone != null) {
             existingUser.setTelephone(telephone);
         }
@@ -63,12 +61,12 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
         userRepository.save(existingUser);
     }
 
-    public void saveAvatar(String avatarName, User user) {
+    public void saveAvatar(String avatarName, User user) { // Kasutaja konto avatari nime salvestamine
         user.setAvatarName(avatarName);
         userRepository.save(user);
     }
 
-    public void saveActive(int value, User user) {
+    public void saveActive(int value, User user) { // Kasutaja konto aktiveerimine/deaktiveerimine
         user.setActive(value);
         userRepository.save(user);
     }
