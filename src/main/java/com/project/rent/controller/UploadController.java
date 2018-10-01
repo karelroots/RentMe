@@ -14,7 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Random;
 
 @Controller
 public class UploadController {
@@ -23,14 +22,13 @@ public class UploadController {
     UserService userService;
 
     // Üleslaetava faili kataloog
-    //private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"\\src\\main\\webapp\\resources\\avatars\\"; //TESTSYSTEM
-    private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/avatars/"; //DEPLOYMENT
+    private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"/src/main/webapp/resources/avatars/"; //TESTSYSTEM
+    //private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/avatars/"; //DEPLOYMENT
 
     @PostMapping("profiil/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
-        Random rand = new Random();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
         String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
@@ -43,7 +41,7 @@ public class UploadController {
 
             if(filetype.equals("jpg") || filetype.equals("png")) {
                 byte[] bytes = file.getBytes();
-                String failinimi = file.getOriginalFilename()+rand.nextInt();
+                String failinimi = userService.findUserByEmail(auth.getName()).getUsername()+"."+filetype;
                 Path path = Paths.get(UPLOADED_FOLDER+failinimi);
                 Files.write(path, bytes);
                 userService.saveAvatar(failinimi, userService.findUserByEmail(auth.getName())); // salvestame kasutaja avatari info andmebaasi
