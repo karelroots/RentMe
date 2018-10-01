@@ -39,13 +39,21 @@ public class LoginController { //siin töötavad meetodid, mis kuvavad konkreets
     @RequestMapping(value = "/registreeri", method = RequestMethod.POST)
     public ModelAndView createNewUser(@Valid User user, BindingResult bindingResult) {
         ModelAndView modelAndView = new ModelAndView();
-        User userExists = userService.findUserByEmail(user.getEmail());
+        User emailExists = userService.findUserByEmail(user.getEmail());
+        User userExists = userService.findUserByUsername(user.getUsername());
 
-        if (userExists != null) {
+        if (emailExists != null) {
             bindingResult
                     .rejectValue("email", "error.user",
                             "Selle e-mailiga on juba kasutaja registreeritud!");
             modelAndView.addObject("emailError", "Selle e-mailiga on juba kasutaja registreeritud!");
+            System.out.println("email exists");
+        }
+        if (userExists != null) {
+            bindingResult
+                    .rejectValue("username", "error.user",
+                            "Selle kasutajanimega on juba kasutaja registreeritud!");
+            modelAndView.addObject("usernameError", "Selle kasutajanimega on juba kasutaja registreeritud!");
             System.out.println("user exists");
         }
         if (bindingResult.hasErrors()) {

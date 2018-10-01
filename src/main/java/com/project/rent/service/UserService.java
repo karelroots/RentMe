@@ -32,6 +32,10 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
         return userRepository.findByEmail(email);
     }
 
+    public User findUserByUsername(String username) {
+        return userRepository.findByUsername(username);
+    }
+
     public void saveUser(User user) { //funktsioon, mis salvestab antud kasutaja andmed andmebaasi
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
         user.setActive(1);
@@ -42,8 +46,23 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
 
     public void updateUser(int userId, User user) { //funktsioon, mis uuendab kasutaja andmeid andmebaasis, kasutades html vormist võetud infot
         User existingUser = userRepository.findById(userId); //leiame olemasoleva kasutaja andmebaasis
+        List<User> allUsers = userRepository.findAll(); // kõikide kasutajte list
+
+        /*for(User u: allUsers) {
+           if(u.getEmail().equals(existingUser.getEmail())) {
+               allUsers.remove(u);
+           }
+        }*/
+
         existingUser.setPassword(bCryptPasswordEncoder.encode(user.getPassword())); //uuendame kõik andmed vastavalt uutele
         existingUser.setName(user.getName());
+
+        /*for(User u: allUsers) {
+            if(u.getEmail().equals(user.getEmail())) {
+                user.setEmail(existingUser.getEmail());
+            }
+        }*/
+
         existingUser.setEmail(user.getEmail());
         existingUser.setLastName(user.getLastName());
 
@@ -58,6 +77,7 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
         }
 
         existingUser.setUsername(user.getUsername());
+
         userRepository.save(existingUser);
     }
 
@@ -73,6 +93,10 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
 
     public List<User> getUserList() { // tagastame kõikide registreeritud kasutajate listi
         return userRepository.findAll();
+    }
+
+    public String getSum() {
+        return userRepository.findCount();
     }
 
 }

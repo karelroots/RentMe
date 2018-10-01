@@ -50,11 +50,10 @@ public class ProfiiliController {
             modelAndView.setViewName("profiil");
             this.userService.updateUser(originalId, user);
             System.out.println("save success");
-            modelAndView.addObject("user", user);
             modelAndView.addObject("successMessage", "Kasutaja andmed on muudetud!");
         }
 
-
+        modelAndView.addObject("user", originalUser);
         return modelAndView;
     }
 

@@ -1,8 +1,9 @@
-function submitRefresh() { // lehekülje refresh pärast mingit tegevust
+function submitRefresh(time) { // lehekülje refresh pärast mingit tegevust
 
         //location.reload(true);
-        setTimeout(function(){window.location.reload();},10);
+        setTimeout(function(){window.location.reload();},time);
 }
+
 
 function fallback() { // kasutame kohalikke resursse kui CDN failid pole kättesaadavad
         if (! $.fn.modal) {

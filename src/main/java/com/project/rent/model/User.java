@@ -15,12 +15,12 @@ public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "user_id")
+    @Column(name = "user_id", unique=true)
     private int id;
-    @Column(name = "username")
+    @Column(name = "username", unique=true)
     @NotEmpty(message = "*Please provide a user")
     private String username;
-    @Column(name = "email")
+    @Column(name = "email", unique=true)
     @Email(message = "*Please provide a valid Email")
     @NotEmpty(message = "*Please provide an email")
     private String email;

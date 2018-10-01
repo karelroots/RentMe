@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="et" xmlns="http://www.w3.org/1999/xhtml">
-<head onload="fallback();">
+<html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head onload="fallback();"> <!--CDN failide blokeerimisel käivitame javascripti, mis kasutab lokaalseid faile-->
     <title>Rent.me | Võta või paku rendile</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -9,10 +9,15 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="resources/funktsioonid.js"></script>
 </head>
-<body>
+<body th:object="${user}">
     <ul>
         <li><a href="/profiil">Kodu</a></li>
         <li><a href="rentimine">Rentimine</a></li>
+        <div th:with="isAdmin = ${user.isAdmin()}"> <!--näitame ainult administraatorile-->
+            <div th:if="${isAdmin}">
+                <li><a href="statistika">Statistika</a></li>
+            </div>
+        </div>
         <li id="logout"><a class="active" href="#logout">Logout</a></li>
     </ul>
 
@@ -23,14 +28,12 @@
         </div>
     </div>
 
-    <div class="container-fluid">
-        <footer class="page-footer font-small blue">
+    <footer class="page-footer font-small blue">
 
-            <div class="footer-copyright text-center py-2">© 2018 Copyright:
-                Rent Me OÜ
-            </div>
+        <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
+            Rent Me OÜ
+        </div>
 
-        </footer>
-    </div>
+    </footer>
 </body>
 </html>

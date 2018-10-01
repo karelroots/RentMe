@@ -24,35 +24,31 @@ public class UploadController {
     // Üleslaetava faili kataloog
     private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"\\src\\main\\webapp\\resources\\avatars\\"; //TESTSYSTEM
     //private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/avatars/"; //DEPLOYMENT
+
     @PostMapping("profiil/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
                                    RedirectAttributes redirectAttributes) {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
+        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("message", "Vali üleslaadimiseks fail");
             return "redirect:/profiil";
-        } else {
-            try {
-                System.out.println(file.getOriginalFilename());
-
-                String filetype = file.getOriginalFilename().split(".")[1].toLowerCase();
-                if(!filetype.equals("jpg") || !filetype.equals("png")) {
-                    redirectAttributes.addFlashAttribute("message", "Failiformaat peab olema JPG või PNG");
-                    return "redirect:/profiil";
-                }
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
         }
 
         try {
 
-            byte[] bytes = file.getBytes();
-            Path path = Paths.get(UPLOADED_FOLDER+ file.getOriginalFilename());
-            Files.write(path, bytes);
-            userService.saveAvatar(file.getOriginalFilename(), userService.findUserByEmail(auth.getName())); // salvestame kasutaja avatari info andmebaasi
+            if(filetype.equals("jpg") || filetype.equals("png")) {
+                byte[] bytes = file.getBytes();
+                Path path = Paths.get(UPLOADED_FOLDER+ file.getOriginalFilename());
+                Files.write(path, bytes);
+                userService.saveAvatar(file.getOriginalFilename(), userService.findUserByEmail(auth.getName())); // salvestame kasutaja avatari info andmebaasi
+            } else {
+                redirectAttributes.addFlashAttribute("failError", "Failiformaat peab olema JPG või PNG");
+                return "redirect:/profiil";
+            }
+
 
         } catch (IOException e) {
             e.printStackTrace();
