@@ -46,7 +46,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter { // siin määra
 
         http.
                 authorizeRequests()
-                .antMatchers("/").permitAll()
+                .antMatchers("/").permitAll() // nendele lehtedele pääsevad kõik ligi
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registreeri").permitAll()
                 .antMatchers("/profiil").hasAuthority("KASUTAJA")
