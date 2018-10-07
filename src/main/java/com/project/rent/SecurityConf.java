@@ -49,6 +49,7 @@ public class SecurityConf extends WebSecurityConfigurerAdapter { // siin määra
                 .antMatchers("/").permitAll()
                 .antMatchers("/login").permitAll()
                 .antMatchers("/registreeri").permitAll()
+                .antMatchers("/meist").permitAll()
                 .antMatchers("/profiil").hasAuthority("KASUTAJA")
                 .antMatchers("/statistika").hasAuthority("ADMIN")
                 .antMatchers("/rentimine").hasAuthority("KASUTAJA").anyRequest()

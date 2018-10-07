@@ -54,3 +54,8 @@ h3 {
 li#logout {
     float:right;
 }
+
+div#map_container{
+    width:600px;
+    height:500px;
+}

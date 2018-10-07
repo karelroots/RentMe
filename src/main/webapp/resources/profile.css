@@ -55,12 +55,3 @@ h3 {
 input#pic-sub {
     position:fixed;
 }
-
-img {
-    opacity: 1;
-    transition: opacity 0.3s;
-}
-
-img[src] {
-    opacity: 0;
-}

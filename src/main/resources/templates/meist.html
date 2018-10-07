@@ -1,15 +1,18 @@
 <!DOCTYPE html>
-<html lang="et" xmlns="http://www.w3.org/1999/xhtml">
+<html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head onload="fallback();">  <!--CDN failide blokeerimisel käivitame javascripti, mis kasutab lokaalseid faile-->
-    <title>Rent.me</title>
+    <title>Rent.me | Meist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="resources/style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="resources/jquery.min.js"></script>
     <script src="resources/funktsioonid.js"></script>
+    <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBVEwfGZyvRXrmm9apIpsWNVbvGQ7WGoDo"></script>
+    <script src="resources/googleMap.js"></script>
 </head>
-<body>
+<body th:onload="'loadMap()'">
 <ul>
     <li><a href="/login">Kodu</a></li>
     <li><a href="/meist">Meist</a></li>
@@ -18,10 +21,15 @@
 <div class="container">
     <div class="col-sm-4 mx-auto text-center"></div>
     <div class="col-sm-4 mx-auto text-center">
-        <h1>Rent.me</h1>
+        <h1>Meist</h1>
     </div>
 </div>
 
+<div class="container-fluid">
+    <div class="col-sm-4 mx-auto text-center"></div>
+    <div class="span8 col-sm-4 mx-auto text-center" id="map_container">
+    </div>
+</div>
 
 </body>
 </html>
