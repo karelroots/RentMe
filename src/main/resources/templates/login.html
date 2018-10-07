@@ -2,60 +2,67 @@
 <html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head onload="fallback();">  <!--CDN failide blokeerimisel käivitame javascripti, mis kasutab lokaalseid faile-->
     <title>Rent.me</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="resources/style.css" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="resources/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+          integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+            integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+            crossorigin="anonymous"></script>
     <script src="resources/funktsioonid.js"></script>
 </head>
 <body>
-    <ul>
-        <li><a href="/login">Kodu</a></li>
-        <li><a href="/meist">Meist</a></li>
-    </ul>
+<ul>
+    <li><a href="/login" th:text="#{login.home}">Kodu</a></li>
+    <li><a href="/meist" th:text="#{login.about}">Meist</a></li>
+</ul>
 
-    <div class="container">
-        <div class="col-sm-4 mx-auto text-center"></div>
-        <div class="col-sm-4 mx-auto text-center">
-            <h1>Rent.me</h1>
+<div class="container">
+    <div class="col-sm-4 mx-auto text-center"></div>
+    <div class="col-sm-4 mx-auto text-center">
+        <h1>Rent.me</h1>
+    </div>
+</div>
+
+<div class="container-fluid">
+
+    <form autocomplete="off" action="#" th:action="@{/login}" method="POST" class="form-signin">
+        <div class="form-group col-sm-4 mx-auto text-center"></div>
+        <div class="form-group col-sm-4">
+            <h3 class="form-signin-heading" th:text="#{login.login}">Logi sisse</h3>
+            <input type="text" id="email" name="email" th:placeholder="#{login.email}"
+                   class="form-control"/> <br/>
+            <input type="password" th:placeholder="#{login.password}"
+                   id="password" name="password" class="form-control"/> <br/>
+
+            <div class="error" align="center" th:if="${#httpServletRequest.getParameter('error') != null}">
+                <label th:text="#{login.invalidCredientials}"></label>
+            </div>
+            <div class="checkbox">
+                <label>
+                    <input type="checkbox" value="remember-me"> Jäta mind meelde
+                </label>
+            </div>
+            <button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Login"
+                    type="Submit" th:text="#{login.login}">
+            </button>
+            <a class="btn btn-md btn-primary btn-block mx-auto text-center" href="registreeri" role="button"
+               th:text="#{login.register}"></a>
+            <a class="btn btn-md btn-primary btn-block mx-auto text-center" href="/login/facebook" role="button"
+               th:text="#{login.facebook}"></a>
+
         </div>
+    </form>
+</div>
+
+<footer class="page-footer font-small blue">
+
+    <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
+        Rent Me OÜ
     </div>
 
-    <div class="container-fluid">
-
-        <form autocomplete="off" action="#" th:action="@{/login}" method="POST" class="form-signin">
-            <div class="form-group col-sm-4 mx-auto text-center"></div>
-                <div class="form-group col-sm-4">
-                    <h3 class="form-signin-heading">Logi sisse</h3>
-                    <input type="text" id="email" name="email"  th:placeholder="Email"
-                           class="form-control" /> <br/>
-                    <input type="password"  th:placeholder="Parool"
-                           id="password" name="password" class="form-control" /> <br />
-
-                    <div class="error" align="center" th:if="${#httpServletRequest.getParameter('error') != null}">
-                    <label>Selliste andmetega kasutajat ei eksisteeri</label>
-                    </div>
-                    <div class="checkbox">
-                        <label>
-                            <input type="checkbox" value="remember-me"> Jäta mind meelde
-                        </label>
-                    </div>
-                    <button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Login" type="Submit">Logi sisse</button>
-                    <a class="btn btn-md btn-primary btn-block mx-auto text-center" href="registreeri" role="button">Registreeri</a>
-                    <a class="btn btn-md btn-primary btn-block mx-auto text-center" href="/login/facebook" role="button">Facebook Login</a>
-
-                </div>
-        </form>
-    </div>
-
-    <footer class="page-footer font-small blue">
-
-        <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
-            Rent Me OÜ
-        </div>
-
-    </footer>
+</footer>
 
 </body>
 </html>
