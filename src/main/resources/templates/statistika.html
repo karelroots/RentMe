@@ -1,30 +1,40 @@
 <!DOCTYPE html>
 <html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head onload="fallback();"> <!--CDN failide blokeerimisel käivitame javascripti, mis kasutab lokaalseid faile-->
-    <title>Rent.me | Statistika</title>
+    <title th:text="#{stats.title}">Rent.me | Statistika</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="resources/style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="resources/funktsioonid.js"></script>
+    <script src="resources/languagePicker.js"></script>
 </head>
 <body th:object="${user}">
     <ul>
-        <li><a href="/profiil">Kodu</a></li>
-        <li><a href="rentimine">Rentimine</a></li>
+        <li><a href="profiil" th:text="#{menu.home}">Kodu</a></li>
+        <li><a href="rentimine" th:text="#{menu.rent}">Rentimine</a></li>
         <div th:with="isAdmin = ${user.isAdmin()}"> <!--näitame ainult administraatorile-->
             <div th:if="${isAdmin}">
-                <li><a href="statistika">Statistika</a></li>
+                <li><a href="statistika" th:text="#{menu.stats}">Statistika</a></li>
             </div>
         </div>
-        <li id="logout"><a class="active" href="/logout">Logout</a></li>
+
+        <li id="lang">
+            <select id="locales" class="selectpicker" data-style="btn-primary">
+                <option th:text="#{lang.pick}"></option>
+                <option value="ee" th:text="#{lang.ee}">Estonian</option>
+                <option value="en" th:text="#{lang.en}">English</option>
+            </select>
+        </li>
+        <li id="logout"><a class="active" href="/logout" th:text="#{menu.logout}">Logout</a></li>
     </ul>
 
     <div class="container">
         <div class="col-sm-4 mx-auto text-center"></div>
         <div class="col-sm-4 mx-auto text-center">
-            <h1>Statistika</h1>
+            <h1 th:text="#{stats.head}">Statistika</h1>
         </div>
     </div>
 
@@ -32,17 +42,17 @@
         <div class="row">
             <div class="panel panel-primary">
                 <div class="panel-heading">
-                    <h3 class="panel-title">Registreeritud Kasutajad</h3>
+                    <h3 class="panel-title" th:text="#{stats.users}">Registreeritud Kasutajad</h3>
                 </div>
                 <table class="table">
                     <thead>
                     <tr id="Pealkirjad">
                         <th>#</th>
-                        <th>Eesnimi</th>
-                        <th>Perenimi</th>
-                        <th>Kasutajanimi</th>
-                        <th>Email</th>
-                        <th>Aktiivne</th>
+                        <th th:text="#{profile.firstName}">Eesnimi</th>
+                        <th th:text="#{profile.lastName}">Perenimi</th>
+                        <th th:text="#{profile.userName}">Kasutajanimi</th>
+                        <th th:text="#{profile.email}">Email</th>
+                        <th th:text="#{stats.active}">Aktiivne</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -54,10 +64,10 @@
                         <td th:text="${user.email}">email@email.ee</td>
                         <td th:if="${user.active} == 1">Aktiveeritud</td>
                         <td th:if="${user.active} == 0">Deaktiveeritud</td>
-                        <td><button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Deactivate" type="Submit">Deaktiveeri</button></td>
+                        <td><button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
                     </tr>
                     <tr>
-                        <td>Kokku: <span th:text="${summa.getSumma()}"></span></td>
+                        <td th:text="#{stats.total(${summa.getSumma()})}">Kokku: </td>
                     </tr>
                     </tbody>
                 </table>

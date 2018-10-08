@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head onload="fallback();">  <!--CDN failide blokeerimisel käivitame javascripti, mis kasutab lokaalseid faile-->
-    <title>Rent.me | Meist</title>
+    <title th:text="#{title.about}">Rent.me | Meist</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="resources/style.css" />
@@ -11,25 +11,33 @@
     <script src="resources/funktsioonid.js"></script>
     <script async defer src="http://maps.googleapis.com/maps/api/js?key=AIzaSyBVEwfGZyvRXrmm9apIpsWNVbvGQ7WGoDo"></script>
     <script src="resources/googleMap.js"></script>
+    <script src="resources/languagePicker.js"></script>
 </head>
 <body th:onload="'loadMap()'">
-<ul>
-    <li><a href="/login">Kodu</a></li>
-    <li><a href="/meist">Meist</a></li>
-</ul>
+    <ul>
+        <li><a href="/login" th:text="#{menu.home}">Kodu</a></li>
+        <li><a href="/meist" th:text="#{menu.about}">Meist</a></li>
+        <li id="lang">
+            <select id="locales" class="selectpicker" data-style="btn-primary">
+                <option th:text="#{lang.pick}"></option>
+                <option value="ee" th:text="#{lang.ee}">Estonian</option>
+                <option value="en" th:text="#{lang.en}">English</option>
+            </select>
+        </li>
+    </ul>
 
-<div class="container">
-    <div class="col-sm-4 mx-auto text-center"></div>
-    <div class="col-sm-4 mx-auto text-center">
-        <h1>Meist</h1>
+    <div class="container">
+        <div class="col-sm-4 mx-auto text-center"></div>
+        <div class="col-sm-4 mx-auto text-center">
+            <h1 th:text="#{about.about}">Meist</h1>
+        </div>
     </div>
-</div>
 
-<div class="container-fluid">
-    <div class="col-sm-4 mx-auto text-center"></div>
-    <div class="span8 col-sm-4 mx-auto text-center" id="map_container">
+    <div class="container-fluid">
+        <div class="col-sm-4 mx-auto text-center"></div>
+        <div class="span8 col-sm-4 mx-auto text-center" id="map_container">
+        </div>
     </div>
-</div>
 
 </body>
 </html>

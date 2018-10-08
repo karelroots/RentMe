@@ -55,6 +55,10 @@ li#logout {
     float:right;
 }
 
+li#lang {
+    float:right;
+}
+
 div#map_container{
     width:600px;
     height:500px;

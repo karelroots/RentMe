@@ -1,17 +1,26 @@
 <!DOCTYPE html>
 <html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head onload="fallback();"> <!--CDN failide blokeerimisel käivitame javascripti, mis kasutab lokaalseid faile-->
-    <title>Rent.me | Registreeri</title>
+    <title th:text="#{title.register}">Rent.me | Registreeri</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="resources/style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="resources/funktsioonid.js"></script>
+    <script src="resources/languagePicker.js"></script>
 </head>
 <body>
     <ul>
-    <li><a href="/login">Kodu</a></li>
+        <li><a href="login" th:text="#{menu.home}">Kodu</a></li>
+        <li id="lang">
+            <select id="locales" class="selectpicker" data-style="btn-primary">
+                <option th:text="#{lang.pick}"></option>
+                <option value="ee" th:text="#{lang.ee}">Estonian</option>
+                <option value="en" th:text="#{lang.en}">English</option>
+            </select>
+        </li>
     </ul>
 
     <div class="container">
@@ -27,31 +36,31 @@
               th:object="${user}" method="post" class="form-horizontal">
             <div class="form-group col-sm-4 mx-auto text-center"></div>
             <div class="form-group col-sm-4">
-                <h3 class="form-signin-heading">Registreeri end kasutajaks</h3>
+                <h3 class="form-signin-heading" th:text="#{register.title}">Registreeri end kasutajaks</h3>
 
                 <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
                        class="validation-message"></label>
-                <input type="text" th:field="*{name}" class="form-control" placeholder="Eesnimi" required autofocus/>
+                <input type="text" th:field="*{name}" class="form-control" th:placeholder="#{profile.firstName}" required autofocus/>
 
                 <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}"
                        class="validation-message"></label>
-                <input type="text" th:field="*{lastName}" class="form-control" placeholder="Perenimi" required/>
+                <input type="text" th:field="*{lastName}" class="form-control" th:placeholder="#{profile.lastName}" required/>
 
                 <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}"
                        class="validation-message"></label>
-                <input type="text" th:field="*{username}" class="form-control" placeholder="Kasutajanimi" required/>
+                <input type="text" th:field="*{username}" class="form-control" th:placeholder="#{profile.userName}" required/>
 
                 <label	th:if="${#fields.hasErrors('email')}" th:errors="*{email}"
                           class="validation-message"></label>
-                <input type="text" th:field="*{email}" class="form-control" placeholder="E-maili aaddress" required/>
+                <input type="text" th:field="*{email}" class="form-control" th:placeholder="#{profile.email}" required/>
 
                 <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-                <input type="password" th:field="*{password}" class="form-control" placeholder="Parool" required />
+                <input type="password" th:field="*{password}" class="form-control" th:placeholder="#{profile.password}" required />
 
                 <!--<label th:if="${#fields.hasErrors('confirmPassword')}" th:errors="*{confirmPassword}" class="validation-message"></label>
                 <input type="password" th:field="*{confirmPassword}" class="form-control" placeholder="Parool (kinnita)" required>-->
 
-                <button class="btn btn-md btn-primary btn-block mx-auto text-center" type="submit">Saada</button>
+                <button class="btn btn-md btn-primary btn-block mx-auto text-center" type="submit" th:text="#{register.send}">Saada</button>
 
                 <span th:utext="${successMessage}"></span>
             </div>

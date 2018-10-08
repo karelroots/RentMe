@@ -1,31 +1,40 @@
 <!DOCTYPE html>
 <html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head onload="fallback();"> <!--Kui CDN failid pole kättesaadavad, siis kasutame lokaalseid faile-->
-    <title>Rent.me | Profiil</title>
+    <title th:text="#{title.profile}">Rent.me | Profiil</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="resources/style.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="resources/funktsioonid.js"></script>
+    <script src="resources/languagePicker.js"></script>
 </head>
 
 <body th:object="${user}">
     <ul>
-        <li><a href="#">Kodu</a></li>
-        <li><a href="rentimine">Rentimine</a></li>
+        <li><a href="#" th:text="#{menu.home}">Kodu</a></li>
+        <li><a href="rentimine" th:text="#{menu.rent}">Rentimine</a></li>
        <!--näitame ainult administraatorile-->
             <div th:if="*{isAdmin()}">
-                <li><a href="statistika">Statistika</a></li>
+                <li><a href="statistika" th:text="#{menu.stats}">Statistika</a></li>
             </div>
 
-        <li id="logout"><a class="active" href="/logout">Logout</a></li>
+        <li id="lang">
+            <select id="locales" class="selectpicker" data-style="btn-primary">
+                <option th:text="#{lang.pick}"></option>
+                <option value="ee" th:text="#{lang.ee}">Estonian</option>
+                <option value="en" th:text="#{lang.en}">English</option>
+            </select>
+        </li>
+        <li id="logout"><a class="active" href="/logout" th:text="#{menu.logout}">Logout</a></li>
     </ul>
 
     <div class="container">
         <div class="col-sm-4 mx-auto text-center"></div>
         <div class="col-sm-4 mx-auto text-center">
-            <h1>Kasutaja Profiil</h1>
+            <h1 th:text="#{profile.userProfile}">Kasutaja Profiil</h1>
         </div>
     </div>
 
@@ -42,27 +51,27 @@
 
                 <div class="text-center">
                     <img th:src="@{resources/avatars/{image}(image=*{avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/>
-                    <h6>Muuda profiilipilti</h6>
+                    <h6 th:text="#{profile.changeImage}">Muuda profiilipilti</h6>
                     <form class="form" action="profiil/upload" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" class="text-center center-block file-upload">
                         <label th:text="${failError}" class="validation-message"></label>
-                        <input type="submit" class="text-left" value="Salvesta" th:onsubmit="'submitRefresh(10);'" />
+                        <input type="submit" class="text-left" th:value="#{profile.save}" th:onsubmit="'submitRefresh(10);'" />
 
                     </form>
                 </div><br>
 
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">Kasutaja Statistika</div>
+                    <div class="panel-heading" th:text="#{profile.stats}">Kasutaja Statistika</div>
                     <div class="panel-body">
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>Pakkumisi: 0</td>
+                                    <td th:text="#{profile.offers}">Pakkumisi: 0</td>
                                     <!--<td th:text=""></td> Pakkumiste arv-->
                                 </tr>
                                 <tr>
-                                    <td>Soove: 0</td>
+                                    <td th:text="#{profile.wishes}">Soove: 0</td>
                                     <!--<td th:text=""></td> Soovide arv-->
                                 </tr>
                             </tbody>
@@ -80,7 +89,7 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="eesnimi">Eesnimi</label></h4>
+                            <h4><label for="eesnimi" th:text="#{profile.firstName}">Eesnimi</label></h4>
                             <label th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="validation-message"></label>
                             <input type="text" th:field="*{name}" class="form-control" id="eesnimi" th:placeholder="*{name}" required autofocus/>
                         </div>
@@ -88,7 +97,7 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="perenimi">Perenimi</label></h4>
+                            <h4><label for="perenimi" th:text="#{profile.lastName}">Perenimi</label></h4>
                             <label th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}" class="validation-message"></label>
                             <input type="text" th:field="*{lastName}" class="form-control" name="lastName" id="perenimi" th:placeholder="*{lastName}"  title="enter your last name if any." required>
                         </div>
@@ -97,7 +106,7 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="telefon">Telefon</label></h4>
+                            <h4><label for="telefon" th:text="#{profile.telephone}">Telefon</label></h4>
                             <label th:if="${#fields.hasErrors('telephone')}" th:errors="*{telephone}" class="validation-message"></label>
                             <input type="text" th:field="*{telephone}" class="form-control" name="phone" id="telefon" th:placeholder="*{telephone}" title="sisesta oma telefoni number" required>
                         </div>
@@ -106,7 +115,7 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="email">Email</label></h4>
+                            <h4><label for="email" th:text="#{profile.email}">Email</label></h4>
                             <label th:if="${#fields.hasErrors('email')}" th:errors="*{email}" class="validation-message"></label>
                             <input type="email" th:field="*{email}" class="form-control" name="email" id="email" th:placeholder="*{email}" title="lisa e-mail" required>
                         </div>
@@ -114,7 +123,7 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="email">Asukoht</label></h4>
+                            <h4><label for="location" th:text="#{profile.location}">Asukoht</label></h4>
                             <label th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="validation-message"></label>
                             <input type="text" th:field="*{location}" class="form-control" id="location" th:placeholder="*{location}" title="lisa asukoht" required>
                         </div>
@@ -123,16 +132,16 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="parool">Parool</label></h4>
+                            <h4><label for="parool" th:text="#{profile.password}">Parool</label></h4>
                             <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-                            <input type="password" th:field="*{password}" class="form-control" name="password" id="parool" placeholder="parool" title="sisesta parool" required>
+                            <input type="password" th:field="*{password}" class="form-control" name="password" id="parool" th:placeholder="#{profile.password}" title="sisesta parool" required>
                         </div>
                     </div>
 
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="username">Kasutajanimi</label></h4>
+                            <h4><label for="username" th:text="#{profile.userName}">Kasutajanimi</label></h4>
                             <label th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="validation-message"></label>
                             <input type="text" th:field="*{username}" class="form-control" id="username" th:placeholder="*{username}" title="lisa kasutajanimi" required>
                         </div>
@@ -141,9 +150,9 @@
                     <div class="form-group">
 
                         <div class="col-xs-6">
-                            <h4><label for="kinnitus">Parool (kinnitus)</label></h4>
+                            <h4><label for="kinnitus" th:text="#{profile.confirmPassword}">Parool (kinnitus)</label></h4>
                             <label th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="validation-message"></label>
-                            <input type="password" th:field="*{confirmPassword}" class="form-control" name="password2" id="kinnitus" placeholder="parooli kinnitus" title="kinnita parool" required>
+                            <input type="password" th:field="*{confirmPassword}" class="form-control" name="password2" id="kinnitus" th:placeholder="#{profile.confirmPassword}" title="kinnita parool" required>
                         </div>
                     </div>
 
@@ -152,8 +161,8 @@
                     <div class="form-group">
                         <div class="col-xs-12">
                             <br>
-                            <button class="btn btn-md btn-primary btn-block" type="submit"> Salvesta</button>
-                            <button class="btn btn-md btn-primary btn-block" type="reset"> Tühista</button>
+                            <button class="btn btn-md btn-primary btn-block" type="submit" th:text="#{profile.save}"> Salvesta</button>
+                            <button class="btn btn-md btn-primary btn-block" type="reset" th:text="#{profile.reset}"> Tühista</button>
                         </div>
                     </div>
                 </form>
