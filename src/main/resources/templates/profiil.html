@@ -10,6 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="resources/funktsioonid.js"></script>
     <script src="resources/languagePicker.js"></script>
+    <script src="resources/lazyLoad.js"></script>
 </head>
 
 <body th:object="${user}">
@@ -28,6 +29,7 @@
                 <option value="en" th:text="#{lang.en}">English</option>
             </select>
         </li>
+
         <li id="logout"><a class="active" href="/logout" th:text="#{menu.logout}">Logout</a></li>
     </ul>
 
@@ -50,7 +52,7 @@
 
 
                 <div class="text-center">
-                    <img th:src="@{resources/avatars/{image}(image=*{avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/>
+                    <img th:src="@{resources/loader.gif}" th:onloadeddata="@{resources/avatars/{image}(image=*{avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/>
                     <h6 th:text="#{profile.changeImage}">Muuda profiilipilti</h6>
                     <form class="form" action="profiil/upload" method="post" enctype="multipart/form-data">
                         <input type="file" name="file" class="text-center center-block file-upload">
