@@ -17,7 +17,7 @@ import org.springframework.stereotype.Repository;
 
 @Slf4j
 @Repository
-public class LoggingInMemoryHttpTraceRepository extends InMemoryHttpTraceRepository {
+public class LoggingService extends InMemoryHttpTraceRepository {
 
     @Autowired
     UserRepository userRepository;
@@ -29,9 +29,6 @@ public class LoggingInMemoryHttpTraceRepository extends InMemoryHttpTraceReposit
     @Override
     public void add(HttpTrace trace) {
         super.add(trace);
-        //log.info("Trace:" + ToStringBuilder.reflectionToString(trace));
-        //log.info("Request:" + ToStringBuilder.reflectionToString(trace.getRequest()));
-        //log.info("Response:" + ToStringBuilder.reflectionToString(trace.getResponse()));
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
@@ -43,19 +40,15 @@ public class LoggingInMemoryHttpTraceRepository extends InMemoryHttpTraceReposit
         if (user != null && !page.contains(".")) {
             UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser();
             UserLog userLog = new UserLog();
-            System.out.println(trace.getRequest().getHeaders().get("user-agent").get(0));
-            System.out.println(trace.getRequest().getRemoteAddress());
-            System.out.println(trace.getRequest().getUri().getPath());
-            System.out.println(user);
 
             ReadableUserAgent agent = parser.parse(rq.getHeaders().get("user-agent").get(0));
             String name = agent.getName();
             VersionNumber version = agent.getVersionNumber();
-
-            System.out.println(name + "/" + version.toVersionString());
+            String osName = agent.getOperatingSystem().getName();
+            String osVersion = agent.getOperatingSystem().getVersionNumber().toVersionString();
 
             userLog.setUserId(userRepository.findByEmail(user).getId()); // leiame sellise e-mailiga kasutaja id ja loggime
-            userLog.setIp(rq.getRemoteAddress()); // loggime kasutaja ip
+            userLog.setOs(osName+" "+osVersion); // loggime kasutaja operatsiooni süsteemi
             userLog.setLandingPage(rq.getUri().getPath()); // loggime landing page'i
             userLog.setBrowser(name + "/" + version.toVersionString()); // loggime kasutaja brauseri
 

@@ -7,7 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserLogRepository extends JpaRepository<UserLog, Long> {
     UserLog findUserLogById(int id);
-    UserLog findUserLogByIp(String ip);
     UserLog findUserLogByUserId(int id);
 
 }

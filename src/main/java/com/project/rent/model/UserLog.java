@@ -21,8 +21,8 @@ public class UserLog {
     @Column(name = "user_id")
     private int userId;
 
-    @Column(name = "ip")
-    private String ip;
+    @Column(name = "os")
+    private String os;
 
     @Column(name = "landing_page")
     private String landingPage;
