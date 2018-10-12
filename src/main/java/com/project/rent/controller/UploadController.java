@@ -22,8 +22,8 @@ public class UploadController {
     UserService userService;
 
     // Üleslaetava faili kataloog
-    //private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"/src/main/webapp/resources/avatars/"; //TESTSYSTEM
-    private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/avatars/"; //DEPLOYMENT
+    private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"/src/main/webapp/resources/avatars/"; //TESTSYSTEM
+    //private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/avatars/"; //DEPLOYMENT
 
     @PostMapping("profiil/upload")
     public String singleFileUpload(@RequestParam("file") MultipartFile file,
