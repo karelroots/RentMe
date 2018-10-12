@@ -13,7 +13,7 @@
 </head>
 <body th:object="${user}">
     <ul>
-        <li><a href="profile" th:text="#{menu.home}">Kodu</a></li>
+        <li><a href="profiil" th:text="#{menu.home}">Kodu</a></li>
         <li><a href="rentimine" th:text="#{menu.rent}">Rentimine</a></li>
         <!--näitame ainult administraatorile-->
         <div th:if="*{isAdmin()}">
