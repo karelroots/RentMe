@@ -11,3 +11,7 @@ function fallback() { // kasutame kohalikke resursse kui CDN failid pole kättes
                 document.write('<link rel="stylesheet" href="/resources/bootstrap.min.css">');
         }
 }
+
+function formReset() { // tühjendame kasutaja täidetud väljad
+    document.getElementById("frmProfiil").reset();
+}
