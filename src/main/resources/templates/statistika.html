@@ -37,7 +37,7 @@
             <h1 class="text-center" th:text="#{stats.head}">Statistika</h1>
         </div>
         <div class="row">
-            <div class="col-md-6">
+            <div class="col-lg-12">
                 <div class="panel with-nav-tabs panel-primary">
                     <div class="panel-heading">
                         <ul class="nav nav-tabs">
@@ -68,7 +68,7 @@
                                         <td th:text="${user.email}">email@email.ee</td>
                                         <td th:if="${user.active} == 1">Aktiveeritud</td>
                                         <td th:if="${user.active} == 0">Deaktiveeritud</td>
-                                        <td><button class="hidden-md hidden-sm hidden-xs btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
+                                        <td><button class="hidden-md hidden-sm hidden-xs btn btn-sm btn-primary btn-block" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
                                     </tr>
                                     <tr>
                                         <td th:text="#{stats.total(${summa.getSumma()})}">Kokku: </td>

@@ -33,15 +33,13 @@
         <li id="logout"><a class="active" href="/logout" th:text="#{menu.logout}">Logout</a></li>
     </ul>
 
-    <div class="container">
-        <div class="col-sm-4 mx-auto text-center"></div>
-        <div class="col-sm-4 mx-auto text-center">
-            <h1 th:text="#{profile.userProfile}">Kasutaja Profiil</h1>
-        </div>
-    </div>
-
     <hr>
     <div class="container" id="cont1">
+
+        <div class="page-header">
+            <h1 class="text-center" th:text="#{profile.userProfile}">Kasutaja Profiil</h1>
+        </div>
+
         <div class="row">
             <div class="col-sm-10">
                 <h1><label th:text="*{username}"></label></h1>

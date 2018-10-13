@@ -26,18 +26,24 @@
         </li>
     </ul>
 
-    <div class="container">
-        <div class="col-sm-4 mx-auto text-center"></div>
-        <div class="col-sm-4 mx-auto text-center">
-            <h1 th:text="#{about.about}">Meist</h1>
-        </div>
-    </div>
-
     <div class="container-fluid">
+
+        <div class="page-header">
+            <h1 class="text-center" th:text="#{about.about}">Meist</h1>
+        </div>
+
         <div class="col-sm-4 mx-auto text-center"></div>
         <div class="span8 col-sm-4 mx-auto text-center" id="map_container">
         </div>
     </div>
+
+    <footer class="page-footer font-small blue">
+
+        <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
+            Rent Me OÜ
+        </div>
+
+    </footer>
 
 </body>
 </html>
