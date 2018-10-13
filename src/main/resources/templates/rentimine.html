@@ -31,11 +31,11 @@
     </ul>
 
     <div class="container">
-        <div class="page-header">
+        <div class="page-header col-xs-10 col-md-10 col-lg-10">
             <h1 class="text-center" th:text="#{rent.head}">Rentimine</h1>
         </div>
 
-        <div class="col-lg-12"> <!-----Siit algab konteineri veerg---->
+        <div class="col-xs-10 col-md-10 col-lg-10 mx-auto text-center"> <!-----Siit algab konteineri veerg---->
             <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
                 <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
                     <ul class="nav nav-tabs"> <!----tabide valiku list--->
@@ -43,6 +43,8 @@
                         <li><a href="#soovid" id="log-tab" data-toggle="tab" th:text="#{rent.wishes}">Soovid</a></li>
                         <li><a href="#sinu-pakkumised" id="sinu-pakkumised-tab" data-toggle="tab" th:text="#{rent.myoffers}">Sinu pakkumised</a></li>
                         <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu soovid</a></li>
+                        <li><a href="#lisa-pakkumine" id="lisa-pakkumine-tab" data-toggle="tab" th:text="#{rent.addoffer}">Lisa pakkumine</a></li>
+                        <li><a href="#lisa-soov" id="lisa-soov-tab" data-toggle="tab" th:text="#{rent.addwish}">Lisa soov</a></li>
                     </ul>
                 </div>
                 <div class="panel-body"> <!----paneeli keha--->
@@ -128,6 +130,101 @@
                                 </tr>
                                 </tbody>
                             </table>
+                        </div>
+                        <div class="tab-pane fade" id="lisa-pakkumine"> <!----lisa pakkumine tab---->
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center mx-auto">
+                                <form class="form" id="frmAddOffer" action="rentimine/addOffer" method="post" th:object="${offer}">
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="itemName" th:text="#{rent.itemName}">Eseme nimi</label></h4>
+                                            <label th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}" class="validation-message"></label>
+                                            <input type="text" th:field="*{itemName}" class="form-control" name="itemName" id="itemName" th:placeholder="#{rent.itemName}"  th:title="#{rent.enterItemName}" required autofocus>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="location" th:text="#{profile.location}">Asukoht</label></h4>
+                                            <label th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="validation-message"></label>
+                                            <input type="text" th:field="*{location}" class="form-control" id="location" th:placeholder="#{profile.location}" th:title="#{rent.enterLocation}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="price" th:text="#{rent.price}">Hind</label></h4>
+                                            <label th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="validation-message"></label>
+                                            <input type="email" th:field="*{price}" class="form-control" name="price" id="price" th:placeholder="#{rent.price}" th:title="#{rent.enterPrice}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="itemDesc" th:text="#{rent.description}">Eseme kirjeldus</label></h4>
+                                            <label th:if="${#fields.hasErrors('itemDesc')}" th:errors="*{itemDesc}" class="validation-message"></label>
+                                            <textarea rows="5" th:field="*{itemDesc}" class="form-control" name="itemDesc" id="itemDesc" th:placeholder="#{rent.description}" th:title="#{rent.enterDescription}" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div id="button-div" class="col-xs-10 mx-auto text-center">
+                                            <br>
+                                            <button class="btn btn-md btn-primary btn-block" type="submit" th:text="#{profile.save}"> Salvesta</button>
+                                            <button class="btn btn-md btn-primary btn-block" type="reset" th:onclick="'formReset();'" th:text="#{profile.reset}"> Tühista</button>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade" id="lisa-soov"> <!----lisa soov tab---->
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center mx-auto">
+                                <form class="form" id="frmAddWish" action="rentimine/addWish" method="post" th:object="${wish}">
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="itemName2" th:text="#{rent.itemName}">Eseme nimi</label></h4>
+                                            <label th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}" class="validation-message"></label>
+                                            <input type="text" th:field="*{itemName}" class="form-control" name="itemName" id="itemName2" th:placeholder="#{rent.itemName}"  th:title="#{rent.enterItemName}" required autofocus>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="location2" th:text="#{profile.location}">Asukoht</label></h4>
+                                            <label th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="validation-message"></label>
+                                            <input type="text" th:field="*{location}" class="form-control" id="location2" th:placeholder="#{profile.location}" th:title="#{rent.enterLocation}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="itemDesc2" th:text="#{rent.description}">Eseme kirjeldus</label></h4>
+                                            <label th:if="${#fields.hasErrors('itemDesc')}" th:errors="*{itemDesc}" class="validation-message"></label>
+                                            <textarea rows="5" th:field="*{itemDesc}" class="form-control" name="itemDesc" id="itemDesc2" th:placeholder="#{rent.description}" th:title="#{rent.enterDescription}" required></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div id="button-div2" class="col-xs-10 mx-auto text-center">
+                                            <br>
+                                            <button class="btn btn-md btn-primary btn-block" type="submit" th:text="#{profile.save}"> Salvesta</button>
+                                            <button class="btn btn-md btn-primary btn-block" type="reset" th:onclick="'formReset();'" th:text="#{profile.reset}"> Tühista</button>
+                                        </div>
+                                    </div>
+
+
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>

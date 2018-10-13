@@ -105,3 +105,7 @@ li#lang {
 .with-nav-tabs.panel-primary .nav-tabs > li.dropdown .dropdown-menu > .active > a:focus {
     background-color: #4a9fe9;
 }
+
+div#button-div {
+    text-align:center;
+}

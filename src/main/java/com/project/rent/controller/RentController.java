@@ -32,11 +32,15 @@ public class RentController {
         List<Wish> wishesList = rentService.getWishesList(); // saame kõikide soovide listi
         List<Offer> userOfferList = rentService.getUserOffersList(user.getId()); // saame autoriseeritud kasutaja pakkumised
         List<Wish> userWishList = rentService.getUserWishesList(user.getId()); // saame autoriseeritud kasutaja soovid
+        Offer offer = new Offer();
+        Wish wish = new Wish();
 
         modelAndView.addObject("offers", offerList);
         modelAndView.addObject("wishes", wishesList);
         modelAndView.addObject("myOffers", userOfferList);
         modelAndView.addObject("myWishes", userWishList);
+        modelAndView.addObject(offer);
+        modelAndView.addObject(wish);
         modelAndView.addObject(user);
         modelAndView.setViewName("rentimine");
         return modelAndView;
