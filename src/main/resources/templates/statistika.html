@@ -4,15 +4,15 @@
     <title th:text="#{stats.title}">Rent.me | Statistika</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="resources/style.css" />
+    <link rel="stylesheet" href="resources/statistika.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="resources/funktsioonid.js"></script>
     <script src="resources/languagePicker.js"></script>
 </head>
 <body th:object="${user}">
-    <ul>
+    <ul id="menu">
         <li><a href="profiil" th:text="#{menu.home}">Kodu</a></li>
         <li><a href="rentimine" th:text="#{menu.rent}">Rentimine</a></li>
         <div th:with="isAdmin = ${user.isAdmin()}"> <!--näitame ainult administraatorile-->
@@ -34,15 +34,15 @@
     <div class="container">
 
         <div class="page-header">
-            <h1 th:text="#{stats.head}">Statistika</h1>
+            <h1 class="text-center" th:text="#{stats.head}">Statistika</h1>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <div class="panel with-nav-tabs panel-primary">
                     <div class="panel-heading">
                         <ul class="nav nav-tabs">
-                            <li class="active"><a href="#users" data-toggle="tab" th:text="#{stats.users}">Kasutajad</a></li>
-                            <li><a href="#log" data-toggle="tab">Logi</a></li>
+                            <li class="active"><a href="#users" id="users-tab" data-toggle="tab" th:text="#{stats.users}">Kasutajad</a></li>
+                            <li><a href="#log" id="log-tab" data-toggle="tab" th:text="#{stats.log}">Logi</a></li>
                         </ul>
                     </div>
                     <div class="panel-body">
@@ -68,7 +68,7 @@
                                         <td th:text="${user.email}">email@email.ee</td>
                                         <td th:if="${user.active} == 1">Aktiveeritud</td>
                                         <td th:if="${user.active} == 0">Deaktiveeritud</td>
-                                        <td><button class="btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
+                                        <td><button class="hidden-md hidden-sm hidden-xs btn btn-md btn-primary btn-block mx-auto text-center" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
                                     </tr>
                                     <tr>
                                         <td th:text="#{stats.total(${summa.getSumma()})}">Kokku: </td>
@@ -76,7 +76,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab-pane fade" id="log">Primary 2</div>
+                            <div class="tab-pane fade" id="log">Siin on logid</div>
                         </div>
                     </div>
                 </div>
