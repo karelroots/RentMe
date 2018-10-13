@@ -31,11 +31,11 @@
     </ul>
 
     <div class="container">
-        <div class="page-header col-xs-10 col-md-10 col-lg-10">
+        <div class="page-header col-xs-10 col-sm-10 col-md-10 col-lg-10">
             <h1 class="text-center" th:text="#{rent.head}">Rentimine</h1>
         </div>
 
-        <div class="col-xs-10 col-md-10 col-lg-10 mx-auto text-center"> <!-----Siit algab konteineri veerg---->
+        <div class="col-xs-12 col-sm-12 col-lg-10"> <!-----Siit algab konteineri veerg---->
             <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
                 <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
                     <ul class="nav nav-tabs"> <!----tabide valiku list--->
@@ -52,7 +52,7 @@
                         <div class="tab-pane fade in active" id="pakkumised"> <!--pakkumiste tab-->
                             <table class="table"> <!--tabeli tekitamine-->
                                 <thead> <!----tabeli päis---->
-                                <tr id="offer-head">
+                                <tr id="offer-head" class="text-center">
                                     <th th:text="#{rent.dateTime}">Postitamise aeg</th>
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.userName}">Kasutajanimi</th>
@@ -101,13 +101,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
+                                <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
                                 <tr th:each="offer : ${myOffers}"> <!--kuvame kõik kasutaja soovid soovide list objektist-->
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
-                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button></td>
+                                    <td>
+                                        <input type="hidden" name="id" th:value="${offer.id}" />
+                                        <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button>
+                                    </td>
                                 </tr>
+                                </form>
                                 </tbody>
                             </table>
                         </div>
@@ -126,14 +131,19 @@
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
-                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button></td>
+                                    <td>
+                                        <form class="form" action="rentimine/removeWish" method="post">
+                                            <input type="hidden" name="id" th:value="${wish.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade" id="lisa-pakkumine"> <!----lisa pakkumine tab---->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center mx-auto">
-                                <form class="form" id="frmAddOffer" action="rentimine/addOffer" method="post" th:object="${offer}">
+                                <form class="form" id="frmAddOffer" th:action="@{rentimine/addOffer}" method="post" th:object="${offer}">
 
                                     <div class="form-group">
 
@@ -158,7 +168,7 @@
                                         <div class="col-xs-10">
                                             <h4><label for="price" th:text="#{rent.price}">Hind</label></h4>
                                             <label th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="validation-message"></label>
-                                            <input type="email" th:field="*{price}" class="form-control" name="price" id="price" th:placeholder="#{rent.price}" th:title="#{rent.enterPrice}" required>
+                                            <input type="text" th:field="*{price}" class="form-control" name="price" id="price" th:placeholder="#{rent.price}" th:title="#{rent.enterPrice}" required>
                                         </div>
                                     </div>
 
@@ -184,8 +194,8 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="lisa-soov"> <!----lisa soov tab---->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center mx-auto">
-                                <form class="form" id="frmAddWish" action="rentimine/addWish" method="post" th:object="${wish}">
+                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 mx-auto text-center">
+                                <form class="form" id="frmAddWish" th:action="@{rentimine/addWish}" method="post" th:object="${wish}">
 
                                     <div class="form-group">
 

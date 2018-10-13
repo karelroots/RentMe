@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface WishRepository extends JpaRepository<Wish, Integer> { // siin asuvad meetodid, mille abil saame Role tabelist andmeid otsida
     Wish findByUserId(int id);
     Wish findByItemName(String name);
+    Wish findWishById(int id);
 
 }

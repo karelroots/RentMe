@@ -28,8 +28,16 @@ public class RentService {
         return offerRepository.findByUserId(id);
     }
 
+    public Offer findOfferById(int id) {
+        return offerRepository.findOfferById(id);
+    }
+
     public Wish findWishByUserId(int id) {
         return wishRepository.findByUserId(id);
+    }
+
+    public Wish findWishById(int id) {
+        return wishRepository.findWishById(id);
     }
 
     public void saveOffer(Offer offer) {
@@ -38,6 +46,14 @@ public class RentService {
 
     public void saveWish(Wish wish) {
         wishRepository.save(wish);
+    }
+
+    public void removeOffer(Offer offer) {
+        offerRepository.delete(offer);
+    }
+
+    public void removeWish(Wish wish) {
+        wishRepository.delete(wish);
     }
 
     public List<Offer> getOffersList() {

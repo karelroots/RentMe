@@ -30,14 +30,14 @@ public class LoggingService extends InMemoryHttpTraceRepository {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if(auth != null) { // tegemist on autoriseeritud kasutajaga
+        if(auth != null && trace != null) { // tegemist on autoriseeritud kasutajaga
 
             HttpTrace.Request rq = trace.getRequest();
 
             String page = rq.getUri().getPath();
             String user = auth.getName();
 
-            if (!page.contains(".")) { // laetud leht on html
+            if (!page.contains(".") && !page.contains("#")) { // laetud leht on html ja pole postitamisega seotud
 
                 UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser(); // User Agent'i parsimiseks
                 UserLog userLog = new UserLog();

@@ -8,5 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface OfferRepository extends JpaRepository<Offer, Integer> { // siin asuvad meetodid, mille abil saame Role tabelist andmeid otsida
     Offer findByUserId(int id);
     Offer findByItemName(String name);
+    Offer findOfferById(int id);
 
 }
