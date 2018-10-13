@@ -31,25 +31,26 @@
         <li id="logout"><a class="active" href="/logout" th:text="#{menu.logout}">Logout</a></li>
     </ul>
 
-    <div class="container">
+    <div class="container"> <!---Kõige pealt peame asjad konteinerisse panema----->
 
-        <div class="page-header">
+        <div class="page-header"> <!--- siis lehele pealkirja tekitama-->
             <h1 class="text-center" th:text="#{stats.head}">Statistika</h1>
         </div>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="panel with-nav-tabs panel-primary">
-                    <div class="panel-heading">
-                        <ul class="nav nav-tabs">
+
+        <div class="row"> <!----Siit algab konteineri rida---->
+            <div class="col-lg-12"> <!-----Siit algab konteineri veerg---->
+                <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
+                    <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
+                        <ul class="nav nav-tabs"> <!----tabide valiku list--->
                             <li class="active"><a href="#users" id="users-tab" data-toggle="tab" th:text="#{stats.users}">Kasutajad</a></li>
                             <li><a href="#log" id="log-tab" data-toggle="tab" th:text="#{stats.log}">Logi</a></li>
                         </ul>
                     </div>
-                    <div class="panel-body">
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="users">
-                                <table class="table">
-                                    <thead>
+                    <div class="panel-body"> <!----paneeli keha--->
+                        <div class="tab-content"> <!----tabide sisu--->
+                            <div class="tab-pane fade in active" id="users"> <!--esimene kasutajte tab-->
+                                <table class="table"> <!--tabeli tekitamine-->
+                                    <thead> <!----tabeli päis---->
                                     <tr id="Pealkirjad">
                                         <th>#</th>
                                         <th th:text="#{profile.firstName}">Eesnimi</th>
@@ -59,8 +60,8 @@
                                         <th th:text="#{stats.active}">Aktiivne</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-                                    <tr th:each="user : ${users}">
+                                    <tbody> <!----tabeli keha---->
+                                    <tr th:each="user : ${users}"> <!--kuvame kõik kasutajad kasutajate list objektist-->
                                         <td th:text="${user.id}">1</td>
                                         <td th:text="${user.name}">Nimi</td>
                                         <td th:text="${user.lastName}">Perenimi</td>
@@ -70,13 +71,34 @@
                                         <td th:if="${user.active} == 0">Deaktiveeritud</td>
                                         <td><button class="hidden-md hidden-sm hidden-xs btn btn-sm btn-primary btn-block" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
                                     </tr>
-                                    <tr>
+                                    <tr> <!---eraldi real kasutajate koguarv--->
                                         <td th:text="#{stats.total(${summa.getSumma()})}">Kokku: </td>
                                     </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="tab-pane fade" id="log">Siin on logid</div>
+                            <div class="tab-pane fade" id="log"> <!----teine logi tab---->
+                                <table class="table">
+                                    <thead>
+                                    <tr id="Attribuudid">
+                                        <td th:text="#{log.time}">Kuupäev ja kellaaeg</td>
+                                        <td th:text="#{profile.userName}">Kasutajanimi</td>
+                                        <td th:text="#{log.landing}">Saabumisleht</td>
+                                        <td th:text="#{log.browser}">Lehitseja</td>
+                                        <td th:text="#{log.os}">Operatsioonisüsteem</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="log : ${logs}">
+                                        <td th:text="${log.datetime}">13.10.2018 15:15</td>
+                                        <td th:text="${log.username}">Kasutajanimi</td>
+                                        <td th:text="${log.landingPage}">Profiil</td>
+                                        <td th:text="${log.browser}">Chrome</td>
+                                        <td th:text="${log.os}">Windows</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -84,12 +106,12 @@
         </div>
     </div>
 
-    <footer class="page-footer font-small blue">
+<!--    <footer class="page-footer font-small blue">
 
         <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
             Rent Me OÜ
         </div>
 
-    </footer>
+    </footer>-->
 </body>
 </html>

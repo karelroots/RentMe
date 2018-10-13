@@ -12,6 +12,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDateTime;
+
 @Slf4j
 @Repository
 public class LoggingService extends InMemoryHttpTraceRepository {
@@ -36,6 +38,7 @@ public class LoggingService extends InMemoryHttpTraceRepository {
             String user = auth.getName();
 
             if (!page.contains(".")) { // laetud leht on html
+
                 UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser(); // User Agent'i parsimiseks
                 UserLog userLog = new UserLog();
 
@@ -49,6 +52,7 @@ public class LoggingService extends InMemoryHttpTraceRepository {
                 userLog.setOs(osName + " " + osVersion); // loggime kasutaja operatsiooni süsteemi
                 userLog.setLandingPage(rq.getUri().getPath()); // loggime landing page'i
                 userLog.setBrowser(browserName + "/" + browserVersion); // loggime kasutaja brauseri
+                userLog.setDatetime(LocalDateTime.now().toString()); // logime aja
 
                 statsService.saveLog(userLog);
 

@@ -2,6 +2,8 @@ package com.project.rent.controller;
 
 import com.project.rent.model.Summa;
 import com.project.rent.model.User;
+import com.project.rent.model.UserLog;
+import com.project.rent.service.StatsService;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -19,12 +21,17 @@ public class StatsController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StatsService statsService;
+
     @RequestMapping(value={"/statistika"}, method = RequestMethod.GET)
     public ModelAndView statistika(){ // statistika lehe kuvamine
 
         Summa summa = new Summa(userService.getSum()); // leiame kasutajate koguarvu
 
         List<User> userArrayList = userService.getUserList();
+
+        List<UserLog> userLogArrayList = statsService.getLastTenList(); // võtame viimased 10 logikirjet
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName()); //leiame kasutaja objekti
@@ -33,6 +40,7 @@ public class StatsController {
         modelAndView.addObject(user);
         modelAndView.addObject("users", userArrayList); // lisame kõikide kasutajate listi statistika lehele kasutamiseks
         modelAndView.addObject(summa); // lisame kasutajate arvu lehele objektina
+        modelAndView.addObject("logs", userLogArrayList); // lisame logide listi
         modelAndView.setViewName("statistika");
         return modelAndView;
     }
