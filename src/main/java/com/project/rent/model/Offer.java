@@ -32,4 +32,6 @@ public class Offer {
     @Column(name = "time")
     private String datetime;
 
+    private String userName;
+
 }

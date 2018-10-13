@@ -29,4 +29,6 @@ public class Wish {
     @Column(name = "time")
     private String datetime;
 
+    private String userName;
+
 }

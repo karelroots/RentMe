@@ -50,25 +50,20 @@
                         <div class="tab-pane fade in active" id="pakkumised"> <!--pakkumiste tab-->
                             <table class="table"> <!--tabeli tekitamine-->
                                 <thead> <!----tabeli päis---->
-                                <tr id="Pealkirjad">
-                                    <th>#</th>
-                                    <th th:text="#{profile.firstName}">Eesnimi</th>
-                                    <th th:text="#{profile.lastName}">Perenimi</th>
+                                <tr id="offer-head">
+                                    <th th:text="#{rent.dateTime}">Postitamise aeg</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.userName}">Kasutajanimi</th>
-                                    <th th:text="#{profile.email}">Email</th>
-                                    <th th:text="#{stats.active}">Aktiivne</th>
+                                    <th th:text="#{profile.location}">Asukoht</th>
                                 </tr>
                                 </thead>
                                 <tbody> <!----tabeli keha---->
-                                <tr th:each="user : ${users}"> <!--kuvame kõik kasutajad kasutajate list objektist-->
-                                    <td th:text="${user.id}">1</td>
-                                    <td th:text="${user.name}">Nimi</td>
-                                    <td th:text="${user.lastName}">Perenimi</td>
-                                    <td th:text="${user.username}">Kasutajanimi</td>
-                                    <td th:text="${user.email}">email@email.ee</td>
-                                    <td th:if="${user.active} == 1">Aktiveeritud</td>
-                                    <td th:if="${user.active} == 0">Deaktiveeritud</td>
-                                    <td><button class="hidden-md hidden-sm hidden-xs btn btn-sm btn-primary btn-block" name="Submit" value="Deactivate" type="Submit" th:text="#{stats.deactivate}">Deaktiveeri</button></td>
+                                <tr th:each="offer : ${offers}"> <!--kuvame kõik pakkumised pakkumiste list objektist-->
+                                    <td th:text="${offer.datetime}">13.10.2018</td>
+                                    <td th:text="${offer.itemName}">Saabas</td>
+                                    <td th:text="${offer.userName}">Kasutajanimi</td>
+                                    <td th:text="${offer.location}">Tartu</td>
+                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Rent" type="Submit" th:text="#{rent.rent}">Rendi</button></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -76,16 +71,63 @@
                         <div class="tab-pane fade" id="soovid"> <!----soovide tab---->
                             <table class="table">
                                 <thead>
+                                <tr id="wish-head">
+                                    <th th:text="#{rent.dateTime}">Postitamise aeg</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
+                                    <th th:text="#{profile.userName}">Kasutajanimi</th>
+                                    <th th:text="#{profile.location}">Asukoht</th>
+                                </tr>
                                 </thead>
                                 <tbody>
+                                <tr th:each="wish : ${wishes}"> <!--kuvame kõik soovid soovide list objektist-->
+                                    <td th:text="${wish.datetime}">13.10.2018</td>
+                                    <td th:text="${wish.itemName}">Saabas</td>
+                                    <td th:text="${wish.userName}">Kasutajanimi</td>
+                                    <td th:text="${wish.location}">Tartu</td>
+                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Offer" type="Submit" th:text="#{rent.offer}">Paku</button></td>
+                                </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade" id="sinu-pakkumised"> <!----sinu pakkumiste tab---->
-                            <table class="table"></table>
+                            <table class="table">
+                                <thead>
+                                <tr id="myoffer-head">
+                                    <th th:text="#{rent.dateTime}">Postitamise aeg</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
+                                    <th th:text="#{profile.location}">Asukoht</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="offer : ${myOffers}"> <!--kuvame kõik kasutaja soovid soovide list objektist-->
+                                    <td th:text="${offer.datetime}">13.10.2018</td>
+                                    <td th:text="${offer.itemName}">Saabas</td>
+                                    <td th:text="${offer.userName}">Kasutajanimi</td>
+                                    <td th:text="${offer.location}">Tartu</td>
+                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <div class="tab-pane fade" id="sinu-soovid"> <!----sinu soovide tab---->
-                            <table class="table"></table>
+                            <table class="table">
+                                <thead>
+                                <tr id="myWish-head">
+                                    <th th:text="#{rent.dateTime}">Postitamise aeg</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
+                                    <th th:text="#{profile.location}">Asukoht</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="wish : ${myWishes}"> <!--kuvame kõik kasutaja soovid soovide list objektist-->
+                                    <td th:text="${wish.datetime}">13.10.2018</td>
+                                    <td th:text="${wish.itemName}">Saabas</td>
+                                    <td th:text="${wish.userName}">Kasutajanimi</td>
+                                    <td th:text="${wish.location}">Tartu</td>
+                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button></td>
+                                </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
