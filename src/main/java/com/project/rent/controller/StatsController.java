@@ -1,8 +1,6 @@
 package com.project.rent.controller;
 
-import com.project.rent.model.Summa;
-import com.project.rent.model.User;
-import com.project.rent.model.UserLog;
+import com.project.rent.model.*;
 import com.project.rent.service.StatsService;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +34,18 @@ public class StatsController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName()); //leiame kasutaja objekti
 
+        List<Browser> topBrowsers = statsService.getTopBrowsers();
+        List<OpSys> topOpSystems = statsService.getTopOs();
+        List<Landing> topLandingPages = statsService.getTopLanding();
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(user);
         modelAndView.addObject("users", userArrayList); // lisame kõikide kasutajate listi statistika lehele kasutamiseks
         modelAndView.addObject(summa); // lisame kasutajate arvu lehele objektina
         modelAndView.addObject("logs", userLogArrayList); // lisame logide listi
+        modelAndView.addObject("browsers", topBrowsers);
+        modelAndView.addObject("opsys", topOpSystems);
+        modelAndView.addObject("pages", topLandingPages);
         modelAndView.setViewName("statistika");
         return modelAndView;
     }
