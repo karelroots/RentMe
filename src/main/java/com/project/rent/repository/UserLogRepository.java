@@ -33,12 +33,12 @@ public interface UserLogRepository extends JpaRepository<UserLog, Long> {
     List<String> findOpSystems();
 
     @Query(
-            value = "SELECT count(landing_page) from userLanding where landing_page = ?1", // userLanding on andmebaasis vaade
+            value = "SELECT count(landing_page) from landingpages where landing_page = ?1", // landingpages on andmebaasis vaade
             nativeQuery = true)
     int findLandingCount(String landingPage);
 
     @Query(
-            value ="SELECT DISTINCT landing_page FROM userLanding",
+            value ="SELECT DISTINCT landing_page FROM landingpages",
             nativeQuery = true)
     List<String> findLandingPages();
 
