@@ -44,6 +44,9 @@
                         <ul class="nav nav-tabs"> <!----tabide valiku list--->
                             <li class="active"><a href="#users" id="users-tab" data-toggle="tab" th:text="#{stats.users}">Kasutajad</a></li>
                             <li><a href="#log" id="log-tab" data-toggle="tab" th:text="#{stats.log}">Logi</a></li>
+                            <li><a href="#top-browser" id="topBrowser-tab" data-toggle="tab" th:text="#{stats.topBrowser}">Statistika</a></li>
+                            <li><a href="#top-os" id="topOs-tab" data-toggle="tab" th:text="#{stats.topOs}">Statistika</a></li>
+                            <li><a href="#top-landing" id="topLanding-tab" data-toggle="tab" th:text="#{stats.topLanding}">Statistika</a></li>
                         </ul>
                     </div>
                     <div class="panel-body"> <!----paneeli keha--->
@@ -81,11 +84,11 @@
                                 <table class="table">
                                     <thead>
                                     <tr id="Attribuudid">
-                                        <td th:text="#{log.time}">Kuupäev ja kellaaeg</td>
-                                        <td th:text="#{profile.userName}">Kasutajanimi</td>
-                                        <td th:text="#{log.landing}">Saabumisleht</td>
-                                        <td th:text="#{log.browser}">Lehitseja</td>
-                                        <td th:text="#{log.os}">Operatsioonisüsteem</td>
+                                        <th th:text="#{log.time}">Kuupäev ja kellaaeg</th>
+                                        <th th:text="#{profile.userName}">Kasutajanimi</th>
+                                        <th th:text="#{log.landing}">Saabumisleht</th>
+                                        <th th:text="#{log.browser}">Lehitseja</th>
+                                        <th th:text="#{log.os}">Operatsioonisüsteem</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -95,6 +98,54 @@
                                         <td th:text="${log.landingPage}">Profiil</td>
                                         <td th:text="${log.browser}">Chrome</td>
                                         <td th:text="${log.os}">Windows</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="top-browser"> <!----kolmas statistika tab---->
+                                <table class="table">
+                                    <thead>
+                                    <tr id="Attribuudid2">
+                                        <th th:text="#{log.browser}">>Brauser</th>
+                                        <th th:text="#{stats.count}">>Arv</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="browser : ${browsers}">
+                                        <td th:text="${browser.name}">Chrome</td>
+                                        <td th:text="${browser.count}">10</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="top-os"> <!----neljas statistika tab---->
+                                <table class="table">
+                                    <thead>
+                                    <tr id="Attribuudid3">
+                                        <th th:text="#{log.os}">Operatsioonisüsteem</th>
+                                        <th th:text="#{stats.count}">Arv</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="os : ${opsys}">
+                                        <td th:text="${os.name}">Windows</td>
+                                        <td th:text="${os.count}">10</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="tab-pane fade" id="top-landing"> <!----viies statistika tab---->
+                                <table class="table">
+                                    <thead>
+                                    <tr id="Attribuudid4">
+                                        <th th:text="#{log.landing}">Leht</th>
+                                        <th th:text="#{stats.count}">Arv</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr th:each="landing : ${pages}">
+                                        <td th:text="${landing.name}">/profiil</td>
+                                        <td th:text="${landing.count}">10</td>
                                     </tr>
                                     </tbody>
                                 </table>

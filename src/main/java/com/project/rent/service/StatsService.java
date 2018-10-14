@@ -1,5 +1,8 @@
 package com.project.rent.service;
 
+import com.project.rent.model.Browser;
+import com.project.rent.model.Landing;
+import com.project.rent.model.OpSys;
 import com.project.rent.model.UserLog;
 import com.project.rent.repository.UserLogRepository;
 import com.project.rent.repository.UserRepository;
@@ -57,5 +60,41 @@ public class StatsService {
         }
 
         return lastTen; // tagastame ainult viimased 10
+    }
+
+    public List<Browser> getTopBrowsers() {
+        List<String> browsers = userLogRepository.findBrowsers();
+        List<Browser> topBrowsers = new ArrayList<>();
+
+        for(String browser:browsers) {
+            topBrowsers.add(new Browser(browser, userLogRepository.findBrowserCount(browser)));
+        }
+        Collections.sort(topBrowsers);
+
+        return topBrowsers;
+    }
+
+    public List<OpSys> getTopOs() {
+        List<String> opsystems = userLogRepository.findOpSystems();
+        List<OpSys> topOs = new ArrayList<>();
+
+        for(String os:opsystems) {
+            topOs.add(new OpSys(os, userLogRepository.findOpSystemCount(os)));
+        }
+        Collections.sort(topOs);
+
+        return topOs;
+    }
+
+    public List<Landing> getTopLanding() {
+        List<String> landingPages = userLogRepository.findLandingPages();
+        List<Landing> topLanding = new ArrayList<>();
+
+        for(String landing:landingPages) {
+            topLanding.add(new Landing(landing, userLogRepository.findLandingCount(landing)));
+        }
+        Collections.sort(topLanding);
+
+        return topLanding;
     }
 }
