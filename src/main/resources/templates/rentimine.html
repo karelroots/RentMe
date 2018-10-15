@@ -106,7 +106,6 @@
                                 <tr th:each="offer : ${myOffers}"> <!--kuvame kõik kasutaja soovid soovide list objektist-->
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
-                                    <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
@@ -131,7 +130,6 @@
                                 <tr th:each="wish : ${myWishes}"> <!--kuvame kõik kasutaja soovid soovide list objektist-->
                                     <td th:text="${wish.datetime}">13.10.2018</td>
                                     <td th:text="${wish.itemName}">Saabas</td>
-                                    <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeWish}" method="post">
