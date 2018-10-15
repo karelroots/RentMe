@@ -57,6 +57,7 @@
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.userName}">Kasutajanimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.price}">Asukoht</th>
                                 </tr>
                                 </thead>
                                 <tbody> <!----tabeli keha---->
@@ -65,6 +66,7 @@
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
+                                    <td th:text="${offer.price}">12345</td>
                                     <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Rent" type="Submit" th:text="#{rent.rent}">Rendi</button></td>
                                 </tr>
                                 </tbody>
@@ -101,18 +103,18 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
                                 <tr th:each="offer : ${myOffers}"> <!--kuvame kõik kasutaja soovid soovide list objektist-->
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td>
-                                        <input type="hidden" name="id" th:value="${offer.id}" />
-                                        <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button>
+                                        <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
+                                            <input type="hidden" name="id" th:value="${offer.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button>
+                                        </form>
                                     </td>
                                 </tr>
-                                </form>
                                 </tbody>
                             </table>
                         </div>
@@ -132,7 +134,7 @@
                                     <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
                                     <td>
-                                        <form class="form" action="rentimine/removeWish" method="post">
+                                        <form class="form" th:action="@{rentimine/removeWish}" method="post">
                                             <input type="hidden" name="id" th:value="${wish.id}" />
                                             <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button>
                                         </form>

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("userService")
 public class UserService { // meetodid kasutajatega toimingute tegemiseks
@@ -35,6 +36,8 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
     public User findUserByUsername(String username) {
         return userRepository.findByUsername(username);
     }
+
+    public User findUserById(int id) { return userRepository.findById(id); }
 
     public void saveUser(User user) { //funktsioon, mis salvestab antud kasutaja andmed andmebaasi
         user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
@@ -75,7 +78,35 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
 
     public void saveActive(int value, User user) { // Kasutaja konto aktiveerimine/deaktiveerimine
         user.setActive(value);
-        userRepository.save(user);
+
+        if(value == 0) {
+            userRepository.save(removeRole(user, "KASUTAJA"));
+        } else {
+            userRepository.save(addRole(user, "KASUTAJA"));
+        }
+    }
+
+    private User removeRole(User user, String roleName) { // kasutajalt rolli eemaldamine
+        Set<Role> roles = user.getRoles();
+
+        for(Role role:roles) {
+            if (role.getRole().equals(roleName)) {
+                roles.remove(role);
+            }
+        }
+
+        user.setRoles(roles);
+
+        return user;
+    }
+
+    private User addRole(User user, String roleName) { // kasutajale uue rolli lisamine
+        Set<Role> roles = user.getRoles();
+
+        roles.add(roleRepository.findByRole("KASUTAJA"));
+        user.setRoles(roles);
+
+        return user;
     }
 
     public List<User> getUserList() { // tagastame kõikide registreeritud kasutajate listi

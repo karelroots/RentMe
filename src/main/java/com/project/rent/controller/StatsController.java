@@ -50,12 +50,11 @@ public class StatsController {
         return modelAndView;
     }
 
-    @RequestMapping(value={"/statistika"}, method = RequestMethod.POST)
-    public ModelAndView statistika(User user, int value){ // kasutajate aktiveerimine/deaktiveerimine
+    @RequestMapping(value={"/statistika/toggleActive"}, method = RequestMethod.POST)
+    public String statistika(int userId, int active){ // kasutajate aktiveerimine/deaktiveerimine
 
-       ModelAndView modelAndView = new ModelAndView();
-       userService.saveActive(value, user);
+        userService.saveActive(active, userService.findUserById(userId));
 
-        return modelAndView;
+        return "redirect:/statistika";
     }
 }
