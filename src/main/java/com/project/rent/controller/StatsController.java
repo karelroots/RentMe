@@ -57,4 +57,13 @@ public class StatsController {
 
         return "redirect:/statistika";
     }
+
+    @RequestMapping("/statistika/")
+    public void handleRequest() {
+        try {
+            System.out.println("ei ole exceptionit");
+        } catch(RuntimeException ex) {
+            throw ex;
+        }
+    }
 }

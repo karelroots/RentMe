@@ -70,8 +70,8 @@
                                         <td th:text="${user.lastName}">Perenimi</td>
                                         <td th:text="${user.username}">Kasutajanimi</td>
                                         <td th:text="${user.email}">email@email.ee</td>
-                                        <td th:if="${user.active} == 1">Aktiveeritud</td>
-                                        <td th:if="${user.active} == 0">Deaktiveeritud</td>
+                                        <td th:if="${user.active} == 1" th:text="#{stats.activated}">Aktiveeritud</td>
+                                        <td th:if="${user.active} == 0" th:text="#{stats.deactivated}">Deaktiveeritud</td>
                                         <td th:if="${user.active} == 1">
                                             <form class="form" th:action="@{statistika/toggleActive/}" method="post">
                                                 <input type="hidden" name="active" th:value=0 />
