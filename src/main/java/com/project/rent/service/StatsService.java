@@ -4,8 +4,10 @@ import com.project.rent.model.Browser;
 import com.project.rent.model.Landing;
 import com.project.rent.model.OpSys;
 import com.project.rent.model.UserLog;
+import com.project.rent.repository.OfferRepository;
 import com.project.rent.repository.UserLogRepository;
 import com.project.rent.repository.UserRepository;
+import com.project.rent.repository.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +19,15 @@ import java.util.List;
 public class StatsService {
     private UserLogRepository userLogRepository;
     private UserRepository userRepository;
+    private OfferRepository offerRepository;
+    private WishRepository wishRepository;
 
     @Autowired
-    public StatsService(UserLogRepository userLogRepository, UserRepository userRepository) {
+    public StatsService(UserLogRepository userLogRepository, UserRepository userRepository, OfferRepository offerRepository, WishRepository wishRepository) {
         this.userLogRepository = userLogRepository;
         this.userRepository = userRepository;
+        this.offerRepository = offerRepository;
+        this.wishRepository = wishRepository;
     }
 
     public UserLog findUserLogByUserId(int id) {
@@ -96,5 +102,15 @@ public class StatsService {
         Collections.sort(topLanding);
 
         return topLanding;
+    }
+
+    public int getUserOffers(int userId) {
+        int count = offerRepository.findOfferCount(userId);
+        return count;
+    }
+
+    public int getUserWishes(int userId) {
+        int count = wishRepository.findWishCount(userId);
+        return  count;
     }
 }

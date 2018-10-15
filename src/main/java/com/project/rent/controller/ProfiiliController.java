@@ -1,6 +1,7 @@
 package com.project.rent.controller;
 
 import com.project.rent.model.User;
+import com.project.rent.service.StatsService;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,9 @@ public class ProfiiliController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private StatsService statsService;
+
     @RequestMapping(value="/profiil", method = RequestMethod.GET)
     public ModelAndView profiil(){
         ModelAndView modelAndView = new ModelAndView();
@@ -28,6 +32,8 @@ public class ProfiiliController {
         User user = userService.findUserByEmail(auth.getName()); //leiame kasutaja objekt
 
         modelAndView.addObject(user);
+        //modelAndView.addObject("offerCount", statsService.getUserOffers(user.getId())); // lisame lehele kasutaja pakkumiste arvu
+        //modelAndView.addObject("wishCount", statsService.getUserWishes(user.getId())); // lisame lehele kasutaja soovide arvu
         modelAndView.setViewName("profiil");
         return modelAndView;
     }
