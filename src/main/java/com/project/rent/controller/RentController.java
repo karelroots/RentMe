@@ -1,9 +1,6 @@
 package com.project.rent.controller;
 
-import com.project.rent.model.ContractOffer;
-import com.project.rent.model.Offer;
-import com.project.rent.model.User;
-import com.project.rent.model.Wish;
+import com.project.rent.model.*;
 import com.project.rent.service.RentService;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +47,27 @@ public class RentController {
         modelAndView.setViewName("rentimine");
 
         return modelAndView;
+    }
+
+    @RequestMapping(value = "rentimine/acceptOffer")
+    public String acceptOffer(@Valid ContractOffer coffer, RedirectAttributes redirectAttributes) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LocalDateTime ldt = LocalDateTime.now();
+
+        Contract contract = new Contract();
+
+        contract.setItemDesc(coffer.getItemDesc());
+        contract.setItemName(coffer.getItemName());
+        contract.setOwnerId(coffer.getUserId());
+        contract.setUserId(userService.findUserByUsername(auth.getName()).getId());
+        contract.setPictureName(coffer.getPictureName());
+        contract.setLocation(coffer.getLocation());
+        contract.setRentDateTime(ldt.toString());
+        contract.setReturnDateTime(coffer.getReturnDateTime());
+
+        rentService.saveContract(contract);
+
+        return "redirect:/rentimine#kinnita-rent";
     }
 
     @RequestMapping(value = "rentimine/rentOffer")
