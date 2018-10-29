@@ -1,5 +1,6 @@
 package com.project.rent.service;
 
+import com.project.rent.model.Contract;
 import com.project.rent.model.ContractOffer;
 import com.project.rent.model.Offer;
 import com.project.rent.model.Wish;
@@ -19,10 +20,12 @@ public class RentService {
     private ContractOfferRepository contractOfferRepository;
 
     @Autowired
-    public RentService(OfferRepository offerRepository, WishRepository wishRepository, UserRepository userRepository) {
+    public RentService(OfferRepository offerRepository, WishRepository wishRepository, UserRepository userRepository, ContractRepository contractRepository, ContractOfferRepository contractOfferRepository) {
         this.offerRepository = offerRepository;
         this.wishRepository = wishRepository;
         this.userRepository = userRepository;
+        this.contractRepository = contractRepository;
+        this.contractOfferRepository = contractOfferRepository;
     }
 
     public Offer findOfferByUserId(int id) {
@@ -41,6 +44,10 @@ public class RentService {
         return wishRepository.findWishById(id);
     }
 
+    public Contract findContractById(int id) { return contractRepository.findByContractID(id);}
+
+    public ContractOffer findContractOfferById(int id) { return contractOfferRepository.findByContractOfferID(id); }
+
     public void saveOffer(Offer offer) {
         offerRepository.save(offer);
     }
@@ -49,7 +56,17 @@ public class RentService {
         wishRepository.save(wish);
     }
 
+    public void saveContract(Contract contract) { contractRepository.save(contract); }
+
     public void saveContractOffer(ContractOffer offer) { contractOfferRepository.save(offer); }
+
+    public void removeContract(Contract contract) {
+        contractRepository.delete(contract);
+    }
+
+    public void removeContractOffer(ContractOffer contractOffer) {
+        contractOfferRepository.delete(contractOffer);
+    }
 
     public void removeOffer(Offer offer) {
         offerRepository.delete(offer);

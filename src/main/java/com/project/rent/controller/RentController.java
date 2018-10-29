@@ -48,6 +48,7 @@ public class RentController {
         modelAndView.addObject(wish);
         modelAndView.addObject(user);
         modelAndView.setViewName("rentimine");
+
         return modelAndView;
     }
 
@@ -70,6 +71,22 @@ public class RentController {
         rentService.saveContractOffer(coffer);
 
         return "redirect:/rentimine#vota-rendile";
+    }
+
+    @RequestMapping(value = "rentimine/removeContract")
+    public String removeContract(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        System.out.println("Offer id on: "+id);
+        rentService.removeContractOffer(rentService.findContractOfferById(id));
+
+        return "redirect:/rentimine#sinu-pakkumised";  // muuda seda!
+    }
+
+    @RequestMapping(value = "rentimine/removeContractOffer")
+    public String removeRentOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        System.out.println("Offer id on: "+id);
+        rentService.removeContractOffer(rentService.findContractOfferById(id));
+
+        return "redirect:/rentimine#sinu-pakkumised";  // muuda seda!
     }
 
     @RequestMapping(value = "rentimine/addOffer")
