@@ -6,13 +6,15 @@ import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "offers") // Pakkumiste andmed
-public class Offer {
-
+@Table(name = "contractoffers") // Rendilepingute andmed
+public class ContractOffer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "offer_id", unique=true)
+    @Column(name = "contractoffer_id", unique=true)
     private int id;
+
+    @Column(name = "owner_id")
+    private int ownerId;
 
     @Column(name = "user_id")
     private int userId;
@@ -29,15 +31,12 @@ public class Offer {
     @Column(name = "location")
     private String location;
 
-    @Column(name = "time")
-    private String datetime;
+    @Column(name = "offer_date")
+    private String offerDateTime;
 
     @Column(name = "return_date")
     private String returnDateTime;
 
     @Column(name = "item_picture")
     private String pictureName;
-
-    private String userName;
-
 }

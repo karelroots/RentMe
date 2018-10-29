@@ -1,5 +1,6 @@
 package com.project.rent.controller;
 
+import com.project.rent.model.ContractOffer;
 import com.project.rent.model.Offer;
 import com.project.rent.model.User;
 import com.project.rent.model.Wish;
@@ -48,6 +49,27 @@ public class RentController {
         modelAndView.addObject(user);
         modelAndView.setViewName("rentimine");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "rentimine/rentOffer")
+    public String rentOffer(@Valid Offer offer, RedirectAttributes redirectAttributes) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LocalDateTime ldt = LocalDateTime.now();
+
+        ContractOffer coffer = new ContractOffer();
+
+        coffer.setItemDesc(offer.getItemDesc());
+        coffer.setItemName(offer.getItemName());
+        coffer.setOwnerId(offer.getUserId());
+        coffer.setUserId(userService.findUserByUsername(auth.getName()).getId());
+        coffer.setPictureName(offer.getPictureName());
+        coffer.setLocation(offer.getLocation());
+        coffer.setOfferDateTime(ldt.toString());
+        coffer.setReturnDateTime(offer.getReturnDateTime());
+
+        rentService.saveContractOffer(coffer);
+
+        return "redirect:/rentimine#vota-rendile";
     }
 
     @RequestMapping(value = "rentimine/addOffer")

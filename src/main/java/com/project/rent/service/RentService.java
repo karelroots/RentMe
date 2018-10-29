@@ -1,10 +1,9 @@
 package com.project.rent.service;
 
+import com.project.rent.model.ContractOffer;
 import com.project.rent.model.Offer;
 import com.project.rent.model.Wish;
-import com.project.rent.repository.OfferRepository;
-import com.project.rent.repository.UserRepository;
-import com.project.rent.repository.WishRepository;
+import com.project.rent.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +15,8 @@ public class RentService {
     private OfferRepository offerRepository;
     private WishRepository wishRepository;
     private UserRepository userRepository;
+    private ContractRepository contractRepository;
+    private ContractOfferRepository contractOfferRepository;
 
     @Autowired
     public RentService(OfferRepository offerRepository, WishRepository wishRepository, UserRepository userRepository) {
@@ -47,6 +48,8 @@ public class RentService {
     public void saveWish(Wish wish) {
         wishRepository.save(wish);
     }
+
+    public void saveContractOffer(ContractOffer offer) { contractOfferRepository.save(offer); }
 
     public void removeOffer(Offer offer) {
         offerRepository.delete(offer);
