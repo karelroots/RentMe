@@ -1,7 +1,5 @@
 package com.project.rent.controller;
 
-import com.project.rent.model.Offer;
-import com.project.rent.model.Wish;
 import com.project.rent.service.RentService;
 import com.project.rent.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,76 +62,5 @@ public class UploadController {
         return "redirect:/profiil";
 
     }
-
-    @PostMapping("rentimine/offerUpload")
-    public String offerUpload(@RequestParam("file") MultipartFile file, @RequestParam int offerId,
-                                   RedirectAttributes redirectAttributes) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Offer offer = rentService.findOfferById(offerId);
-
-        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("failError", "Vali üleslaadimiseks fail");
-            return "redirect:/rentimine";
-        }
-
-        try {
-
-            if(filetype.equals("jpg") || filetype.equals("png")) {
-                byte[] bytes = file.getBytes();
-                String failinimi = userService.findUserByEmail(auth.getName()).getUsername()+offer.getId()+"."+filetype;
-                Path path = Paths.get(UPLOADED_FOLDER+failinimi);
-                Files.write(path, bytes);
-                rentService.saveOfferImage(failinimi, offer); // salvestame pakkumise pildi info andmebaasi
-            } else {
-                redirectAttributes.addFlashAttribute("failError", "Failiformaat peab olema JPG või PNG");
-                return "redirect:/rentimine";
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "redirect:/rentimine";
-
-    }
-
-
-    @PostMapping("rentimine/wishUpload")
-    public String wishUpload(@RequestParam("file") MultipartFile file, @RequestParam int wishId,
-                              RedirectAttributes redirectAttributes) {
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        Wish wish = rentService.findWishById(wishId);
-
-        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("failError", "Vali üleslaadimiseks fail");
-            return "redirect:/rentimine";
-        }
-
-        try {
-
-            if(filetype.equals("jpg") || filetype.equals("png")) {
-                byte[] bytes = file.getBytes();
-                String failinimi = userService.findUserByEmail(auth.getName()).getUsername()+wish.getId()+"."+filetype;
-                Path path = Paths.get(UPLOADED_FOLDER+failinimi);
-                Files.write(path, bytes);
-                rentService.saveWishImage(failinimi, wish); // salvestame soovi pildi info andmebaasi
-            } else {
-                redirectAttributes.addFlashAttribute("failError", "Failiformaat peab olema JPG või PNG");
-                return "redirect:/rentimine";
-            }
-
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return "redirect:/rentimine";
-
-    }
-
 
 }

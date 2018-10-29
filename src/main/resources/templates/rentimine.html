@@ -69,6 +69,7 @@
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td th:text="${offer.price}">12345</td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${offer.pictureName})}" class="img-responsive" alt="pakkumisepilt"/></td>
                                     <td th:if="${user.id} != ${offer.userId}">
                                         <form class="form" th:action="@{rentimine/rentOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${offer.id}" />
@@ -95,6 +96,7 @@
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td th:if="${user.id} != ${wish.userId}">
                                         <form class="form" th:action="@{rentimine/offerWish/}" method="post">
                                         <input type="hidden" name="id" th:value="${wish.id}" />
@@ -119,6 +121,7 @@
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.location}">Tartu</td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${offer.id}" />
@@ -143,6 +146,7 @@
                                     <td th:text="${wish.datetime}">13.10.2018</td>
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.location}">Tartu</td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeWish}" method="post">
                                             <input type="hidden" name="id" th:value="${wish.id}" />
@@ -166,26 +170,12 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="contract : ${myOwnerContracts}"> <!--kuvame kõik kasutaja omaniku lepingud lepingute list objektist-->
+                                <tr th:each="contract : ${myContracts}"> <!--kuvame kõik kasutaja lepingud lepingute list objektist-->
                                     <td th:text="${contract.rentDateTime}">13.10.2018</td>
                                     <td th:text="${contract.userName}">Kasutajanimi</td>
                                     <td th:text="${contract.itemName}">Saabas</td>
                                     <td th:text="${contract.location}">Tartu</td>
                                     <td th:text="${contract.owner}">Sina</td>
-                                    <td th:text="${contract.returnDateTime}">13.10.2018</td>
-                                    <td>
-                                        <form class="form" th:action="@{rentimine/removeContract/}" method="post">
-                                            <input type="hidden" name="id" th:value="${contract.id}" />
-                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                                <tr th:each="contract : ${myRentContracts}"> <!--kuvame kõik kasutaja renditud lepingud lepingute list objektist-->
-                                    <td th:text="${contract.rentDateTime}">13.10.2018</td>
-                                    <td th:text="${contract.userName}">Kasutajanimi</td>
-                                    <td th:text="${contract.itemName}">Saabas</td>
-                                    <td th:text="${contract.location}">Tartu</td>
-                                    <td th:text="${contract.owner}">Tema</td>
                                     <td th:text="${contract.returnDateTime}">13.10.2018</td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeContract/}" method="post">
@@ -210,14 +200,15 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr th:each="contractOffer : ${myOwnerContractOffers}"> <!--kuvame kõik kasutaja omaniku lepingu pakkumised lepingute list objektist-->
+                                <tr th:each="contractOffer : ${myContractOffers}"> <!--kuvame kõik kasutaja omaniku lepingu pakkumised lepingute list objektist-->
                                     <td th:text="${contractOffer.offerDateTime}">13.10.2018</td>
                                     <td th:text="${contractOffer.userName}">Kasutajanimi</td>
                                     <td th:text="${contractOffer.itemName}">Saabas</td>
                                     <td th:text="${contractOffer.location}">Tartu</td>
                                     <td th:text="${contractOffer.owner}">Sina</td>
                                     <td th:text="${contractOffer.returnDateTime}">Tartu</td>
-                                    <td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
+                                    <td th:if="${user.id} != ${contractOffer.ownerId}">
                                         <form class="form" th:action="@{rentimine/acceptContractOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${contractOffer.id}" />
                                             <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Confirm" type="Submit" th:text="#{rent.accept}">Aktsepteeri</button>
@@ -230,26 +221,20 @@
                                         </form>
                                     </td>
                                 </tr>
-                                <tr th:each="contractOffer : ${myRentContractOffers}"> <!--kuvame kõik kasutaja renditud lepingu pakkumised lepingute list objektist-->
-                                    <td th:text="${contractOffer.offerDateTime}">13.10.2018</td>
-                                    <td th:text="${contractOffer.userName}">Kasutajanimi</td>
-                                    <td th:text="${contractOffer.itemName}">Saabas</td>
-                                    <td th:text="${contractOffer.location}">Tartu</td>
-                                    <td th:text="${contractOffer.owner}">Tema</td>
-                                    <td th:text="${contractOffer.returnDateTime}">Tartu</td>
-                                    <td>
-                                        <form class="form" th:action="@{rentimine/removeContractOffer/}" method="post">
-                                            <input type="hidden" name="id" th:value="${contractOffer.id}" />
-                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
-                                        </form>
-                                    </td>
-                                </tr>
                                 </tbody>
                             </table>
                         </div>
                         <div class="tab-pane fade" id="lisa-pakkumine"> <!----lisa pakkumine tab---->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center mx-auto">
-                                <form class="form" id="frmAddOffer" th:action="@{rentimine/addOffer}" method="post" th:object="${offer}">
+                                <form class="form" id="frmAddOffer" th:action="@{rentimine/addOffer}" enctype="multipart/form-data" method="post" th:object="${offer}">
+
+                                    <div class="form-group">
+                                        <div class="col-sm-10 pull-left">
+                                            <h5 th:text="#{rent.changeImage}">Lisa pakkumise pilt</h5>
+                                            <input type="file" name="file" class="text-center center-block file-upload">
+                                            <label th:text="${failError}" class="validation-message"></label>
+                                        </div><br>
+                                    </div>
 
                                     <div class="form-group">
 
@@ -301,7 +286,15 @@
                         </div>
                         <div class="tab-pane fade" id="lisa-soov"> <!----lisa soov tab---->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 mx-auto text-center">
-                                <form class="form" id="frmAddWish" th:action="@{rentimine/addWish}" method="post" th:object="${wish}">
+                                <form class="form" id="frmAddWish" th:action="@{rentimine/addWish}" enctype="multipart/form-data" method="post" th:object="${wish}">
+
+                                    <div class="form-group">
+                                        <div class="col-sm-10 pull-left">
+                                            <h5 th:text="#{rent.changeImage}">Lisa soovi pilt</h5>
+                                            <input type="file" name="file" class="text-center center-block file-upload">
+                                            <label th:text="${failError}" class="validation-message"></label>
+                                        </div><br>
+                                    </div>
 
                                     <div class="form-group">
 

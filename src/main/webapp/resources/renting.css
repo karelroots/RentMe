@@ -113,3 +113,8 @@ div#button-div {
 tr#offer-head {
     text-align:center;
 }
+
+.img-fluid {
+    max-width: 25%;
+    height: auto;
+}
