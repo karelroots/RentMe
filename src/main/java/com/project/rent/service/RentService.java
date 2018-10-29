@@ -139,4 +139,14 @@ public class RentService {
         return contractOfferRepository.findAllByUserId(id);
     }
 
+    public void saveOfferImage(String name, Offer offer) { // Pakkumise pildi salvestamine
+        offer.setPictureName(name);
+        offerRepository.save(offer);
+    }
+
+    public void saveWishImage(String name, Wish wish) { // Soovi pildi salvestamine
+        wish.setPictureName(name);
+        wishRepository.save(wish);
+    }
+
 }
