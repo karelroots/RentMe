@@ -1,18 +1,21 @@
 package com.project.rent.model;
 
+
 import lombok.Data;
 
 import javax.persistence.*;
 
 @Data
 @Entity
-@Table(name = "offers") // Pakkumiste andmed
-public class Offer {
-
+@Table(name = "contracts") // Rendilepingute andmed
+public class Contract {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "offer_id", unique=true)
+    @Column(name = "contract_id", unique=true)
     private int id;
+
+    @Column(name = "owner_id")
+    private int ownerId;
 
     @Column(name = "user_id")
     private int userId;
@@ -29,12 +32,13 @@ public class Offer {
     @Column(name = "location")
     private String location;
 
-    @Column(name = "time")
-    private String datetime;
+    @Column(name = "rent_date")
+    private String rentDateTime;
+
+    @Column(name = "return_date")
+    private String returnDateTime;
 
     @Column(name = "item_picture")
     private String pictureName;
-
-    private String userName;
 
 }

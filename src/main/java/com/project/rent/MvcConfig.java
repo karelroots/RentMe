@@ -90,34 +90,5 @@ public class MvcConfig implements WebMvcConfigurer { //siin määrame ära oad
         BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         return bCryptPasswordEncoder;
     }
-/*
-    @Bean
-    public FilterRegistrationBean someFilterRegistration() {
-
-        Logbook logbook = Logbook.create();
-
-        FilterRegistrationBean registration = new FilterRegistrationBean();
-        registration.setFilter(new LogbookFilter(logbook, Strategy.SECURITY));
-        registration.addUrlPatterns("/*");
-        registration.setName("LogbookFilter");
-        registration.setOrder(1);
-        return registration;
-    }
-
-    public Filter logBookFilter() {
-        return new LogbookFilter();
-    }*/
-
-
-/*
-    @Bean
-    public ServletRegistrationBean dispatcherRegistration() {
-        return new ServletRegistrationBean(dispatcherServlet());
-    }
-
-    @Bean(name = DispatcherServletAutoConfiguration.DEFAULT_DISPATCHER_SERVLET_BEAN_NAME)
-    public DispatcherServlet dispatcherServlet() {
-        return new LoggingService();
-    }*/
 
 }
