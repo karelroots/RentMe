@@ -44,9 +44,9 @@ public class RentService {
         return wishRepository.findWishById(id);
     }
 
-    public Contract findContractById(int id) { return contractRepository.findByContractID(id);}
+    public Contract findContractById(int id) { return contractRepository.findContractById(id);}
 
-    public ContractOffer findContractOfferById(int id) { return contractOfferRepository.findByContractOfferID(id); }
+    public ContractOffer findContractOfferById(int id) { return contractOfferRepository.findContractOfferById(id); }
 
     public void saveOffer(Offer offer) {
         offerRepository.save(offer);
@@ -121,6 +121,22 @@ public class RentService {
         }
 
         return userWishes;
+    }
+
+    public List<Contract> getUserOwnerContractList(int id) {
+        return contractRepository.findAllByOwnerId(id);
+    }
+
+    public List<Contract> getUserRentContractList(int id) {
+        return contractRepository.findAllByUserId(id);
+    }
+
+    public List<ContractOffer> getUserOwnerContractOfferList(int id) {
+        return contractOfferRepository.findAllByOwnerId(id);
+    }
+
+    public List<ContractOffer> getUserRentContractOfferList(int id) {
+        return contractOfferRepository.findAllByUserId(id);
     }
 
 }

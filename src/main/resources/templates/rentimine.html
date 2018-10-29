@@ -42,6 +42,8 @@
                         <li class="active"><a href="#pakkumised" id="pakkumised-tab" data-toggle="tab" th:text="#{rent.offers}">Pakkumised</a></li>
                         <li><a href="#soovid" id="log-tab" data-toggle="tab" th:text="#{rent.wishes}">Soovid</a></li>
                         <li><a href="#sinu-pakkumised" id="sinu-pakkumised-tab" data-toggle="tab" th:text="#{rent.myoffers}">Sinu pakkumised</a></li>
+                        <li><a href="#sinu-lepingud" id="sinu-lepingud-tab" data-toggle="tab" th:text="#{rent.mycontracts}">Sinu lepingud</a></li>
+                        <li><a href="#sinu-lepingu-pakkumised" id="sinu-lepingupakkumised-tab" data-toggle="tab" th:text="#{rent.mycontractoffers}">Sinu lepingu pakkumised</a></li>
                         <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu soovid</a></li>
                         <li><a href="#lisa-pakkumine" id="lisa-pakkumine-tab" data-toggle="tab" th:text="#{rent.addoffer}">Lisa pakkumine</a></li>
                         <li><a href="#lisa-soov" id="lisa-soov-tab" data-toggle="tab" th:text="#{rent.addwish}">Lisa soov</a></li>
@@ -67,7 +69,12 @@
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td th:text="${offer.price}">12345</td>
-                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Rent" type="Submit" th:text="#{rent.rent}">Rendi</button></td>
+                                    <td th:if="${user.id} != ${offer.userId}">
+                                        <form class="form" th:action="@{rentimine/rentOffer/}" method="post">
+                                            <input type="hidden" name="id" th:value="${offer.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Rent" type="Submit" th:text="#{rent.rent}">Rendi</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -88,7 +95,12 @@
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
-                                    <td><button class="btn btn-sm btn-primary btn-block" name="Submit" value="Offer" type="Submit" th:text="#{rent.offer}">Paku</button></td>
+                                    <td th:if="${user.id} != ${wish.userId}">
+                                        <form class="form" th:action="@{rentimine/offerWish/}" method="post">
+                                        <input type="hidden" name="id" th:value="${wish.id}" />
+                                        <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Offer" type="Submit" th:text="#{rent.offer}">Paku</button>
+                                    </form>
+                                    </td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -135,6 +147,100 @@
                                         <form class="form" th:action="@{rentimine/removeWish}" method="post">
                                             <input type="hidden" name="id" th:value="${wish.id}" />
                                             <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.delete}">Kustuta</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="sinu-lepingud"> <!----sinu lepingute tab---->
+                            <table class="table">
+                                <thead>
+                                <tr id="mycontract-head">
+                                    <th th:text="#{rent.dateTime}">Rentimise aeg</th>
+                                    <th th:text="#{rent.user}">Rentija kasutajanimi</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
+                                    <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.owner}">Omanik</th>
+                                    <th th:text="#{rent.returndate}">Tagastuskuupäev</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="contract : ${myOwnerContracts}"> <!--kuvame kõik kasutaja omaniku lepingud lepingute list objektist-->
+                                    <td th:text="${contract.rentDateTime}">13.10.2018</td>
+                                    <td th:text="${contract.userName}">Kasutajanimi</td>
+                                    <td th:text="${contract.itemName}">Saabas</td>
+                                    <td th:text="${contract.location}">Tartu</td>
+                                    <td th:text="${contract.owner}">Sina</td>
+                                    <td th:text="${contract.returnDateTime}">13.10.2018</td>
+                                    <td>
+                                        <form class="form" th:action="@{rentimine/removeContract/}" method="post">
+                                            <input type="hidden" name="id" th:value="${contract.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr th:each="contract : ${myRentContracts}"> <!--kuvame kõik kasutaja renditud lepingud lepingute list objektist-->
+                                    <td th:text="${contract.rentDateTime}">13.10.2018</td>
+                                    <td th:text="${contract.userName}">Kasutajanimi</td>
+                                    <td th:text="${contract.itemName}">Saabas</td>
+                                    <td th:text="${contract.location}">Tartu</td>
+                                    <td th:text="${contract.owner}">Tema</td>
+                                    <td th:text="${contract.returnDateTime}">13.10.2018</td>
+                                    <td>
+                                        <form class="form" th:action="@{rentimine/removeContract/}" method="post">
+                                            <input type="hidden" name="id" th:value="${contract.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="sinu-lepingu-pakkumised"> <!----sinu lepingu pakkumiste tab---->
+                            <table class="table">
+                                <thead>
+                                <tr id="mycontractoffers-head">
+                                    <th th:text="#{rent.dateTime}">Pakkumise aeg</th>
+                                    <th th:text="#{rent.user}">Rentija kasutajanimi</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
+                                    <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.owner}">Omanik</th>
+                                    <th th:text="#{rent.returndate}">Tagastuskuupäev</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="contractOffer : ${myOwnerContractOffers}"> <!--kuvame kõik kasutaja omaniku lepingu pakkumised lepingute list objektist-->
+                                    <td th:text="${contractOffer.offerDateTime}">13.10.2018</td>
+                                    <td th:text="${contractOffer.userName}">Kasutajanimi</td>
+                                    <td th:text="${contractOffer.itemName}">Saabas</td>
+                                    <td th:text="${contractOffer.location}">Tartu</td>
+                                    <td th:text="${contractOffer.owner}">Sina</td>
+                                    <td th:text="${contractOffer.returnDateTime}">Tartu</td>
+                                    <td>
+                                        <form class="form" th:action="@{rentimine/acceptContractOffer/}" method="post">
+                                            <input type="hidden" name="id" th:value="${contractOffer.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Confirm" type="Submit" th:text="#{rent.accept}">Aktsepteeri</button>
+                                        </form>
+                                    </td>
+                                    <td>
+                                        <form class="form" th:action="@{rentimine/removeContractOffer/}" method="post">
+                                            <input type="hidden" name="id" th:value="${contractOffer.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <tr th:each="contractOffer : ${myRentContractOffers}"> <!--kuvame kõik kasutaja renditud lepingu pakkumised lepingute list objektist-->
+                                    <td th:text="${contractOffer.offerDateTime}">13.10.2018</td>
+                                    <td th:text="${contractOffer.userName}">Kasutajanimi</td>
+                                    <td th:text="${contractOffer.itemName}">Saabas</td>
+                                    <td th:text="${contractOffer.location}">Tartu</td>
+                                    <td th:text="${contractOffer.owner}">Tema</td>
+                                    <td th:text="${contractOffer.returnDateTime}">Tartu</td>
+                                    <td>
+                                        <form class="form" th:action="@{rentimine/removeContractOffer/}" method="post">
+                                            <input type="hidden" name="id" th:value="${contractOffer.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
                                         </form>
                                     </td>
                                 </tr>

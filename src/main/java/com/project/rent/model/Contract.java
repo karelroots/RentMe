@@ -41,4 +41,7 @@ public class Contract {
     @Column(name = "item_picture")
     private String pictureName;
 
+    private String userName;
+    private String owner;
+
 }

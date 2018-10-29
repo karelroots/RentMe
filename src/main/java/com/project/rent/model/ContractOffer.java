@@ -19,6 +19,12 @@ public class ContractOffer {
     @Column(name = "user_id")
     private int userId;
 
+    @Column(name = "offer_id")
+    private int offerId;
+
+    @Column(name = "wish_id")
+    private int wishId;
+
     @Column(name = "item_name")
     private String itemName;
 
@@ -39,4 +45,7 @@ public class ContractOffer {
 
     @Column(name = "item_picture")
     private String pictureName;
+
+    private String userName;
+    private String owner;
 }

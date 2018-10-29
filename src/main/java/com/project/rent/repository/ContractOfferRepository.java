@@ -8,5 +8,5 @@ import java.util.List;
 public interface ContractOfferRepository extends JpaRepository<ContractOffer, Integer> {
     List<ContractOffer> findAllByUserId(int id);
     List<ContractOffer> findAllByOwnerId(int id);
-    ContractOffer findByContractOfferID(int id);
+    ContractOffer findContractOfferById(int id);
 }

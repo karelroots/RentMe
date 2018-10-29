@@ -34,6 +34,10 @@ public class RentController {
         List<Wish> wishesList = rentService.getWishesList(); // saame kõikide soovide listi
         List<Offer> userOfferList = rentService.getUserOffersList(user.getId()); // saame autoriseeritud kasutaja pakkumised
         List<Wish> userWishList = rentService.getUserWishesList(user.getId()); // saame autoriseeritud kasutaja soovid
+        List<Contract> userOwnerContractList = rentService.getUserOwnerContractList(user.getId());
+        List<Contract> userRentContractList = rentService.getUserRentContractList(user.getId());
+        List<ContractOffer> userOwnerContractOfferList = rentService.getUserOwnerContractOfferList(user.getId());
+        List<ContractOffer> userRentContractOfferList = rentService.getUserRentContractOfferList(user.getId());
         Offer offer = new Offer();
         Wish wish = new Wish();
 
@@ -41,6 +45,10 @@ public class RentController {
         modelAndView.addObject("wishes", wishesList);
         modelAndView.addObject("myOffers", userOfferList);
         modelAndView.addObject("myWishes", userWishList);
+        modelAndView.addObject("myOwnerContracts", userOwnerContractList);
+        modelAndView.addObject("myRentContracts", userRentContractList);
+        modelAndView.addObject("myOwnerContractOffers", userOwnerContractOfferList);
+        modelAndView.addObject("myRentContractOffers", userRentContractOfferList);
         modelAndView.addObject(offer);
         modelAndView.addObject(wish);
         modelAndView.addObject(user);
@@ -49,59 +57,98 @@ public class RentController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "rentimine/acceptOffer")
-    public String acceptOffer(@Valid ContractOffer coffer, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "rentimine/acceptContractOffer")
+    public String acceptContractOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
         LocalDateTime ldt = LocalDateTime.now();
+        ContractOffer coffer = rentService.findContractOfferById(id);
+        Offer offer = rentService.findOfferById(coffer.getOfferId());
+        Wish wish = rentService.findWishById(coffer.getWishId());
+        if(offer != null) {
+            rentService.removeOffer(offer);
+        }
+        if(wish != null) {
+            rentService.removeWish(wish);
+        }
 
         Contract contract = new Contract();
-
         contract.setItemDesc(coffer.getItemDesc());
         contract.setItemName(coffer.getItemName());
         contract.setOwnerId(coffer.getUserId());
-        contract.setUserId(userService.findUserByUsername(auth.getName()).getId());
-        contract.setPictureName(coffer.getPictureName());
+        contract.setUserId(user.getId());
+        //contract.setPictureName(coffer.getPictureName());
         contract.setLocation(coffer.getLocation());
         contract.setRentDateTime(ldt.toString());
         contract.setReturnDateTime(coffer.getReturnDateTime());
+        contract.setOwner(userService.findUserById(contract.getOwnerId()).getUsername());
+        contract.setUserName(userService.findUserById(contract.getUserId()).getUsername());
 
         rentService.saveContract(contract);
+        rentService.removeContractOffer(coffer);
 
-        return "redirect:/rentimine#kinnita-rent";
+        return "redirect:/rentimine";
     }
 
     @RequestMapping(value = "rentimine/rentOffer")
-    public String rentOffer(@Valid Offer offer, RedirectAttributes redirectAttributes) {
+    public String rentOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
+        Offer offer = rentService.findOfferById(id);
 
         ContractOffer coffer = new ContractOffer();
 
         coffer.setItemDesc(offer.getItemDesc());
         coffer.setItemName(offer.getItemName());
         coffer.setOwnerId(offer.getUserId());
-        coffer.setUserId(userService.findUserByUsername(auth.getName()).getId());
-        coffer.setPictureName(offer.getPictureName());
+        coffer.setUserId(userService.findUserByEmail(auth.getName()).getId());
+        //coffer.setPictureName(offer.getPictureName());
         coffer.setLocation(offer.getLocation());
         coffer.setOfferDateTime(ldt.toString());
         coffer.setReturnDateTime(offer.getReturnDateTime());
+        coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
+        coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
+        coffer.setOfferId(id);
 
         rentService.saveContractOffer(coffer);
 
-        return "redirect:/rentimine#vota-rendile";
+        return "redirect:/rentimine#pakkumised";
+    }
+
+    @RequestMapping(value = "rentimine/offerWish")
+    public String offerWish(@RequestParam int id, RedirectAttributes redirectAttributes) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        LocalDateTime ldt = LocalDateTime.now();
+        Wish wish = rentService.findWishById(id);
+
+        ContractOffer coffer = new ContractOffer();
+
+        coffer.setItemDesc(wish.getItemDesc());
+        coffer.setItemName(wish.getItemName());
+        coffer.setOwnerId(wish.getUserId());
+        coffer.setUserId(userService.findUserByEmail(auth.getName()).getId());
+        //coffer.setPictureName(offer.getPictureName());
+        coffer.setLocation(wish.getLocation());
+        coffer.setOfferDateTime(ldt.toString());
+        //coffer.setReturnDateTime(wish.getReturnDateTime());
+        coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
+        coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
+        coffer.setWishId(id);
+
+        rentService.saveContractOffer(coffer);
+
+        return "redirect:/rentimine#pakkumised";
     }
 
     @RequestMapping(value = "rentimine/removeContract")
     public String removeContract(@RequestParam int id, RedirectAttributes redirectAttributes) {
-        System.out.println("Offer id on: "+id);
-        rentService.removeContractOffer(rentService.findContractOfferById(id));
+        rentService.removeContract(rentService.findContractById(id));
 
         return "redirect:/rentimine#sinu-pakkumised";  // muuda seda!
     }
 
     @RequestMapping(value = "rentimine/removeContractOffer")
-    public String removeRentOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
-        System.out.println("Offer id on: "+id);
+    public String removeContractOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
         rentService.removeContractOffer(rentService.findContractOfferById(id));
 
         return "redirect:/rentimine#sinu-pakkumised";  // muuda seda!
