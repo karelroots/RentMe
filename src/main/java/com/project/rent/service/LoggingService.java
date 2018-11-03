@@ -1,5 +1,6 @@
 package com.project.rent.service;
 
+import com.project.rent.model.User;
 import com.project.rent.model.UserLog;
 import lombok.extern.slf4j.Slf4j;
 import net.sf.uadetector.ReadableUserAgent;
@@ -30,14 +31,15 @@ public class LoggingService extends InMemoryHttpTraceRepository {
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if(auth != null && trace != null) { // tegemist on autoriseeritud kasutajaga
+        if(trace != null && auth != null) {
 
             HttpTrace.Request rq = trace.getRequest();
 
             String page = rq.getUri().getPath();
-            String user = auth.getName();
+            User user = userService.findUserByEmail(auth.getName());
 
-            if (!page.contains(".") && !page.contains("#")) { // laetud leht on html ja pole postitamisega seotud
+            // tegemist on autoriseeritud kasutajaga, laetud leht on html ja pole postitamisega seotud
+            if (user != null && !page.contains(".") && !page.contains("#")) {
 
                 UserAgentStringParser parser = UADetectorServiceFactory.getResourceModuleParser(); // User Agent'i parsimiseks
                 UserLog userLog = new UserLog();
@@ -48,7 +50,7 @@ public class LoggingService extends InMemoryHttpTraceRepository {
                 String osName = agent.getOperatingSystem().getName();
                 String osVersion = agent.getOperatingSystem().getVersionNumber().toVersionString();
 
-                userLog.setUserId(userService.findUserByEmail(user).getId()); // leiame sellise e-mailiga kasutaja id ja loggime
+                userLog.setUserId(user.getId()); // leiame sellise e-mailiga kasutaja id ja loggime
                 userLog.setOs(osName + " " + osVersion); // loggime kasutaja operatsiooni süsteemi
                 userLog.setLandingPage(rq.getUri().getPath()); // loggime landing page'i
                 userLog.setBrowser(browserName + "/" + browserVersion); // loggime kasutaja brauseri
