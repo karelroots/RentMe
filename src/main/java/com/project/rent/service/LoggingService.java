@@ -27,7 +27,6 @@ public class LoggingService extends InMemoryHttpTraceRepository {
 
     @Override
     public void add(HttpTrace trace) {
-        //super.add(trace);
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
