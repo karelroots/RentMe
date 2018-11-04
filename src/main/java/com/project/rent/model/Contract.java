@@ -36,7 +36,7 @@ public class Contract {
     private String rentDateTime;
 
     @Column(name = "return_date")
-    private String returnDateTime;
+    private String returnDate;
 
     @Column(name = "item_picture")
     private String pictureName;

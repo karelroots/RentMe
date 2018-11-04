@@ -22,6 +22,9 @@ public class ContractOffer {
     @Column(name = "offer_id")
     private int offerId;
 
+    @Column(name = "offeruser_id")
+    private int offerUserId;
+
     @Column(name = "wish_id")
     private int wishId;
 
@@ -41,7 +44,7 @@ public class ContractOffer {
     private String offerDateTime;
 
     @Column(name = "return_date")
-    private String returnDateTime;
+    private String returnDate;
 
     @Column(name = "item_picture")
     private String pictureName;

@@ -59,7 +59,8 @@
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.userName}">Kasutajanimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
-                                    <th th:text="#{rent.price}">Asukoht</th>
+                                    <th th:text="#{rent.price}">15</th>
+                                    <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
                                 </thead>
                                 <tbody> <!----tabeli keha---->
@@ -69,7 +70,7 @@
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td th:text="${offer.price}">12345</td>
-                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${offer.pictureName})}" class="img-responsive" alt="pakkumisepilt"/></td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${offer.pictureName})}" class="img-responsive" alt="pakkumise-pilt"/></td>
                                     <td th:if="${user.id} != ${offer.userId}">
                                         <form class="form" th:action="@{rentimine/rentOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${offer.id}" />
@@ -96,9 +97,8 @@
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
-                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td th:if="${user.id} != ${wish.userId}">
-                                        <form class="form" th:action="@{rentimine/offerWish/}" method="post">
+                                        <form class="form" th:action="@{pakusoov}" method="post">
                                         <input type="hidden" name="id" th:value="${wish.id}" />
                                         <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Offer" type="Submit" th:text="#{rent.offer}">Paku</button>
                                     </form>
@@ -114,6 +114,7 @@
                                     <th th:text="#{rent.dateTime}">Postitamise aeg</th>
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -121,7 +122,7 @@
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.location}">Tartu</td>
-                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="pakkumise-pilt"/></td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${offer.id}" />
@@ -146,7 +147,6 @@
                                     <td th:text="${wish.datetime}">13.10.2018</td>
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.location}">Tartu</td>
-                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeWish}" method="post">
                                             <input type="hidden" name="id" th:value="${wish.id}" />
@@ -176,7 +176,7 @@
                                     <td th:text="${contract.itemName}">Saabas</td>
                                     <td th:text="${contract.location}">Tartu</td>
                                     <td th:text="${contract.owner}">Sina</td>
-                                    <td th:text="${contract.returnDateTime}">13.10.2018</td>
+                                    <td th:text="${contract.returnDate}">13.10.2018</td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeContract/}" method="post">
                                             <input type="hidden" name="id" th:value="${contract.id}" />
@@ -197,6 +197,7 @@
                                     <th th:text="#{profile.location}">Asukoht</th>
                                     <th th:text="#{rent.owner}">Omanik</th>
                                     <th th:text="#{rent.returndate}">Tagastuskuupäev</th>
+                                    <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -206,9 +207,9 @@
                                     <td th:text="${contractOffer.itemName}">Saabas</td>
                                     <td th:text="${contractOffer.location}">Tartu</td>
                                     <td th:text="${contractOffer.owner}">Sina</td>
-                                    <td th:text="${contractOffer.returnDateTime}">Tartu</td>
-                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
-                                    <td th:if="${user.id} != ${contractOffer.ownerId}">
+                                    <td th:text="${contractOffer.returnDate}">12.12.12</td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${contractOffer.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
+                                    <td th:if="${user.id} != ${contractOffer.offerUserId}">
                                         <form class="form" th:action="@{rentimine/acceptContractOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${contractOffer.id}" />
                                             <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Confirm" type="Submit" th:text="#{rent.accept}">Aktsepteeri</button>
@@ -286,15 +287,7 @@
                         </div>
                         <div class="tab-pane fade" id="lisa-soov"> <!----lisa soov tab---->
                             <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 mx-auto text-center">
-                                <form class="form" id="frmAddWish" th:action="@{rentimine/addWish}" enctype="multipart/form-data" method="post" th:object="${wish}">
-
-                                    <div class="form-group">
-                                        <div class="col-sm-10 pull-left">
-                                            <h5 th:text="#{rent.changeImage}">Lisa soovi pilt</h5>
-                                            <input type="file" name="file" class="text-center center-block file-upload">
-                                            <label th:text="${failError}" class="validation-message"></label>
-                                        </div><br>
-                                    </div>
+                                <form class="form" id="frmAddWish" th:action="@{rentimine/addWish}" method="post" th:object="${wish}">
 
                                     <div class="form-group">
 

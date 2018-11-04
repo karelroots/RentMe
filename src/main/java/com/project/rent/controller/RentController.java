@@ -87,12 +87,12 @@ public class RentController {
         Contract contract = new Contract();
         contract.setItemDesc(coffer.getItemDesc());
         contract.setItemName(coffer.getItemName());
-        contract.setOwnerId(coffer.getUserId());
+        contract.setOwnerId(coffer.getOwnerId());
         contract.setUserId(user.getId());
         contract.setPictureName(coffer.getPictureName());
         contract.setLocation(coffer.getLocation());
         contract.setRentDateTime(ldt.toString());
-        contract.setReturnDateTime(coffer.getReturnDateTime());
+        contract.setReturnDate(coffer.getReturnDate());
         contract.setOwner(userService.findUserById(contract.getOwnerId()).getUsername());
         contract.setUserName(userService.findUserById(contract.getUserId()).getUsername());
 
@@ -117,7 +117,7 @@ public class RentController {
         coffer.setPictureName(offer.getPictureName());
         coffer.setLocation(offer.getLocation());
         coffer.setOfferDateTime(ldt.toString());
-        coffer.setReturnDateTime(offer.getReturnDateTime());
+        coffer.setReturnDate(offer.getReturnDate());
         coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
         coffer.setOfferId(id);
@@ -127,29 +127,52 @@ public class RentController {
         return "redirect:/rentimine#pakkumised";
     }
 
-    @RequestMapping(value = "rentimine/offerWish")
-    public String offerWish(@RequestParam int id, RedirectAttributes redirectAttributes) {
+    @RequestMapping(value = "pakusoov/offerWish")
+    public String offerWish(@Valid Offer offer, @RequestParam("id") int id, @RequestParam("file") MultipartFile file, @RequestParam String returnDate, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
         Wish wish = rentService.findWishById(id);
-
+        int userId = userService.findUserByEmail(auth.getName()).getId();
         ContractOffer coffer = new ContractOffer();
 
-        coffer.setItemDesc(wish.getItemDesc());
+        if (file.isEmpty()) {
+            redirectAttributes.addFlashAttribute("failError", "Vali üleslaadimiseks fail");
+            return "redirect:/pakusoov";
+        }
+
+        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
+        try {
+
+            if(filetype.equals("jpg") || filetype.equals("png")) {
+                byte[] bytes = file.getBytes();
+                String failinimi = userService.findUserByEmail(auth.getName()).getUsername()+"coffer"+ThreadLocalRandom.current().nextInt(1, Integer.MAX_VALUE)+"."+filetype;
+                Path path = Paths.get(UPLOADED_FOLDER+failinimi);
+                Files.write(path, bytes);
+                coffer.setPictureName(failinimi);  // lisame pakkumisele pildi
+            } else {
+                redirectAttributes.addFlashAttribute("failError", "Failiformaat peab olema JPG või PNG");
+                return "redirect:/pakusoov";
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        coffer.setItemDesc(offer.getItemDesc());
         coffer.setItemName(wish.getItemName());
-        coffer.setOwnerId(wish.getUserId());
-        coffer.setUserId(userService.findUserByEmail(auth.getName()).getId());
-        coffer.setPictureName(wish.getPictureName());
+        coffer.setOwnerId(userId);
+        coffer.setUserId(wish.getUserId());
         coffer.setLocation(wish.getLocation());
         coffer.setOfferDateTime(ldt.toString());
-        //coffer.setReturnDateTime(wish.getReturnDateTime());
+        coffer.setReturnDate(returnDate);
         coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
         coffer.setWishId(id);
+        coffer.setOfferUserId(userId);
 
         rentService.saveContractOffer(coffer);
 
-        return "redirect:/rentimine#pakkumised";
+        return "redirect:/rentimine";
     }
 
     @RequestMapping(value = "rentimine/removeContract")
@@ -204,31 +227,9 @@ public class RentController {
     }
 
     @RequestMapping(value = "rentimine/addWish")
-    public String addWish(@Valid Wish wish, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+    public String addWish(@Valid Wish wish, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
-
-        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
-        if (file.isEmpty()) {
-            redirectAttributes.addFlashAttribute("failError", "Vali üleslaadimiseks fail");
-            return "redirect:/rentimine";
-        }
-
-        try {
-            if(filetype.equals("jpg") || filetype.equals("png")) {
-                byte[] bytes = file.getBytes();
-                String failinimi = userService.findUserByEmail(auth.getName()).getUsername()+"wish"+ThreadLocalRandom.current().nextInt(1, Integer.MAX_VALUE)+"."+filetype;
-                Path path = Paths.get(UPLOADED_FOLDER+failinimi);
-                Files.write(path, bytes);
-                wish.setPictureName(failinimi); // salvestame soovi pildi info andmebaasi
-            } else {
-                redirectAttributes.addFlashAttribute("failError", "Failiformaat peab olema JPG või PNG");
-                return "redirect:/rentimine";
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         wish.setDatetime(ldt.toString()); // lisame soovile postitamise aja
         wish.setUserId(userService.findUserByEmail(auth.getName()).getId()); // lisame soovile kasutaja id
@@ -239,21 +240,33 @@ public class RentController {
         return "redirect:/rentimine#lisa-soov";
     }
 
+    @RequestMapping(value ="pakusoov")
+    public ModelAndView getOfferWish(@RequestParam("id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName());
+        Offer wishOffer = new Offer();
+
+        modelAndView.addObject(user);
+        modelAndView.addObject("wishId", id);
+        modelAndView.addObject("wishOffer", wishOffer);
+        modelAndView.setViewName("pakusoov");
+
+        return modelAndView;
+    }
+
     @RequestMapping(value ="rentimine/removeOffer")
-    public String removeOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
+    public void removeOffer(@RequestParam int id) {
 
         System.out.println("Offer id on: "+id);
         rentService.removeOffer(rentService.findOfferById(id));
-
-        return "redirect:/rentimine#sinu-pakkumised";
     }
 
     @RequestMapping(value ="rentimine/removeWish")
-    public String removeWish(@RequestParam int id, RedirectAttributes redirectAttributes) {
+    public void removeWish(@RequestParam int id) {
 
         System.out.println("Wish id on: "+id);
         rentService.removeWish(rentService.findWishById(id));
 
-        return "redirect:/rentimine#sinu-soovid";
     }
 }
