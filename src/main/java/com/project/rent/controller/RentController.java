@@ -77,10 +77,10 @@ public class RentController {
         ContractOffer coffer = rentService.findContractOfferById(id);
         Offer offer = rentService.findOfferById(coffer.getOfferId());
         Wish wish = rentService.findWishById(coffer.getWishId());
-        if(offer != null) {
+        if(offer != null) {  // eemaldame pakkumise avalike pakkumiste hulgast
             rentService.removeOffer(offer);
         }
-        if(wish != null) {
+        if(wish != null) {  // eemaldame soovi avalike pakkumiste hulgast
             rentService.removeWish(wish);
         }
 
@@ -88,7 +88,7 @@ public class RentController {
         contract.setItemDesc(coffer.getItemDesc());
         contract.setItemName(coffer.getItemName());
         contract.setOwnerId(coffer.getOwnerId());
-        contract.setUserId(user.getId());
+        contract.setUserId(coffer.getUserId());
         contract.setPictureName(coffer.getPictureName());
         contract.setLocation(coffer.getLocation());
         contract.setRentDateTime(ldt.toString());
@@ -99,7 +99,7 @@ public class RentController {
         rentService.saveContract(contract);
         rentService.removeContractOffer(coffer);
 
-        return "redirect:/rentimine";
+        return "redirect:/rentimine#sinu-lepingud";
     }
 
     @RequestMapping(value = "rentimine/rentOffer")
@@ -107,24 +107,26 @@ public class RentController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
         Offer offer = rentService.findOfferById(id);
+        int userId = userService.findUserByEmail(auth.getName()).getId(); // current auth user id
 
         ContractOffer coffer = new ContractOffer();
 
         coffer.setItemDesc(offer.getItemDesc());
         coffer.setItemName(offer.getItemName());
         coffer.setOwnerId(offer.getUserId());
-        coffer.setUserId(userService.findUserByEmail(auth.getName()).getId());
+        coffer.setUserId(userId);
         coffer.setPictureName(offer.getPictureName());
         coffer.setLocation(offer.getLocation());
         coffer.setOfferDateTime(ldt.toString());
         coffer.setReturnDate(offer.getReturnDate());
-        coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
+        coffer.setUserName(userService.findUserById(userId).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
         coffer.setOfferId(id);
+        coffer.setOfferUserId(userId);
 
         rentService.saveContractOffer(coffer);
 
-        return "redirect:/rentimine#pakkumised";
+        return "redirect:/rentimine#sinu-lepingu-pakkumised";
     }
 
     @RequestMapping(value = "pakusoov/offerWish")
@@ -194,11 +196,12 @@ public class RentController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
 
-        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
         if (file.isEmpty()) {
             redirectAttributes.addFlashAttribute("failError", "Vali üleslaadimiseks fail");
-            return "redirect:/rentimine";
+            return "redirect:/rentimine#lisa-pakkumine";
         }
+
+        String filetype = file.getOriginalFilename().substring(file.getOriginalFilename().length()-3).toLowerCase();
 
         try {
 
@@ -210,7 +213,7 @@ public class RentController {
                 offer.setPictureName(failinimi);  // lisame pakkumisele pildi
             } else {
                 redirectAttributes.addFlashAttribute("failError", "Failiformaat peab olema JPG või PNG");
-                return "redirect:/rentimine";
+                return "redirect:/rentimine#lisa-pakkumine";
             }
 
         } catch (IOException e) {
@@ -223,7 +226,7 @@ public class RentController {
         rentService.saveOffer(offer); // salvestame pakkumise andmebaasi
         redirectAttributes.addFlashAttribute("postSuccess", "Pakkumine on edukalt postitatud!");
 
-        return "redirect:/rentimine#lisa-pakkumine";
+        return "redirect:/rentimine#sinu-pakkumised";
     }
 
     @RequestMapping(value = "rentimine/addWish")
@@ -237,7 +240,7 @@ public class RentController {
         rentService.saveWish(wish); // salvestame pakkumise andmebaasi
         redirectAttributes.addFlashAttribute("postSuccess", "Soov on edukalt postitatud!");
 
-        return "redirect:/rentimine#lisa-soov";
+        return "redirect:/rentimine#sinu-soovid";
     }
 
     @RequestMapping(value ="pakusoov")
@@ -256,17 +259,20 @@ public class RentController {
     }
 
     @RequestMapping(value ="rentimine/removeOffer")
-    public void removeOffer(@RequestParam int id) {
+    public String removeOffer(@RequestParam int id) {
 
         System.out.println("Offer id on: "+id);
         rentService.removeOffer(rentService.findOfferById(id));
+
+        return "redirect:/rentimine#sinu-pakkumised";
     }
 
     @RequestMapping(value ="rentimine/removeWish")
-    public void removeWish(@RequestParam int id) {
+    public String removeWish(@RequestParam int id) {
 
         System.out.println("Wish id on: "+id);
         rentService.removeWish(rentService.findWishById(id));
 
+        return "redirect:/rentimine#sinu-soovid";
     }
 }

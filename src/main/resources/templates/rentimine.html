@@ -11,7 +11,7 @@
     <script src="resources/funktsioonid.js"></script>
     <script src="resources/languagePicker.js"></script>
 </head>
-<body th:object="${user}">
+<body th:object="${user}" onload="loadTab();">
     <ul id="menu">
         <li><a href="profiil" th:text="#{menu.home}">Kodu</a></li>
         <li><a href="rentimine" th:text="#{menu.rent}">Rentimine</a></li>
@@ -42,9 +42,9 @@
                         <li class="active"><a href="#pakkumised" id="pakkumised-tab" data-toggle="tab" th:text="#{rent.offers}">Pakkumised</a></li>
                         <li><a href="#soovid" id="log-tab" data-toggle="tab" th:text="#{rent.wishes}">Soovid</a></li>
                         <li><a href="#sinu-pakkumised" id="sinu-pakkumised-tab" data-toggle="tab" th:text="#{rent.myoffers}">Sinu pakkumised</a></li>
+                        <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu soovid</a></li>
                         <li><a href="#sinu-lepingud" id="sinu-lepingud-tab" data-toggle="tab" th:text="#{rent.mycontracts}">Sinu lepingud</a></li>
                         <li><a href="#sinu-lepingu-pakkumised" id="sinu-lepingupakkumised-tab" data-toggle="tab" th:text="#{rent.mycontractoffers}">Sinu lepingu pakkumised</a></li>
-                        <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu soovid</a></li>
                         <li><a href="#lisa-pakkumine" id="lisa-pakkumine-tab" data-toggle="tab" th:text="#{rent.addoffer}">Lisa pakkumine</a></li>
                         <li><a href="#lisa-soov" id="lisa-soov-tab" data-toggle="tab" th:text="#{rent.addwish}">Lisa soov</a></li>
                     </ul>
@@ -122,7 +122,7 @@
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.location}">Tartu</td>
-                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${wish.pictureName})}" class="img-responsive" alt="pakkumise-pilt"/></td>
+                                    <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${offer.pictureName})}" class="img-responsive" alt="pakkumise-pilt"/></td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${offer.id}" />
@@ -226,7 +226,7 @@
                             </table>
                         </div>
                         <div class="tab-pane fade" id="lisa-pakkumine"> <!----lisa pakkumine tab---->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 text-center mx-auto">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11 text-center mx-auto col-xs-push-1 col-sm-push-1 col-md-push-1">
                                 <form class="form" id="frmAddOffer" th:action="@{rentimine/addOffer}" enctype="multipart/form-data" method="post" th:object="${offer}">
 
                                     <div class="form-group">
@@ -264,6 +264,15 @@
                                         </div>
                                     </div>
 
+                                    <div class="form-group date-picker" id="datepicker">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="price" th:text="#{rent.returndate}">Tagastuskuupäev</label></h4>
+                                            <label th:if="${#fields.hasErrors('returnDate')}" th:errors="*{returnDate}" class="validation-message"></label>
+                                            <input type="text" th:field="*{returnDate}" class="form-control" name="returndate" id="returndate" th:placeholder="#{rent.returndate}" th:title="#{rent.enterReturnDate}" required>
+                                        </div>
+                                    </div>
+
                                     <div class="form-group">
 
                                         <div class="col-xs-10">
@@ -286,7 +295,7 @@
                             </div>
                         </div>
                         <div class="tab-pane fade" id="lisa-soov"> <!----lisa soov tab---->
-                            <div class="col-xs-10 col-sm-10 col-md-10 col-lg-10 mx-auto text-center">
+                            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11 mx-auto text-center col-xs-push-1 col-sm-push-1 col-md-push-1 col-lg-push-1">
                                 <form class="form" id="frmAddWish" th:action="@{rentimine/addWish}" method="post" th:object="${wish}">
 
                                     <div class="form-group">
@@ -333,13 +342,5 @@
             </div>
         </div>
     </div>
-
-    <footer class="page-footer font-small blue">
-
-        <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
-            Rent Me OÜ
-        </div>
-
-    </footer>
 </body>
 </html>

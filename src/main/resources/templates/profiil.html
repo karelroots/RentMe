@@ -53,12 +53,12 @@
                     <img th:src="@{resources/loader.gif}" th:onloadeddata="@{resources/avatars/{image}(image=*{avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/>
                     <h6 th:text="#{profile.changeImage}">Muuda profiilipilti</h6>
                     <form class="form" action="profiil/upload" method="post" enctype="multipart/form-data">
-                        <input type="file" name="file" class="text-center center-block file-upload">
+                        <input type="file" name="file" class="text-center center-block pull-left file-upload">
                         <label th:text="${failError}" class="validation-message"></label>
-                        <input type="submit" class="text-left" th:value="#{profile.save}" th:onsubmit="'submitRefresh(10);'" />
+                        <input type="submit" class="pull-left center-block col-lg-3" th:value="#{profile.save}" th:onsubmit="'submitRefresh(10);'" />
 
                     </form>
-                </div><br>
+                </div><br><br>
 
 
                 <div class="panel panel-default">
