@@ -133,7 +133,7 @@ public class RentController {
     }
 
     @RequestMapping(value = "pakusoov/offerWish")
-    public String offerWish(@Valid Offer offer, @RequestParam("id") int id, @RequestParam("file") MultipartFile file, @RequestParam String returnDate, RedirectAttributes redirectAttributes) {
+    public String offerWish(@Valid Offer offer, @RequestParam("id") int id, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
         Wish wish = rentService.findWishById(id);
@@ -163,7 +163,7 @@ public class RentController {
             e.printStackTrace();
         }
 
-        String rDate = ldt.toLocalDate().plusDays(Integer.parseInt(returnDate)).toString();  // lisame praegusele kuupäevale rendi päevade arvu ja saame tagastuskuupäeva
+        String rDate = ldt.toLocalDate().plusDays(Integer.parseInt(offer.getRentPeriod())).toString();  // lisame praegusele kuupäevale rendi päevade arvu ja saame tagastuskuupäeva
 
         coffer.setItemDesc(offer.getItemDesc());
         coffer.setItemName(wish.getItemName());
@@ -179,7 +179,7 @@ public class RentController {
 
         rentService.saveContractOffer(coffer);
 
-        return "redirect:/rentimine";
+        return "redirect:/rentimine#sinu-lepingu-pakkumised";
     }
 
     @RequestMapping(value = "rentimine/removeContract")
