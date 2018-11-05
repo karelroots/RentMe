@@ -35,7 +35,7 @@ public class ContractOffer {
     private String itemDesc;
 
     @Column(name = "price")
-    private String price;
+    private int price;
 
     @Column(name = "location")
     private String location;

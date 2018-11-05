@@ -44,6 +44,7 @@ public class RentController {
         List<Wish> wishesList = rentService.getWishesList(); // saame kõikide soovide listi
         List<Offer> userOfferList = rentService.getUserOffersList(user.getId()); // saame autoriseeritud kasutaja pakkumised
         List<Wish> userWishList = rentService.getUserWishesList(user.getId()); // saame autoriseeritud kasutaja soovid
+        List<Invoice> userInvoiceList = rentService.getUserInvoiceList(user.getId()); // saame autoriseeritud kasutaja arved
         List<Contract> userOwnerContractList = rentService.getUserOwnerContractList(user.getId());
         List<Contract> userRentContractList = rentService.getUserRentContractList(user.getId());
         List<Contract> userContractList = new ArrayList<>(userOwnerContractList);
@@ -59,6 +60,7 @@ public class RentController {
         modelAndView.addObject("wishes", wishesList);
         modelAndView.addObject("myOffers", userOfferList);
         modelAndView.addObject("myWishes", userWishList);
+        modelAndView.addObject("myInvoices", userInvoiceList);
         modelAndView.addObject("myContracts", userContractList);
         modelAndView.addObject("myContractOffers", userContractOfferList);
         modelAndView.addObject(offer);
@@ -90,13 +92,27 @@ public class RentController {
         contract.setOwnerId(coffer.getOwnerId());
         contract.setUserId(coffer.getUserId());
         contract.setPictureName(coffer.getPictureName());
+        contract.setPrice(coffer.getPrice());
         contract.setLocation(coffer.getLocation());
         contract.setRentDateTime(ldt.toString());
         contract.setReturnDate(coffer.getReturnDate());
         contract.setOwner(userService.findUserById(contract.getOwnerId()).getUsername());
         contract.setUserName(userService.findUserById(contract.getUserId()).getUsername());
 
+        Invoice invoice = new Invoice();
+        invoice.setDatetime(ldt.toString());
+        invoice.setItemDesc(contract.getItemDesc());
+        invoice.setItemName(contract.getItemName());
+        invoice.setPayeeId(contract.getOwnerId());
+        invoice.setPayerId(contract.getUserId());
+        invoice.setSum(contract.getPrice());
+        invoice.setPayee(contract.getOwner());
+        invoice.setPayer(contract.getUserName());
+        invoice.setPayBy(ldt.toLocalDate().plusDays(3).toString());  // maksmistähtaeg 3 päeva peale arve loomist
+        invoice.setPaid(false); // alguses on arve maksmata
+
         rentService.saveContract(contract);
+        rentService.saveInvoice(invoice);
         rentService.removeContractOffer(coffer);
 
         return "redirect:/rentimine#sinu-lepingud";
@@ -124,6 +140,7 @@ public class RentController {
         coffer.setReturnDate(returnDate);
         coffer.setUserName(userService.findUserById(userId).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
+        coffer.setPrice(offer.getPrice());
         coffer.setOfferId(id);
         coffer.setOfferUserId(userId);
 
@@ -172,6 +189,7 @@ public class RentController {
         coffer.setLocation(wish.getLocation());
         coffer.setOfferDateTime(ldt.toString());
         coffer.setReturnDate(rDate);
+        coffer.setPrice(offer.getPrice());
         coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
         coffer.setWishId(id);
@@ -266,7 +284,6 @@ public class RentController {
     @RequestMapping(value ="rentimine/removeOffer")
     public String removeOffer(@RequestParam int id) {
 
-        System.out.println("Offer id on: "+id);
         rentService.removeOffer(rentService.findOfferById(id));
 
         return "redirect:/rentimine#sinu-pakkumised";
@@ -275,9 +292,19 @@ public class RentController {
     @RequestMapping(value ="rentimine/removeWish")
     public String removeWish(@RequestParam int id) {
 
-        System.out.println("Wish id on: "+id);
         rentService.removeWish(rentService.findWishById(id));
 
         return "redirect:/rentimine#sinu-soovid";
+    }
+
+    @RequestMapping(value ="rentimine/payInvoice")
+    public String payInvoice(@RequestParam int id) {
+
+        Invoice paidInvoice = rentService.findInvoiceById(id);
+        paidInvoice.setPaid(true);
+        paidInvoice.setPaidAt(LocalDateTime.now().toLocalDate().toString());
+        rentService.saveInvoice(paidInvoice);
+
+        return "redirect:/rentimine#sinu-arved";
     }
 }

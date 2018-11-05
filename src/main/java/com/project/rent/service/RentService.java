@@ -1,9 +1,6 @@
 package com.project.rent.service;
 
-import com.project.rent.model.Contract;
-import com.project.rent.model.ContractOffer;
-import com.project.rent.model.Offer;
-import com.project.rent.model.Wish;
+import com.project.rent.model.*;
 import com.project.rent.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,14 +15,18 @@ public class RentService {
     private UserRepository userRepository;
     private ContractRepository contractRepository;
     private ContractOfferRepository contractOfferRepository;
+    private InvoiceRepository invoiceRepository;
 
     @Autowired
-    public RentService(OfferRepository offerRepository, WishRepository wishRepository, UserRepository userRepository, ContractRepository contractRepository, ContractOfferRepository contractOfferRepository) {
+    public RentService(OfferRepository offerRepository, WishRepository wishRepository,
+                       UserRepository userRepository, ContractRepository contractRepository,
+                       ContractOfferRepository contractOfferRepository, InvoiceRepository invoiceRepository) {
         this.offerRepository = offerRepository;
         this.wishRepository = wishRepository;
         this.userRepository = userRepository;
         this.contractRepository = contractRepository;
         this.contractOfferRepository = contractOfferRepository;
+        this.invoiceRepository = invoiceRepository;
     }
 
     public Offer findOfferByUserId(int id) {
@@ -48,6 +49,8 @@ public class RentService {
 
     public ContractOffer findContractOfferById(int id) { return contractOfferRepository.findContractOfferById(id); }
 
+    public Invoice findInvoiceById(int id) { return invoiceRepository.findInvoiceById(id); }
+
     public void saveOffer(Offer offer) {
         offerRepository.save(offer);
     }
@@ -59,6 +62,9 @@ public class RentService {
     public void saveContract(Contract contract) { contractRepository.save(contract); }
 
     public void saveContractOffer(ContractOffer offer) { contractOfferRepository.save(offer); }
+
+    public void saveInvoice(Invoice invoice) { invoiceRepository.save(invoice);
+    }
 
     public void removeContract(Contract contract) {
         contractRepository.delete(contract);
@@ -121,6 +127,18 @@ public class RentService {
         }
 
         return userWishes;
+    }
+
+    public List<Invoice> getUserInvoiceList(int id) {
+        List<Invoice> invoices = invoiceRepository.findAll();
+        List<Invoice> userInvoices = new ArrayList<>();
+
+        for(Invoice invoice:invoices) {
+            if(invoice.getPayerId() == id) {
+                userInvoices.add(invoice);
+            }
+        }
+        return userInvoices;
     }
 
     public List<Contract> getUserOwnerContractList(int id) {

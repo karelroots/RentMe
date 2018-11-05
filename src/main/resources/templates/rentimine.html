@@ -31,11 +31,11 @@
     </ul>
 
     <div class="container">
-        <div class="page-header col-xs-10 col-sm-10 col-md-10 col-lg-10">
+        <div class="page-header col-xs-12 col-sm-12 col-md-12 col-lg-11">
             <h1 class="text-center" th:text="#{rent.head}">Rentimine</h1>
         </div>
 
-        <div class="col-xs-12 col-sm-12 col-lg-10"> <!-----Siit algab konteineri veerg---->
+        <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11"> <!-----Siit algab konteineri veerg---->
             <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
                 <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
                     <ul class="nav nav-tabs"> <!----tabide valiku list--->
@@ -45,6 +45,7 @@
                         <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu soovid</a></li>
                         <li><a href="#sinu-lepingud" id="sinu-lepingud-tab" data-toggle="tab" th:text="#{rent.mycontracts}">Sinu lepingud</a></li>
                         <li><a href="#sinu-lepingu-pakkumised" id="sinu-lepingupakkumised-tab" data-toggle="tab" th:text="#{rent.mycontractoffers}">Sinu lepingu pakkumised</a></li>
+                        <li><a href="#sinu-arved" id="sinu-arved-tab" data-toggle="tab" th:text="#{rent.myInvoices}">Sinu lepingu pakkumised</a></li>
                         <li><a href="#lisa-pakkumine" id="lisa-pakkumine-tab" data-toggle="tab" th:text="#{rent.addoffer}">Lisa pakkumine</a></li>
                         <li><a href="#lisa-soov" id="lisa-soov-tab" data-toggle="tab" th:text="#{rent.addwish}">Lisa soov</a></li>
                     </ul>
@@ -198,7 +199,8 @@
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeContract/}" method="post">
                                             <input type="hidden" name="id" th:value="${contract.id}" />
-                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
+                                            <button th:if="${user.id == contract.userId}" class="btn btn-sm btn-primary btn-block" name="Submit" value="Return" type="Submit" th:text="#{rent.return}">Tagasta</button>
+                                            <button th:if="${user.id != contract.userId}" class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -215,6 +217,7 @@
                                     <th th:text="#{profile.location}">Asukoht</th>
                                     <th th:text="#{rent.owner}">Omanik</th>
                                     <th th:text="#{rent.description}">Kirjeldus</th>
+                                    <th th:text="#{rent.price}">12</th>
                                     <th th:text="#{rent.returndate}">Tagastuskuupäev</th>
                                     <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
@@ -227,6 +230,7 @@
                                     <td th:text="${contractOffer.location}">Tartu</td>
                                     <td th:text="${contractOffer.owner}">Sina</td>
                                     <td th:title="${contractOffer.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
+                                    <td th:text="${contractOffer.price}">12</td>
                                     <td th:text="${contractOffer.returnDate}">12.12.12</td>
                                     <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${contractOffer.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td th:if="${user.id} != ${contractOffer.offerUserId}">
@@ -239,6 +243,39 @@
                                         <form class="form" th:action="@{rentimine/removeContractOffer/}" method="post">
                                             <input type="hidden" name="id" th:value="${contractOffer.id}" />
                                             <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Delete" type="Submit" th:text="#{rent.cancel}">Tühista</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="tab-pane fade" id="sinu-arved"> <!----sinu arvete tab---->
+                            <table class="table">
+                                <thead>
+                                <tr id="myinvoices-head">
+                                    <th th:text="#{rent.created}">Pakkumise aeg</th>
+                                    <th th:text="#{rent.owner}">Arve esitaja</th>
+                                    <th th:text="#{rent.itemName}">Eseme nimi</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
+                                    <th th:text="#{rent.sum}">Kirjeldus</th>
+                                    <th th:text="#{rent.payBy}">Maksetähtaeg</th>
+                                    <th th:text="#{rent.paidAt}">Makstud</th>
+
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr th:each="invoice : ${myInvoices}"> <!--kuvame kõik kasutaja omaniku lepingu pakkumised lepingute list objektist-->
+                                    <td th:text="${invoice.datetime}">13.10.2018</td>
+                                    <td th:text="${invoice.payee}">Kasutajanimi</td>
+                                    <td th:text="${invoice.itemName}">Saabas</td>
+                                    <td th:title="${invoice.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
+                                    <td th:text="${invoice.sum}">123</td>
+                                    <td th:text="${invoice.payBy}">12.12.12</td>
+                                    <td th:if="${invoice.paid}" th:text="${invoice.paidAt}">12.12.12</td>
+                                    <td th:if="${!invoice.paid}">
+                                        <form class="form" th:action="@{rentimine/payInvoice/}" method="post">
+                                            <input type="hidden" name="id" th:value="${invoice.id}" />
+                                            <button class="btn btn-sm btn-primary btn-block" name="Submit" value="Pay" type="Submit" th:text="#{rent.pay}">Maksa</button>
                                         </form>
                                     </td>
                                 </tr>
