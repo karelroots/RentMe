@@ -186,14 +186,14 @@ public class RentController {
     public String removeContract(@RequestParam int id, RedirectAttributes redirectAttributes) {
         rentService.removeContract(rentService.findContractById(id));
 
-        return "redirect:/rentimine#sinu-pakkumised";  // muuda seda!
+        return "redirect:/rentimine#sinu-lepingud";
     }
 
     @RequestMapping(value = "rentimine/removeContractOffer")
     public String removeContractOffer(@RequestParam int id, RedirectAttributes redirectAttributes) {
         rentService.removeContractOffer(rentService.findContractOfferById(id));
 
-        return "redirect:/rentimine#sinu-pakkumised";  // muuda seda!
+        return "redirect:/rentimine#sinu-lepingu-pakkumised";
     }
 
     @RequestMapping(value = "rentimine/addOffer")
