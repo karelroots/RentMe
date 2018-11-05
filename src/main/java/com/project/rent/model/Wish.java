@@ -29,6 +29,9 @@ public class Wish {
     @Column(name = "time")
     private String datetime;
 
+    @Column(name = "rentperiod")
+    private int rentPeriod;
+
     @Column(name = "item_picture")
     private String pictureName;
 

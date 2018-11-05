@@ -60,16 +60,20 @@
                                     <th th:text="#{profile.userName}">Kasutajanimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
                                     <th th:text="#{rent.price}">15</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
+                                    <th th:text="#{rent.rentPeriod}">Periood</th>
                                     <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
                                 </thead>
                                 <tbody> <!----tabeli keha---->
                                 <tr th:each="offer : ${offers}"> <!--kuvame kõik pakkumised pakkumiste list objektist-->
                                     <td th:text="${offer.datetime}">13.10.2018</td>
-                                    <td th:text="${offer.itemName}">Saabas</td>
+                                    <td th:title="${offer.itemDesc}" th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.userName}">Kasutajanimi</td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td th:text="${offer.price}">12345</td>
+                                    <td th:title="${offer.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
+                                    <td th:text="${offer.rentPeriod}">30</td>
                                     <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${offer.pictureName})}" class="img-responsive" alt="pakkumise-pilt"/></td>
                                     <td th:if="${user.id} != ${offer.userId}">
                                         <form class="form" th:action="@{rentimine/rentOffer/}" method="post">
@@ -89,14 +93,18 @@
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.userName}">Kasutajanimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
+                                    <th th:text="#{rent.rentPeriod}">30</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr th:each="wish : ${wishes}"> <!--kuvame kõik soovid soovide list objektist-->
                                     <td th:text="${wish.datetime}">13.10.2018</td>
-                                    <td th:text="${wish.itemName}">Saabas</td>
+                                    <td th:title="${wish.itemDesc}" th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.userName}">Kasutajanimi</td>
                                     <td th:text="${wish.location}">Tartu</td>
+                                    <td th:title="${wish.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
+                                    <th th:text="${wish.rentPeriod}">30</th>
                                     <td th:if="${user.id} != ${wish.userId}">
                                         <form class="form" th:action="@{pakusoov}" method="post">
                                         <input type="hidden" name="id" th:value="${wish.id}" />
@@ -114,6 +122,8 @@
                                     <th th:text="#{rent.dateTime}">Postitamise aeg</th>
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
+                                    <th th:text="#{rent.rentPeriod}">Periood</th>
                                     <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
                                 </thead>
@@ -122,6 +132,8 @@
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:text="${offer.itemName}">Saabas</td>
                                     <td th:text="${offer.location}">Tartu</td>
+                                    <td th:title="${offer.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
+                                    <td th:text="${offer.rentPeriod}">30</td>
                                     <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${offer.pictureName})}" class="img-responsive" alt="pakkumise-pilt"/></td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeOffer/}" method="post">
@@ -140,6 +152,8 @@
                                     <th th:text="#{rent.dateTime}">Postitamise aeg</th>
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
+                                    <th th:text="#{rent.rentPeriod}">30</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -147,6 +161,8 @@
                                     <td th:text="${wish.datetime}">13.10.2018</td>
                                     <td th:text="${wish.itemName}">Saabas</td>
                                     <td th:text="${wish.location}">Tartu</td>
+                                    <td th:title="${wish.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
+                                    <th th:text="${wish.rentPeriod}">30</th>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeWish}" method="post">
                                             <input type="hidden" name="id" th:value="${wish.id}" />
@@ -161,11 +177,12 @@
                             <table class="table">
                                 <thead>
                                 <tr id="mycontract-head">
-                                    <th th:text="#{rent.dateTime}">Rentimise aeg</th>
+                                    <th th:text="#{rent.signedAt}">Rentimise aeg</th>
                                     <th th:text="#{rent.user}">Rentija kasutajanimi</th>
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
                                     <th th:text="#{rent.owner}">Omanik</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
                                     <th th:text="#{rent.returndate}">Tagastuskuupäev</th>
                                 </tr>
                                 </thead>
@@ -176,6 +193,7 @@
                                     <td th:text="${contract.itemName}">Saabas</td>
                                     <td th:text="${contract.location}">Tartu</td>
                                     <td th:text="${contract.owner}">Sina</td>
+                                    <td th:title="${contract.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <td th:text="${contract.returnDate}">13.10.2018</td>
                                     <td>
                                         <form class="form" th:action="@{rentimine/removeContract/}" method="post">
@@ -196,6 +214,7 @@
                                     <th th:text="#{rent.itemName}">Eseme nimi</th>
                                     <th th:text="#{profile.location}">Asukoht</th>
                                     <th th:text="#{rent.owner}">Omanik</th>
+                                    <th th:text="#{rent.description}">Kirjeldus</th>
                                     <th th:text="#{rent.returndate}">Tagastuskuupäev</th>
                                     <th th:text="#{rent.picture}">Pilt</th>
                                 </tr>
@@ -207,6 +226,7 @@
                                     <td th:text="${contractOffer.itemName}">Saabas</td>
                                     <td th:text="${contractOffer.location}">Tartu</td>
                                     <td th:text="${contractOffer.owner}">Sina</td>
+                                    <td th:title="${contractOffer.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <td th:text="${contractOffer.returnDate}">12.12.12</td>
                                     <td class="col-xs-1"><img th:src="@{resources/images/{image}(image=${contractOffer.pictureName})}" class="img-responsive" alt="soovipilt"/></td>
                                     <td th:if="${user.id} != ${contractOffer.offerUserId}">
@@ -264,12 +284,12 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group date-picker" id="datepicker">
+                                    <div class="form-group">
 
                                         <div class="col-xs-10">
-                                            <h4><label for="price" th:text="#{rent.returndate}">Tagastuskuupäev</label></h4>
-                                            <label th:if="${#fields.hasErrors('returnDate')}" th:errors="*{returnDate}" class="validation-message"></label>
-                                            <input type="text" th:field="*{returnDate}" class="form-control" name="returndate" id="returndate" th:placeholder="#{rent.returndate}" th:title="#{rent.enterReturnDate}" required>
+                                            <h4><label for="rentPeriod2" th:text="#{rent.rentPeriod}">Rendiperiood</label></h4>
+                                            <label th:if="${#fields.hasErrors('rentPeriod')}" th:errors="*{rentPeriod}" class="validation-message"></label>
+                                            <input type="text" th:field="*{rentPeriod}" class="form-control" name="rentPeriod2" id="rentPeriod2" th:placeholder="#{rent.rentPeriod}" th:title="#{rent.enterRentPeriod}" required>
                                         </div>
                                     </div>
 
@@ -313,6 +333,15 @@
                                             <h4><label for="location2" th:text="#{profile.location}">Asukoht</label></h4>
                                             <label th:if="${#fields.hasErrors('location')}" th:errors="*{location}" class="validation-message"></label>
                                             <input type="text" th:field="*{location}" class="form-control" id="location2" th:placeholder="#{profile.location}" th:title="#{rent.enterLocation}" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+
+                                        <div class="col-xs-10">
+                                            <h4><label for="rentPeriod" th:text="#{rent.rentPeriod}">Rendiperiood</label></h4>
+                                            <label th:if="${#fields.hasErrors('rentPeriod')}" th:errors="*{rentPeriod}" class="validation-message"></label>
+                                            <input type="text" th:field="*{rentPeriod}" class="form-control" name="rentPeriod" id="rentPeriod" th:placeholder="#{rent.rentPeriod}" th:title="#{rent.enterRentPeriod}" required>
                                         </div>
                                     </div>
 

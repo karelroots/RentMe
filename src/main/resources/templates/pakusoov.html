@@ -102,9 +102,9 @@
                 <div class="form-group">
 
                     <div class="col-xs-10">
-                        <h4><label for="price" th:text="#{rent.returndate}">Tagastuskuupäev</label></h4>
-                        <label th:if="${#fields.hasErrors('price')}" th:errors="*{returnDate}" class="validation-message"></label>
-                        <input type="text" th:field="*{returnDate}" class="form-control" name="returnDate" id="returnDate" th:placeholder="#{rent.returndate}" th:title="#{rent.enterRe}" required>
+                        <h4><label for="rentPeriod" th:text="#{rent.rentPeriod}">Rendiperiood</label></h4>
+                        <label th:if="${#fields.hasErrors('returnDate')}" th:errors="*{returnDate}" class="validation-message"></label>
+                        <input type="text" th:field="*{returnDate}" class="form-control" name="rentPeriod" id="rentPeriod" th:placeholder="#{rent.rentPeriod}" th:title="#{rent.enterRentPeriod}" required>
                     </div>
                 </div>
 

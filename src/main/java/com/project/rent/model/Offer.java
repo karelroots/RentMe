@@ -32,8 +32,8 @@ public class Offer {
     @Column(name = "time")
     private String datetime;
 
-    @Column(name = "return_date")
-    private String returnDate;
+    @Column(name = "rent_period")
+    private String rentPeriod;
 
     @Column(name = "item_picture")
     private String pictureName;

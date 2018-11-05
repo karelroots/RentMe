@@ -111,6 +111,9 @@ public class RentController {
 
         ContractOffer coffer = new ContractOffer();
 
+        // arvutame tagastuskuupäeva lisades praegusele kuupäevale rendipäevade arvu
+        String returnDate = ldt.toLocalDate().plusDays(Integer.parseInt(offer.getRentPeriod())).toString();
+
         coffer.setItemDesc(offer.getItemDesc());
         coffer.setItemName(offer.getItemName());
         coffer.setOwnerId(offer.getUserId());
@@ -118,7 +121,7 @@ public class RentController {
         coffer.setPictureName(offer.getPictureName());
         coffer.setLocation(offer.getLocation());
         coffer.setOfferDateTime(ldt.toString());
-        coffer.setReturnDate(offer.getReturnDate());
+        coffer.setReturnDate(returnDate);
         coffer.setUserName(userService.findUserById(userId).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
         coffer.setOfferId(id);
@@ -160,13 +163,15 @@ public class RentController {
             e.printStackTrace();
         }
 
+        String rDate = ldt.toLocalDate().plusDays(Integer.parseInt(returnDate)).toString();  // lisame praegusele kuupäevale rendi päevade arvu ja saame tagastuskuupäeva
+
         coffer.setItemDesc(offer.getItemDesc());
         coffer.setItemName(wish.getItemName());
         coffer.setOwnerId(userId);
         coffer.setUserId(wish.getUserId());
         coffer.setLocation(wish.getLocation());
         coffer.setOfferDateTime(ldt.toString());
-        coffer.setReturnDate(returnDate);
+        coffer.setReturnDate(rDate);
         coffer.setUserName(userService.findUserById(coffer.getUserId()).getUsername());
         coffer.setOwner(userService.findUserById(coffer.getOwnerId()).getUsername());
         coffer.setWishId(id);
