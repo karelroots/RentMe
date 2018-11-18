@@ -26,4 +26,12 @@ function loadTab() { // open #tab when loading page
         window.location.hash = e.target.hash;
     })
     window.scrollTo(0, 0)
+    //document.getElementById("link").addEventListener("click", openNew, false);
+}
+
+function openNew() {
+    var strWindowFeatures = "location=yes,height=570,width=520,scrollbars=yes,status=yes";
+    var URL = "http://"+window.location.hostname+window.location.port+this.data;
+    console.log(URL);
+    window.open(URL, "_blank", strWindowFeatures);
 }

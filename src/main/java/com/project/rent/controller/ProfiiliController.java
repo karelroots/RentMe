@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,6 +36,22 @@ public class ProfiiliController {
         //modelAndView.addObject("offerCount", statsService.getUserOffers(user.getId())); // lisame lehele kasutaja pakkumiste arvu
         //modelAndView.addObject("wishCount", statsService.getUserWishes(user.getId())); // lisame lehele kasutaja soovide arvu
         modelAndView.setViewName("profiil");
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/kasutajaprofiil/{user_id}", method = RequestMethod.GET)
+    public ModelAndView getKasutajaProfiil(@PathVariable("user_id") int id) {
+        ModelAndView modelAndView = new ModelAndView();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = userService.findUserByEmail(auth.getName()); // authitud kasutaja
+        User profileUser = userService.findUserById(id); // kuvatava profiili kasutaja
+
+        System.out.println(profileUser.getAvatarName());
+
+        modelAndView.addObject(user);
+        modelAndView.addObject("profileUser", profileUser);
+        modelAndView.setViewName("kasutajaprofiil");
+
         return modelAndView;
     }
 

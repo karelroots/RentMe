@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="et" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head onload="fallback();"> <!--Kui CDN failid pole kättesaadavad, siis kasutame lokaalseid faile-->
+    <title th:text="#{title.profile}">Rent.me | Profiil</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/resources/style.css" />
+    <link rel="stylesheet" href="/resources/kasutajaprofiil.css" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="/resources/funktsioonid.js"></script>
+    <script src="/resources/languagePicker.js"></script>
+    <script src="/resources/lazyLoad.js"></script>
+</head>
+
+<body th:object="${profileUser}">
+<ul>
+    <li><a href="/profiil" th:text="#{menu.home}">Kodu</a></li>
+    <li><a href="/rentimine" th:text="#{menu.rent}">Rentimine</a></li>
+    <!--näitame ainult administraatorile-->
+    <div th:if="${user.isAdmin()}">
+        <li><a href="/statistika" th:text="#{menu.stats}">Statistika</a></li>
+    </div>
+
+    <li id="lang">
+        <select id="locales" class="selectpicker" data-style="btn-primary">
+            <option th:text="#{lang.pick}"></option>
+            <option value="ee" th:text="#{lang.ee}">Estonian</option>
+            <option value="en" th:text="#{lang.en}">English</option>
+        </select>
+    </li>
+
+    <li id="logout"><a class="active" href="/logout" th:text="#{menu.logout}">Logout</a></li>
+</ul>
+
+<hr>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-sm-12 col-md-6 col-lg-6 col-xs-offset-0 col-sm-offset-0 col-md-offset-3 col-lg-offset-3 toppad" >
+            <div class="panel panel-info">
+                <div class="panel-heading">
+                    <h3 class="panel-title" th:text="*{username}">Kasutajanimi</h3>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3 " align="center"> <img th:src="@{/resources/avatars/{image}(image=*{avatarName})}" class="avatar img-circle img-thumbnail" alt="profiilipilt"/> </div>
+
+                        <div class=" col-md-9 col-lg-9 ">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td th:text="#{profile.firstName}">Eesnimi:</td>
+                                        <td th:text="*{name}">Nimi</td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="#{profile.lastName}">Perenimi:</td>
+                                        <td th:text="*{lastName}">Nimi</td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="#{profile.telephone}">Telefon:</td>
+                                        <td th:text="*{telephone}">555555</td>
+                                    </tr>
+
+                                    <tr>
+                                        <td th:text="#{profile.email}">E-mail:</td>
+                                        <td><a th:text="*{email}" th:href="'mailto:'+*{email}">a@b.ee</a></td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="#{profile.location}">Asukoht:</td>
+                                        <td th:placeholder="*{location}">Tartu</td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="#{profile.offers}">Pakkumisi:</td>
+                                        <td>0</td>
+                                    </tr>
+                                    <tr>
+                                        <td th:text="#{profile.wishes}">Soove:</td>
+                                        <td>0</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<footer class="page-footer font-small blue">
+
+    <div class="well hidden-sm hidden-xs footer-copyright text-center py-3">© 2018 Copyright:
+        Rent Me OÜ
+    </div>
+
+</footer>
+
+</body>
+</html>

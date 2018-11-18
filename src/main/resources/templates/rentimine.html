@@ -10,6 +10,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="resources/funktsioonid.js"></script>
     <script src="resources/languagePicker.js"></script>
+
 </head>
 <body th:object="${user}" onload="loadTab();">
     <ul id="menu">
@@ -70,7 +71,9 @@
                                 <tr th:each="offer : ${offers}"> <!--kuvame kõik pakkumised pakkumiste list objektist-->
                                     <td th:text="${offer.datetime}">13.10.2018</td>
                                     <td th:title="${offer.itemDesc}" th:text="${offer.itemName}">Saabas</td>
-                                    <td th:text="${offer.userName}">Kasutajanimi</td>
+                                    <td>
+                                        <a id="link" th:text="${offer.userName}" th:href="@{/kasutajaprofiil/{id}(id=${offer.userId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:text="${offer.location}">Tartu</td>
                                     <td th:text="${offer.price}">12345</td>
                                     <td th:title="${offer.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
@@ -102,7 +105,9 @@
                                 <tr th:each="wish : ${wishes}"> <!--kuvame kõik soovid soovide list objektist-->
                                     <td th:text="${wish.datetime}">13.10.2018</td>
                                     <td th:title="${wish.itemDesc}" th:text="${wish.itemName}">Saabas</td>
-                                    <td th:text="${wish.userName}">Kasutajanimi</td>
+                                    <td>
+                                        <a th:text="${wish.userName}" th:href="@{/kasutajaprofiil/{id}(id=${wish.userId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:text="${wish.location}">Tartu</td>
                                     <td th:title="${wish.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <th th:text="${wish.rentPeriod}">30</th>
@@ -190,10 +195,14 @@
                                 <tbody>
                                 <tr th:each="contract : ${myContracts}"> <!--kuvame kõik kasutaja lepingud lepingute list objektist-->
                                     <td th:text="${contract.rentDateTime}">13.10.2018</td>
-                                    <td th:text="${contract.userName}">Kasutajanimi</td>
+                                    <td>
+                                        <a th:text="${contract.userName}" th:href="@{/kasutajaprofiil/{id}(id=${contract.userId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:text="${contract.itemName}">Saabas</td>
                                     <td th:text="${contract.location}">Tartu</td>
-                                    <td th:text="${contract.owner}">Sina</td>
+                                    <td>
+                                        <a th:text="${wish.owner}" th:href="@{/kasutajaprofiil/{id}(id=${contract.ownerId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:title="${contract.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <td th:text="${contract.returnDate}">13.10.2018</td>
                                     <td>
@@ -225,10 +234,14 @@
                                 <tbody>
                                 <tr th:each="contractOffer : ${myContractOffers}"> <!--kuvame kõik kasutaja omaniku lepingu pakkumised lepingute list objektist-->
                                     <td th:text="${contractOffer.offerDateTime}">13.10.2018</td>
-                                    <td th:text="${contractOffer.userName}">Kasutajanimi</td>
+                                    <td>
+                                        <a th:text="${contractOffer.userName}" th:href="@{/kasutajaprofiil/{id}(id=${wish.userId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:text="${contractOffer.itemName}">Saabas</td>
                                     <td th:text="${contractOffer.location}">Tartu</td>
-                                    <td th:text="${contractOffer.owner}">Sina</td>
+                                    <td>
+                                        <a th:text="${contractOffer.owner}" th:href="@{/kasutajaprofiil/{id}(id=${contractOffer.offerId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:title="${contractOffer.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <td th:text="${contractOffer.price}">12</td>
                                     <td th:text="${contractOffer.returnDate}">12.12.12</td>
@@ -266,7 +279,9 @@
                                 <tbody>
                                 <tr th:each="invoice : ${myInvoices}"> <!--kuvame kõik kasutaja omaniku lepingu pakkumised lepingute list objektist-->
                                     <td th:text="${invoice.datetime}">13.10.2018</td>
-                                    <td th:text="${invoice.payee}">Kasutajanimi</td>
+                                    <td>
+                                        <a th:text="${invoice.payee}" th:href="@{/kasutajaprofiil/{id}(id=${invoice.payeeId})}">Kasutajanimi</a>
+                                    </td>
                                     <td th:text="${invoice.itemName}">Saabas</td>
                                     <td th:title="${invoice.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <td th:text="${invoice.sum}">123</td>
