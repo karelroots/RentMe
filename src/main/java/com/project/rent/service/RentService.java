@@ -10,17 +10,17 @@ import java.util.List;
 
 @Service("rentService")
 public class RentService {
-    private OfferRepository offerRepository;
-    private WishRepository wishRepository;
-    private UserRepository userRepository;
-    private ContractRepository contractRepository;
-    private ContractOfferRepository contractOfferRepository;
-    private InvoiceRepository invoiceRepository;
+    private final OfferRepository offerRepository;
+    private final WishRepository wishRepository;
+    private final UserRepository userRepository;
+    private final ContractRepository contractRepository;
+    private final ContractOfferRepository contractOfferRepository;
+    private final InvoiceRepository invoiceRepository;
 
     @Autowired
-    public RentService(OfferRepository offerRepository, WishRepository wishRepository,
-                       UserRepository userRepository, ContractRepository contractRepository,
-                       ContractOfferRepository contractOfferRepository, InvoiceRepository invoiceRepository) {
+    public RentService(@Autowired OfferRepository offerRepository, @Autowired WishRepository wishRepository,
+                       @Autowired UserRepository userRepository, @Autowired ContractRepository contractRepository,
+                       @Autowired ContractOfferRepository contractOfferRepository, @Autowired InvoiceRepository invoiceRepository) {
         this.offerRepository = offerRepository;
         this.wishRepository = wishRepository;
         this.userRepository = userRepository;

@@ -17,13 +17,16 @@ import java.util.List;
 
 @Service("statsService")
 public class StatsService {
-    private UserLogRepository userLogRepository;
-    private UserRepository userRepository;
-    private OfferRepository offerRepository;
-    private WishRepository wishRepository;
+    private final UserLogRepository userLogRepository;
+    private final UserRepository userRepository;
+    private final OfferRepository offerRepository;
+    private final WishRepository wishRepository;
 
     @Autowired
-    public StatsService(UserLogRepository userLogRepository, UserRepository userRepository, OfferRepository offerRepository, WishRepository wishRepository) {
+    public StatsService(@Autowired UserLogRepository userLogRepository,
+                        @Autowired UserRepository userRepository,
+                        @Autowired OfferRepository offerRepository,
+                        @Autowired WishRepository wishRepository) {
         this.userLogRepository = userLogRepository;
         this.userRepository = userRepository;
         this.offerRepository = offerRepository;
