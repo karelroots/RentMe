@@ -201,7 +201,8 @@
                                     <td th:text="${contract.itemName}">Saabas</td>
                                     <td th:text="${contract.location}">Tartu</td>
                                     <td>
-                                        <a th:text="${wish.owner}" th:href="@{/kasutajaprofiil/{id}(id=${contract.ownerId})}">Kasutajanimi</a>
+                                        <a th:text="${contract.owner}"
+                                           th:href="@{/kasutajaprofiil/{id}(id=${contract.ownerId})}">Kasutajanimi</a>
                                     </td>
                                     <td th:title="${contract.itemDesc}"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></td>
                                     <td th:text="${contract.returnDate}">13.10.2018</td>

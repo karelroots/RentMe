@@ -150,7 +150,7 @@ public class RentController {
         return "redirect:/rentimine#sinu-lepingu-pakkumised";
     }
 
-    @RequestMapping(value = "pakusoov/offerWish")
+    @RequestMapping(value = "pakusoov/offerWish", method = RequestMethod.POST)
     public String offerWish(@Valid Offer offer, @RequestParam("id") int id, @RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         LocalDateTime ldt = LocalDateTime.now();
@@ -267,7 +267,7 @@ public class RentController {
         return "redirect:/rentimine#sinu-soovid";
     }
 
-    @RequestMapping(value ="pakusoov", method = RequestMethod.GET)
+    @RequestMapping(value ="pakusoov", method = RequestMethod.POST)
     public ModelAndView getOfferWish(@RequestParam("id") int id) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

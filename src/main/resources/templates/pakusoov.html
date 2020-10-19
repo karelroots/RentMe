@@ -119,9 +119,11 @@
                 <div class="form-group">
                     <div class="col-xs-10 col-sm-10 col-md-9 col-lg-10">
                         <br>
-                        <input type="hidden" name="id" th:value="${wishId}" />
-                        <button class="btn btn-md btn-primary btn-block" type="submit" th:text="#{offerWish.send}"> Saada</button>
-                        <button class="btn btn-md btn-primary btn-block" type="reset" th:onclick="'formReset();'" th:text="#{profile.reset}"> Tühista</button>
+                        <form class="form" th:action="@{pakusoov/offerWish}" method="post">
+                            <input type="hidden" name="id" th:value="${wishId}" />
+                            <button class="btn btn-md btn-primary btn-block" type="submit" th:text="#{offerWish.send}"> Saada</button>
+                            <button class="btn btn-md btn-primary btn-block" type="reset" th:onclick="'formReset();'" th:text="#{profile.reset}"> Tühista</button>
+                        </form>
                     </div>
                 </div>
 
