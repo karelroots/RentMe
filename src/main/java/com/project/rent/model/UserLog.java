@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 @Data
 @Entity
-@Table(name = "userslog")
+@Table(name = "user_log")
 public class UserLog implements Comparable<UserLog> {
 
     @Id

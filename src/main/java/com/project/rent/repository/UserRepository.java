@@ -12,7 +12,7 @@ public interface UserRepository extends JpaRepository<User, Long> { // siin asuv
     User findByUsername(String username);
 
     @Query(
-            value = "SELECT count(*) FROM userAuth", // userAuth on andmebaasis vaade
+            value = "SELECT count(*) FROM user_auth", // userAuth on andmebaasis vaade
             nativeQuery = true)
     String findCount();
 }
