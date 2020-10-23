@@ -167,4 +167,11 @@ public class RentService {
         wishRepository.save(wish);
     }
 
+    public List<Offer> getOffersContaining(String searchQuery) {
+        Offer BANANA1 = Offer.builder().itemName("Big banana").build();
+        Offer BANANA2 = Offer.builder().itemName("Small banana").build();
+        Offer BANANA3 = Offer.builder().itemName("Bananas").build();
+        Offer BANANA4 = Offer.builder().itemName("A case of bananas").build();
+        return List.of(BANANA1, BANANA2, BANANA3, BANANA4);
+    }
 }
