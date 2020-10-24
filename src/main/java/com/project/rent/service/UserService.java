@@ -109,8 +109,8 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
         return user;
     }
 
-    public List<User> getUserList() { // tagastame kõikide registreeritud kasutajate listi
-        return userRepository.findAll();
+    public List<User> getUsers(String query) { // tagastame kõikide registreeritud kasutajate listi
+        return List.of(User.builder().email(query).build());
     }
 
     public String getSum() {

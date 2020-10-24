@@ -28,7 +28,7 @@ public class StatsController {
 
         Summa summa = new Summa(userService.getSum()); // leiame kasutajate koguarvu
 
-        List<User> userArrayList = userService.getUserList();
+        List<User> userArrayList = userService.getUsers("");
 
         List<UserLog> userLogArrayList = statsService.getLastTenList(); // võtame viimased 10 logikirjet
 
