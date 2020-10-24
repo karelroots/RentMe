@@ -22,6 +22,7 @@ public class StatsController {
     @Autowired
     private StatsService statsService;
 
+    // TODO: test code coverage for this end-point
     @RequestMapping(value={"/statistika"}, method = RequestMethod.GET)
     public ModelAndView statistika(){ // statistika lehe kuvamine
 

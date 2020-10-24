@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.util.stream.Collectors.toList;
+
 @Service("rentService")
 public class RentService {
     private final OfferRepository offerRepository;
@@ -82,10 +84,10 @@ public class RentService {
         wishRepository.delete(wish);
     }
 
-    public List<Offer> getOffersList() {
-        List<Offer> offers = offerRepository.findAll();
+    public List<Offer> getOffersList(String query) {
+        List<Offer> offers = query != null ? getOffersContaining(query) : offerRepository.findAll();
 
-        for(Offer offer:offers) {
+        for (Offer offer : offers) {
             // lisame pakkumisele kasutaja id-le vastava kasutajanime
             offer.setUserName(userRepository.findById(offer.getUserId()).getUsername());
         }
@@ -168,10 +170,10 @@ public class RentService {
     }
 
     public List<Offer> getOffersContaining(String searchQuery) {
-        Offer BANANA1 = Offer.builder().itemName("Big banana").build();
-        Offer BANANA2 = Offer.builder().itemName("Small banana").build();
-        Offer BANANA3 = Offer.builder().itemName("Bananas").build();
-        Offer BANANA4 = Offer.builder().itemName("A case of bananas").build();
-        return List.of(BANANA1, BANANA2, BANANA3, BANANA4);
+        List<Offer> allOffers = offerRepository.findAll();
+        return allOffers.stream()
+                        .filter(offer -> offer.getItemName().toLowerCase()
+                                              .contains(searchQuery.toLowerCase()))
+                        .collect(toList());
     }
 }

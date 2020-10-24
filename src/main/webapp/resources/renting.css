@@ -111,10 +111,14 @@ div#button-div {
 }
 
 tr#offer-head {
-    text-align:center;
+    text-align: center;
 }
 
 .img-fluid {
     max-width: 25%;
     height: auto;
+}
+
+.search-box {
+    padding-bottom: 5px;
 }
