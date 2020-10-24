@@ -36,12 +36,13 @@ public class RentController {
     //private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/images/"; //DEPLOYMENT
 
     @RequestMapping(value = "/rentimine")
-    public ModelAndView rentimine(@RequestParam(value = "offerQuery", required = false) String offerQuery) {
+    public ModelAndView rentimine(@RequestParam(value = "offerQuery", required = false) String offerQuery,
+                                  @RequestParam(value = "wishQuery", required = false) String wishQuery) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName()); //leiame kasutaja objekt
-        List<Offer> offerList = rentService.getOffersList(offerQuery);
-        List<Wish> wishesList = rentService.getWishesList(); // saame kõikide soovide listi
+        List<Offer> offerList = rentService.getOffers(offerQuery);
+        List<Wish> wishList = rentService.getWishes(wishQuery);
         List<Offer> userOfferList =
                 rentService.getUserOffersList(user.getId()); // saame autoriseeritud kasutaja pakkumised
         List<Wish> userWishList = rentService.getUserWishesList(user.getId()); // saame autoriseeritud kasutaja soovid
@@ -59,7 +60,7 @@ public class RentController {
         Wish wish = new Wish();
 
         modelAndView.addObject("offers", offerList);
-        modelAndView.addObject("wishes", wishesList);
+        modelAndView.addObject("wishes", wishList);
         modelAndView.addObject("myOffers", userOfferList);
         modelAndView.addObject("myWishes", userWishList);
         modelAndView.addObject("myInvoices", userInvoiceList);
@@ -312,7 +313,12 @@ public class RentController {
     }
 
     @RequestMapping(value = "rentimine/searchOffers")
-    public String getSearchOffers(@RequestParam("offerQuery") String offerQuery) {
-        return "redirect:/rentimine?offerQuery=" + offerQuery;
+    public String getSearchOffers(@RequestParam("searchQuery") String searchQuery) {
+        return "redirect:/rentimine?offerQuery=" + searchQuery + "#pakkumised";
+    }
+
+    @RequestMapping(value = "rentimine/searchWishes")
+    public String getSearchWishes(@RequestParam("searchQuery") String searchQuery) {
+        return "redirect:/rentimine?wishQuery=" + searchQuery + "#soovid";
     }
 }

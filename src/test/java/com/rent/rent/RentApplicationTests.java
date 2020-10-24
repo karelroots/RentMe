@@ -40,19 +40,23 @@ public class RentApplicationTests {
 		doReturn(TestConsts.ALL_OFFERS).when(offerRepository).findAll();
 
 		// Act
-		List<Offer> filteredOffers = rentService.getOffersContaining(searchQuery);
+		List<Offer> filteredOffers = rentService.getOffers(searchQuery);
 
 		// Assert
 		assertTrue(
-				filteredOffers.stream().allMatch(offer1 ->
-														 TestConsts.BANANA_OFFERS.stream().anyMatch(offer2 ->
-																											offer1.getItemName()
-																												  .equals(offer2.getItemName()))));
+				TestConsts.BANANA_OFFERS.stream()
+										.allMatch(offer1 ->
+														  filteredOffers.stream().anyMatch(
+																  offer2 ->
+																		  offer1.getItemName()
+																				.equals(offer2.getItemName()))));
 		assertTrue(
-				filteredOffers.stream().noneMatch(offer1 ->
-														  TestConsts.WITHOUT_BANANA_OFFERS.stream().anyMatch(
-																  offer2 -> offer1.getItemName()
-																				  .equals(offer2.getItemName()))));
+				filteredOffers.stream()
+							  .noneMatch(offer1 ->
+												 TestConsts.WITHOUT_BANANA_OFFERS.stream().anyMatch(
+														 offer2 ->
+																 offer1.getItemName()
+																	   .equals(offer2.getItemName()))));
 	}
 
 	@Test
@@ -64,16 +68,16 @@ public class RentApplicationTests {
 		doReturn(TestConsts.ALL_WISHES).when(wishRepository).findAll();
 
 		// Act
-		List<Wish> filteredWishes = rentService.getWishesContaining(searchQuery);
+		List<Wish> filteredWishes = rentService.getWishes(searchQuery);
 
 		// Assert
 		assertTrue(
-				filteredWishes.stream()
-							  .allMatch(wish1 ->
-												TestConsts.VACUUM_WISHES.stream()
-																		.anyMatch(wish2 ->
-																						  wish1.getItemName()
-																							   .equals(wish2.getItemName()))));
+				TestConsts.VACUUM_WISHES.stream()
+										.allMatch(wish1 ->
+														  filteredWishes.stream().anyMatch(
+																  wish2 ->
+																		  wish1.getItemName()
+																			   .equals(wish2.getItemName()))));
 		assertTrue(
 				filteredWishes.stream()
 							  .noneMatch(wish1 ->

@@ -84,7 +84,7 @@ public class RentService {
         wishRepository.delete(wish);
     }
 
-    public List<Offer> getOffersList(String query) {
+    public List<Offer> getOffers(String query) {
         List<Offer> offers = query != null ? getOffersContaining(query) : offerRepository.findAll();
 
         for (Offer offer : offers) {
@@ -94,10 +94,10 @@ public class RentService {
         return offers;
     }
 
-    public List<Wish> getWishesList() {
-        List<Wish> wishes = wishRepository.findAll();
+    public List<Wish> getWishes(String query) {
+        List<Wish> wishes = query != null ? getWishesContaining(query) : wishRepository.findAll();
 
-        for(Wish wish:wishes) {
+        for (Wish wish : wishes) {
             // lisame soovile kasutaja id-le vastava kasutajanime
             wish.setUserName(userRepository.findById(wish.getUserId()).getUsername());
         }
@@ -169,7 +169,7 @@ public class RentService {
         wishRepository.save(wish);
     }
 
-    public List<Offer> getOffersContaining(String searchQuery) {
+    private List<Offer> getOffersContaining(String searchQuery) {
         List<Offer> allOffers = offerRepository.findAll();
         return allOffers.stream()
                         .filter(offer -> offer.getItemName().toLowerCase()
@@ -177,10 +177,11 @@ public class RentService {
                         .collect(toList());
     }
 
-    public List<Wish> getWishesContaining(String searchQuery) {
-        Wish vacuum2 = Wish.builder().itemName("Philips super vacuum").build();
-        Wish vacuum3 = Wish.builder().itemName("Samsung Ultra Vacuum").build();
-        Wish vacuum4 = Wish.builder().itemName("Broken vacuum").build();
-        return List.of(vacuum2, vacuum3, vacuum4);
+    private List<Wish> getWishesContaining(String searchQuery) {
+        List<Wish> allWishes = wishRepository.findAll();
+        return allWishes.stream()
+                        .filter(wish -> wish.getItemName().toLowerCase()
+                                            .contains(searchQuery.toLowerCase()))
+                        .collect(toList());
     }
 }

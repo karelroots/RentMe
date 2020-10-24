@@ -35,7 +35,7 @@ public class Wish {
     @Column(name = "time")
     private String datetime;
 
-    @Column(name = "rentperiod")
+    @Column(name = "rent_period")
     private int rentPeriod;
 
     @Column(name = "item_picture")
