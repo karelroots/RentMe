@@ -13,6 +13,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static java.util.stream.Collectors.toList;
+
 @Service("userService")
 public class UserService { // meetodid kasutajatega toimingute tegemiseks
 
@@ -109,8 +111,17 @@ public class UserService { // meetodid kasutajatega toimingute tegemiseks
         return user;
     }
 
-    public List<User> getUsers(String query) { // tagastame kõikide registreeritud kasutajate listi
-        return List.of(User.builder().email(query).build());
+    public List<User> getUsers(String query) {
+
+        return query != null ? getUsersWithEmailContaining(query)
+                             : userRepository.findAll();
+    }
+
+    private List<User> getUsersWithEmailContaining(String query) {
+        return userRepository.findAll()
+                             .stream()
+                             .filter(user -> user.getEmail().contains(query))
+                             .collect(toList());
     }
 
     public String getSum() {

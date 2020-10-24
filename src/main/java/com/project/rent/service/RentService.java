@@ -89,7 +89,10 @@ public class RentService {
 
         for (Offer offer : offers) {
             // lisame pakkumisele kasutaja id-le vastava kasutajanime
-            offer.setUserName(userRepository.findById(offer.getUserId()).getUsername());
+            User user = userRepository.findById(offer.getUserId());
+            if (user != null) {
+                offer.setUserName(user.getUsername());
+            }
         }
         return offers;
     }
@@ -99,7 +102,10 @@ public class RentService {
 
         for (Wish wish : wishes) {
             // lisame soovile kasutaja id-le vastava kasutajanime
-            wish.setUserName(userRepository.findById(wish.getUserId()).getUsername());
+            User user = userRepository.findById(wish.getUserId());
+            if (user != null) {
+                wish.setUserName(user.getUsername());
+            }
         }
 
         return wishes;

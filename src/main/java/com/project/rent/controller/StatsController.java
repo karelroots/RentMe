@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
@@ -23,12 +24,13 @@ public class StatsController {
     private StatsService statsService;
 
     // TODO: test code coverage for this end-point
-    @RequestMapping(value={"/statistika"}, method = RequestMethod.GET)
-    public ModelAndView statistika(){ // statistika lehe kuvamine
+    @RequestMapping(value = {"/statistika"}, method = RequestMethod.GET)
+    public ModelAndView statistika(
+            @RequestParam(value = "emailQuery", required = false) String emailQuery) { // statistika lehe kuvamine
 
         Summa summa = new Summa(userService.getSum()); // leiame kasutajate koguarvu
 
-        List<User> userArrayList = userService.getUsers("");
+        List<User> userArrayList = userService.getUsers(emailQuery);
 
         List<UserLog> userLogArrayList = statsService.getLastTenList(); // võtame viimased 10 logikirjet
 
@@ -41,18 +43,25 @@ public class StatsController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject(user);
-        modelAndView.addObject("users", userArrayList); // lisame kõikide kasutajate listi statistika lehele kasutamiseks
+        modelAndView
+                .addObject("users", userArrayList); // lisame kõikide kasutajate listi statistika lehele kasutamiseks
         modelAndView.addObject(summa); // lisame kasutajate arvu lehele objektina
         modelAndView.addObject("logs", userLogArrayList); // lisame logide listi
         modelAndView.addObject("browsers", topBrowsers);
         modelAndView.addObject("opsys", topOpSystems);
         modelAndView.addObject("pages", topLandingPages);
+        modelAndView.addObject("query", emailQuery);
         modelAndView.setViewName("statistika");
         return modelAndView;
     }
 
-    @RequestMapping(value={"/statistika/toggleActive"}, method = RequestMethod.POST)
-    public String statistika(int userId, int active){ // kasutajate aktiveerimine/deaktiveerimine
+    @RequestMapping(value = "statistika/searchUsers")
+    public String getSearchWishes(@RequestParam("searchQuery") String searchQuery) {
+        return "redirect:/statistika?emailQuery=" + searchQuery;
+    }
+
+    @RequestMapping(value = {"/statistika/toggleActive"}, method = RequestMethod.POST)
+    public String statistika(int userId, int active) { // kasutajate aktiveerimine/deaktiveerimine
 
         userService.saveActive(active, userService.findUserById(userId));
 
