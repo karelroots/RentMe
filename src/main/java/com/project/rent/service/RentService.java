@@ -176,4 +176,11 @@ public class RentService {
                                               .contains(searchQuery.toLowerCase()))
                         .collect(toList());
     }
+
+    public List<Wish> getWishesContaining(String searchQuery) {
+        Wish vacuum2 = Wish.builder().itemName("Philips super vacuum").build();
+        Wish vacuum3 = Wish.builder().itemName("Samsung Ultra Vacuum").build();
+        Wish vacuum4 = Wish.builder().itemName("Broken vacuum").build();
+        return List.of(vacuum2, vacuum3, vacuum4);
+    }
 }
