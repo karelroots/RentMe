@@ -1,7 +1,9 @@
 package com.rent.rent;
 
 import com.project.rent.model.Offer;
+import com.project.rent.model.Wish;
 import com.project.rent.repository.OfferRepository;
+import com.project.rent.repository.WishRepository;
 import com.project.rent.service.RentService;
 import com.rent.rent.utils.TestConsts;
 import org.junit.Before;
@@ -21,13 +23,16 @@ public class RentApplicationTests {
 	private RentService rentService;
 	@Mock
 	private OfferRepository offerRepository;
+	@Mock
+	private WishRepository wishRepository;
 
 	@Before
 	public void setUp() {
-		rentService = new RentService(offerRepository, null, null, null, null, null);
+		rentService = new RentService(offerRepository, wishRepository, null, null, null, null);
 	}
 
 	@Test
+	// TDD Cycle 1
 	public void givenValidSearchQuery_whenPerformingRentOfferSearch_thenOnlyOffersMatchingSearchQueryReturned() {
 		// Assign
 		String searchQuery = "banana";
@@ -45,9 +50,36 @@ public class RentApplicationTests {
 																												  .equals(offer2.getItemName()))));
 		assertTrue(
 				filteredOffers.stream().noneMatch(offer1 ->
-														  TestConsts.OTHER_OFFERS.stream().anyMatch(
+														  TestConsts.WITHOUT_BANANA_OFFERS.stream().anyMatch(
 																  offer2 -> offer1.getItemName()
 																				  .equals(offer2.getItemName()))));
+	}
+
+	@Test
+	// TDD Cycle 2
+	public void givenValidSearchQuery_whenPerformingRentWishSearch_thenOnlyOffersMatchingSearchQueryReturned() {
+		// Assign
+		String searchQuery = "VACUUM";
+
+		doReturn(TestConsts.ALL_WISHES).when(wishRepository).findAll();
+
+		// Act
+		List<Wish> filteredWishes = rentService.getWishesContaining(searchQuery);
+
+		// Assert
+		assertTrue(
+				filteredWishes.stream()
+							  .allMatch(wish1 ->
+												TestConsts.VACUUM_WISHES.stream()
+																		.anyMatch(wish2 ->
+																						  wish1.getItemName()
+																							   .equals(wish2.getItemName()))));
+		assertTrue(
+				filteredWishes.stream()
+							  .noneMatch(wish1 ->
+												 TestConsts.WITHOUT_VACUUM_WISHES.stream().anyMatch(
+														 wish2 -> wish1.getItemName()
+																	   .equals(wish2.getItemName()))));
 	}
 
 }
