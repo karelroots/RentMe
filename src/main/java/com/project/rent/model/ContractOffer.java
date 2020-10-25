@@ -1,11 +1,17 @@
 package com.project.rent.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "contractoffers") // Rendilepingute andmed
 public class ContractOffer {
     @Id
