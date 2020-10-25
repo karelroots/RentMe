@@ -4,10 +4,8 @@ import com.project.rent.model.Browser;
 import com.project.rent.model.Landing;
 import com.project.rent.model.OpSys;
 import com.project.rent.model.UserLog;
-import com.project.rent.repository.OfferRepository;
 import com.project.rent.repository.UserLogRepository;
 import com.project.rent.repository.UserRepository;
-import com.project.rent.repository.WishRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,22 +17,12 @@ import java.util.List;
 public class StatsService {
     private final UserLogRepository userLogRepository;
     private final UserRepository userRepository;
-    private final OfferRepository offerRepository;
-    private final WishRepository wishRepository;
 
     @Autowired
     public StatsService(@Autowired UserLogRepository userLogRepository,
-                        @Autowired UserRepository userRepository,
-                        @Autowired OfferRepository offerRepository,
-                        @Autowired WishRepository wishRepository) {
+                        @Autowired UserRepository userRepository) {
         this.userLogRepository = userLogRepository;
         this.userRepository = userRepository;
-        this.offerRepository = offerRepository;
-        this.wishRepository = wishRepository;
-    }
-
-    public UserLog findUserLogByUserId(int id) {
-        return userLogRepository.findUserLogByUserId(id);
     }
 
     public void saveLog(UserLog userLog) {
@@ -105,15 +93,5 @@ public class StatsService {
         Collections.sort(topLanding);
 
         return topLanding;
-    }
-
-    public int getUserOffers(int userId) {
-        int count = offerRepository.findOfferCount(userId);
-        return count;
-    }
-
-    public int getUserWishes(int userId) {
-        int count = wishRepository.findWishCount(userId);
-        return  count;
     }
 }

@@ -31,16 +31,8 @@ public class RentService {
         this.invoiceRepository = invoiceRepository;
     }
 
-    public Offer findOfferByUserId(int id) {
-        return offerRepository.findByUserId(id);
-    }
-
     public Offer findOfferById(int id) {
         return offerRepository.findOfferById(id);
-    }
-
-    public Wish findWishByUserId(int id) {
-        return wishRepository.findByUserId(id);
     }
 
     public Wish findWishById(int id) {
@@ -163,16 +155,6 @@ public class RentService {
 
     public List<ContractOffer> getUserRentContractOfferList(int id) {
         return contractOfferRepository.findAllByUserId(id);
-    }
-
-    public void saveOfferImage(String name, Offer offer) { // Pakkumise pildi salvestamine
-        offer.setPictureName(name);
-        offerRepository.save(offer);
-    }
-
-    public void saveWishImage(String name, Wish wish) { // Soovi pildi salvestamine
-        wish.setPictureName(name);
-        wishRepository.save(wish);
     }
 
     private List<Offer> getOffersContaining(String searchQuery) {
