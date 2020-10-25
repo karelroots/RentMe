@@ -2,7 +2,7 @@ package com.project.rent.service;
 
 import com.project.rent.model.*;
 import com.project.rent.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -11,6 +11,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @Service("rentService")
+@RequiredArgsConstructor
 public class RentService {
     private final OfferRepository offerRepository;
     private final WishRepository wishRepository;
@@ -18,18 +19,6 @@ public class RentService {
     private final ContractRepository contractRepository;
     private final ContractOfferRepository contractOfferRepository;
     private final InvoiceRepository invoiceRepository;
-
-    @Autowired
-    public RentService(@Autowired OfferRepository offerRepository, @Autowired WishRepository wishRepository,
-                       @Autowired UserRepository userRepository, @Autowired ContractRepository contractRepository,
-                       @Autowired ContractOfferRepository contractOfferRepository, @Autowired InvoiceRepository invoiceRepository) {
-        this.offerRepository = offerRepository;
-        this.wishRepository = wishRepository;
-        this.userRepository = userRepository;
-        this.contractRepository = contractRepository;
-        this.contractOfferRepository = contractOfferRepository;
-        this.invoiceRepository = invoiceRepository;
-    }
 
     public Offer findOfferById(int id) {
         return offerRepository.findOfferById(id);
