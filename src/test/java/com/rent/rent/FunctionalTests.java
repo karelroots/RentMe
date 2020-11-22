@@ -32,7 +32,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test01() {
+    public void FRT01() {
         open("/registreeri");
         $(By.id("name")).setValue("");
         $(By.id("lastName")).setValue("Jam");
@@ -46,7 +46,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test02() {
+    public void FRT02() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("");
@@ -59,7 +59,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test03() {
+    public void FRT03() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -72,7 +72,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test04() {
+    public void FRT04() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -85,7 +85,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test05() {
+    public void FRT05() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -98,7 +98,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test06() {
+    public void FRT06() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -112,7 +112,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test07() {
+    public void FRT07() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -124,7 +124,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test08() {
+    public void FRT08() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("234karen");
@@ -138,7 +138,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test09() {
+    public void FRT09() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("@$€ii}");
@@ -152,7 +152,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test10() {
+    public void FRT10() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -166,7 +166,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test11() {
+    public void FRT11() {
         open("/registreeri");
         $(By.id("name")).setValue("Hanna");
         $(By.id("lastName")).setValue("Jam");
@@ -180,7 +180,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test12() {
+    public void FRT12() {
         open("/registreeri");
         $(By.id("name")).setValue("234karen");
         $(By.id("lastName")).setValue("Jam");
@@ -194,7 +194,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test13() {
+    public void FRT13() {
         open("/registreeri");
         $(By.id("name")).setValue("@$€ii}");
         $(By.id("lastName")).setValue("Jam");
@@ -208,7 +208,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test14() {
+    public void FRT14() {
         open("/");
         $(By.id("email")).setValue("test@test.ee");
         $(By.id("password")).setValue("");
@@ -218,7 +218,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test15() {
+    public void FRT15() {
         open("/");
         $(By.id("email")).setValue("");
         $(By.id("password")).setValue("password");
@@ -227,7 +227,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test16() {
+    public void FRT16() {
         open("/");
         $(By.id("email")).setValue("test@test.ee");
         $(By.id("password")).setValue("password");
@@ -238,7 +238,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test17() {
+    public void FRT17() {
         open("/");
         $(By.id("email")).setValue("test@test");
         $(By.id("password")).setValue("password");
@@ -247,7 +247,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test18() {
+    public void FRT18() {
         open("/");
         $(By.id("email")).setValue("test@test.ee");
         $(By.id("password")).setValue("pass");
@@ -257,7 +257,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test19() {
+    public void FRT19() {
         open("/");
         $(By.id("email")).setValue("test@test.ee");
         $(By.id("password")).setValue("password");
@@ -267,7 +267,7 @@ public class FunctionalTests {
     }
 
     @Test
-    public void Test20() {
+    public void FRT20() {
         open("/");
         $(By.id("email")).setValue("test@test.ee");
         $(By.id("password")).setValue("password");
