@@ -8,8 +8,17 @@ INSERT INTO USERS (user_id, username, email, password, name, last_name, active)
 VALUES (999, 'test', 'test@test.ee', '$2y$12$py61EKFyvdPhzPNbMw/Um.dcEEkS9YhaaGT6mP194PEomkVRsu9em', 'Test', 'Test', 1);
 
 INSERT INTO USERS (user_id, username, email, password, name, last_name, active)
-VALUES (9999, 'test2', 't@t.ee', '$2y$12$Tm5/fkXIPjqmml0qPokjieGmiIaenDZkaR7/aoygO4uQCZxqBmUnu', 'Test2', 'Test2',
+VALUES (9999, 'test99', 't@t.ee', '$2y$12$Tm5/fkXIPjqmml0qPokjieGmiIaenDZkaR7/aoygO4uQCZxqBmUnu', 'Test2', 'Test2',
  1);
+
+INSERT INTO USERS (user_id, username, email, password, name, last_name, active)
+VALUES (123, 'johndoe', 'JohnDoe99@gmail.com', '$2y$12$YqueAE9Tt8tGPxYlMJqpbuY.RZ6qt1BQAZbjspUwODNFNhD.sQGgq ', 'Test',
+'Test', 1);
+
+INSERT INTO USERS (user_id, username, email, password, name, last_name, active)
+VALUES (222, 'maryjane', 'MaryJane@gmail.com', '$2y$12$0fFype0N4SslyIDCb0yX3Ov20tzAD3rBaF26p1p2NCwCxZg2Nqq66 ', 'Test',
+'Test', 1);
+
 
 INSERT INTO USER_ROLE (user_id, role_id)
 VALUES (999, 1);
@@ -19,6 +28,12 @@ VALUES (999, 2);
 
 INSERT INTO USER_ROLE (user_id, role_id)
 VALUES (9999, 2);
+
+INSERT INTO USER_ROLE (user_id, role_id)
+VALUES (123, 2);
+
+INSERT INTO USER_ROLE (user_id, role_id)
+VALUES (222, 2);
 
 CREATE VIEW USER_AUTH AS
 SELECT user_id FROM USERS;
