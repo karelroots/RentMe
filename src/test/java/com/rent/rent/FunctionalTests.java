@@ -134,7 +134,7 @@ public class FunctionalTests {
         $(byText("Send")).click();
         sleep(2000);
         assertFalse($(byText("Kasutaja on registreeritud!")).isDisplayed());
-        assertTrue($(byText("Name should consist of letters only")).isDisplayed());
+        assertTrue($(byText("First name should consist of letters only")).isDisplayed());
     }
 
     @Test
