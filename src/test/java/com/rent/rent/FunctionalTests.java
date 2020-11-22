@@ -37,7 +37,6 @@ public class FunctionalTests {
         $(byText("Send")).click();
         sleep(2000);
         assertFalse($(byText("Kasutaja on registreeritud!")).isDisplayed());
-        assertFalse($(byText("Kasutaja on registreeritud!")).isDisplayed());
     }
 
     @Test
