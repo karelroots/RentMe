@@ -1,9 +1,7 @@
 package com.rent.rent;
 
-import com.codeborne.selenide.junit.ScreenShooter;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
-import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runners.MethodSorters;
 import org.openqa.selenium.By;
@@ -20,9 +18,6 @@ import static org.junit.Assert.assertTrue;
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class FunctionalTests {
-
-    @Rule
-    public ScreenShooter screenShooter = ScreenShooter.failedTests();
 
     @BeforeClass
     public static void openPage() {
