@@ -31,3 +31,9 @@ SELECT os FROM USER_LOG;
 
 CREATE VIEW LANDING_PAGES AS
 SELECT landing_page FROM USER_LOG;
+
+INSERT INTO OFFERS (offer_id, user_id, item_name, item_desc, price, location, time, rent_period)
+VALUES (1, 999, 'Banana', 'Just banana', 2, 'Tartu', '12.12.2012', '1');
+
+INSERT INTO OFFERS (offer_id, user_id, item_name, item_desc, price, location, time, rent_period)
+VALUES (2, 9999, 'Hammer', 'Just hammer', 3, 'Tartu', '12.12.2012', '1');

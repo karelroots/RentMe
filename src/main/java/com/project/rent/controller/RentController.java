@@ -3,7 +3,7 @@ package com.project.rent.controller;
 import com.project.rent.model.*;
 import com.project.rent.service.RentService;
 import com.project.rent.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -25,27 +25,28 @@ import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Controller
+@RequiredArgsConstructor
 public class RentController {
 
-    @Autowired
-    UserService userService;
+    private final UserService userService;
 
-    @Autowired
-    RentService rentService;
+    private final RentService rentService;
 
     private static String UPLOADED_FOLDER = System.getProperty("user.dir")+"/src/main/webapp/resources/images/"; //TESTSYSTEM
     //private static String UPLOADED_FOLDER = "/opt/tomcat/webapps/rent/resources/images/"; //DEPLOYMENT
 
     @RequestMapping(value = "/rentimine")
-    public ModelAndView rentimine() {
+    public ModelAndView rentimine(@RequestParam(value = "offerQuery", required = false) String offerQuery) {
         ModelAndView modelAndView = new ModelAndView();
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = userService.findUserByEmail(auth.getName()); //leiame kasutaja objekt
-        List<Offer> offerList = rentService.getOffersList(); // saame kõikide pakkumiste listi
+        List<Offer> offerList = rentService.getOffersList(offerQuery);
         List<Wish> wishesList = rentService.getWishesList(); // saame kõikide soovide listi
-        List<Offer> userOfferList = rentService.getUserOffersList(user.getId()); // saame autoriseeritud kasutaja pakkumised
+        List<Offer> userOfferList =
+                rentService.getUserOffersList(user.getId()); // saame autoriseeritud kasutaja pakkumised
         List<Wish> userWishList = rentService.getUserWishesList(user.getId()); // saame autoriseeritud kasutaja soovid
-        List<Invoice> userInvoiceList = rentService.getUserInvoiceList(user.getId()); // saame autoriseeritud kasutaja arved
+        List<Invoice> userInvoiceList =
+                rentService.getUserInvoiceList(user.getId()); // saame autoriseeritud kasutaja arved
         List<Contract> userOwnerContractList = rentService.getUserOwnerContractList(user.getId());
         List<Contract> userRentContractList = rentService.getUserRentContractList(user.getId());
         List<Contract> userContractList = new ArrayList<>(userOwnerContractList);
@@ -64,6 +65,7 @@ public class RentController {
         modelAndView.addObject("myInvoices", userInvoiceList);
         modelAndView.addObject("myContracts", userContractList);
         modelAndView.addObject("myContractOffers", userContractOfferList);
+        modelAndView.addObject("query", offerQuery);
         modelAndView.addObject(offer);
         modelAndView.addObject(wish);
         modelAndView.addObject(user);
@@ -298,7 +300,7 @@ public class RentController {
         return "redirect:/rentimine#sinu-soovid";
     }
 
-    @RequestMapping(value ="rentimine/payInvoice")
+    @RequestMapping(value = "rentimine/payInvoice")
     public String payInvoice(@RequestParam int id) {
 
         Invoice paidInvoice = rentService.findInvoiceById(id);
@@ -307,5 +309,10 @@ public class RentController {
         rentService.saveInvoice(paidInvoice);
 
         return "redirect:/rentimine#sinu-arved";
+    }
+
+    @RequestMapping(value = "rentimine/searchOffers")
+    public String getSearchOffers(@RequestParam("offerQuery") String offerQuery) {
+        return "redirect:/rentimine?offerQuery=" + offerQuery;
     }
 }

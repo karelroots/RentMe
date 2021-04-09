@@ -36,19 +36,54 @@
             <h1 class="text-center" th:text="#{rent.head}">Rentimine</h1>
         </div>
 
+        <div class="search-box">
+            <form th:action="@{rentimine/searchOffers}" method="post">
+                <div class="row">
+                    <div class="col-lg-6 col-lg-push-2">
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Search"
+                                   name="offerQuery"
+                                   id="offerQuery"
+                                   th:value="${query}"
+                            />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-11"> <!-----Siit algab konteineri veerg---->
             <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
                 <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
                     <ul class="nav nav-tabs"> <!----tabide valiku list--->
-                        <li class="active"><a href="#pakkumised" id="pakkumised-tab" data-toggle="tab" th:text="#{rent.offers}">Pakkumised</a></li>
+                        <li class="active"><a href="#pakkumised" id="pakkumised-tab" data-toggle="tab"
+                                              th:text="#{rent.offers}">Pakkumised</a></li>
                         <li><a href="#soovid" id="log-tab" data-toggle="tab" th:text="#{rent.wishes}">Soovid</a></li>
-                        <li><a href="#sinu-pakkumised" id="sinu-pakkumised-tab" data-toggle="tab" th:text="#{rent.myoffers}">Sinu pakkumised</a></li>
-                        <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu soovid</a></li>
-                        <li><a href="#sinu-lepingud" id="sinu-lepingud-tab" data-toggle="tab" th:text="#{rent.mycontracts}">Sinu lepingud</a></li>
-                        <li><a href="#sinu-lepingu-pakkumised" id="sinu-lepingupakkumised-tab" data-toggle="tab" th:text="#{rent.mycontractoffers}">Sinu lepingu pakkumised</a></li>
-                        <li><a href="#sinu-arved" id="sinu-arved-tab" data-toggle="tab" th:text="#{rent.myInvoices}">Sinu lepingu pakkumised</a></li>
-                        <li><a href="#lisa-pakkumine" id="lisa-pakkumine-tab" data-toggle="tab" th:text="#{rent.addoffer}">Lisa pakkumine</a></li>
-                        <li><a href="#lisa-soov" id="lisa-soov-tab" data-toggle="tab" th:text="#{rent.addwish}">Lisa soov</a></li>
+                        <li><a href="#sinu-pakkumised" id="sinu-pakkumised-tab" data-toggle="tab"
+                               th:text="#{rent.myoffers}">Sinu pakkumised</a></li>
+                        <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu
+                                                                                                                     soovid</a>
+                        </li>
+                        <li><a href="#sinu-lepingud" id="sinu-lepingud-tab" data-toggle="tab"
+                               th:text="#{rent.mycontracts}">Sinu lepingud</a></li>
+                        <li><a href="#sinu-lepingu-pakkumised" id="sinu-lepingupakkumised-tab" data-toggle="tab"
+                               th:text="#{rent.mycontractoffers}">Sinu lepingu pakkumised</a></li>
+                        <li><a href="#sinu-arved" id="sinu-arved-tab" data-toggle="tab" th:text="#{rent.myInvoices}">Sinu
+                                                                                                                     lepingu
+                                                                                                                     pakkumised</a>
+                        </li>
+                        <li><a href="#lisa-pakkumine" id="lisa-pakkumine-tab" data-toggle="tab"
+                               th:text="#{rent.addoffer}">Lisa pakkumine</a></li>
+                        <li><a href="#lisa-soov" id="lisa-soov-tab" data-toggle="tab" th:text="#{rent.addwish}">Lisa
+                                                                                                                soov</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="panel-body"> <!----paneeli keha--->
