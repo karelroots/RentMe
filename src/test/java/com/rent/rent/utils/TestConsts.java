@@ -1,8 +1,6 @@
 package com.rent.rent.utils;
 
-import com.project.rent.model.Offer;
-import com.project.rent.model.User;
-import com.project.rent.model.Wish;
+import com.project.rent.model.*;
 
 import java.util.List;
 import java.util.stream.Stream;
@@ -10,14 +8,26 @@ import java.util.stream.Stream;
 import static java.util.stream.Collectors.toUnmodifiableList;
 
 public class TestConsts {
-    public static final Offer BANANA1 = Offer.builder().itemName("Big banana").build();
-    public static final Offer BANANA2 = Offer.builder().itemName("Small banana").build();
+    public static final int BANANA1_ID = 1;
+    public static final String USER1_EMAIL = "test@rent.me";
+    public static final String USER1_USERNAME = "normaluser";
+    public static final int USER1_ID = 333;
+    public static final User USER1 = User.builder()
+                                         .active(1)
+                                         .id(USER1_ID)
+                                         .password("123")
+                                         .email(USER1_EMAIL)
+                                         .username(USER1_USERNAME)
+                                         .build();
+    public static final Offer BANANA1 = Offer.builder().itemName("Big banana").id(BANANA1_ID).userId(USER1_ID).build();
+    public static final Offer BANANA2 = Offer.builder().itemName("Small banana").userId(USER1_ID).build();
     public static final Offer VACUUM1 = Offer.builder().itemName("Regular vacuum").build();
-    public static final Offer BANANA3 = Offer.builder().itemName("Bananas").build();
-    public static final Offer BANANA4 = Offer.builder().itemName("A case of bananas").build();
+    public static final Offer BANANA3 = Offer.builder().itemName("Bananas").userId(USER1_ID).build();
+    public static final Offer BANANA4 = Offer.builder().itemName("A case of bananas").userId(USER1_ID).build();
     public static final Offer HAMMER = Offer.builder().itemName("Large ban hammer").build();
     public static final Offer SCREWDRIVER = Offer.builder().itemName("Little screwdriver").build();
-    public static final Wish VACUUM2 = Wish.builder().itemName("Philips super vacuum").build();
+    public static final int VACUUM2_ID = 2;
+    public static final Wish VACUUM2 = Wish.builder().itemName("Philips super vacuum").id(VACUUM2_ID).build();
     public static final Wish VACUUM3 = Wish.builder().itemName("Samsung Ultra Vacuum").build();
     public static final Wish VACUUM4 = Wish.builder().itemName("Broken vacuum").build();
     public static final Wish NAILS = Wish.builder().itemName("Bunch of nails").build();
@@ -42,24 +52,18 @@ public class TestConsts {
     public static final List<Wish> WITHOUT_VACUUM_WISHES = ALL_WISHES.stream()
                                                                      .filter(wish -> !VACUUM_WISHES.contains(wish))
                                                                      .collect(toUnmodifiableList());
-    public static final String USER1_EMAIL = "test@rent.me";
-    public static final User USER1 = User.builder()
-                                         .active(1)
-                                         .id(1)
-                                         .password("123")
-                                         .email(USER1_EMAIL)
-                                         .username("normaluser")
-                                         .build();
+    public static final int USER2_ID = 2;
     public static final User USER2 = User.builder()
                                          .active(1)
-                                         .id(2)
+                                         .id(USER2_ID)
                                          .password("123")
                                          .email("admin@rent.me")
                                          .username("adminuser")
                                          .build();
+    public static final int USER3_ID = 3;
     public static final User USER3 = User.builder()
                                          .active(1)
-                                         .id(3)
+                                         .id(USER3_ID)
                                          .password("123")
                                          .email("tst@rent.me")
                                          .username("anothernormaluser")
@@ -67,4 +71,13 @@ public class TestConsts {
     public static final List<User> ALL_USERS = List.of(USER1, USER2);
     public static final List<User> FILTERED_USERS = List.of(USER1);
     public static final List<User> OTHER_USERS = List.of(USER2, USER3);
+    public static final int INVOICE_ID = 123;
+    public static final Invoice EXAMPLE_INVOICE = Invoice.builder().id(INVOICE_ID).build();
+    public static final int CONTRACT_ID = 9321;
+    public static final Contract EXAMPLE_CONTRACT = Contract.builder().id(CONTRACT_ID).build();
+    public static final int CONTRACT_OFFER_ID = 6621;
+    public static final ContractOffer EXAMPLE_CONTRACT_OFFER = ContractOffer.builder().id(CONTRACT_OFFER_ID).build();
+    public static final Invoice INVOICE1 = Invoice.builder().payerId(USER2_ID).build();
+    public static final Invoice INVOICE2 = Invoice.builder().payerId(USER3_ID).build();
+    public static final List<Invoice> ALL_INVOICES = List.of(INVOICE1, INVOICE2);
 }
