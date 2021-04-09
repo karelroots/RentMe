@@ -1,12 +1,18 @@
 package com.project.rent.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
 @Table(name = "wishes") // Soovide andmed
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Wish {
 
     @Id
@@ -29,7 +35,7 @@ public class Wish {
     @Column(name = "time")
     private String datetime;
 
-    @Column(name = "rentperiod")
+    @Column(name = "rent_period")
     private int rentPeriod;
 
     @Column(name = "item_picture")

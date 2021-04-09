@@ -37,16 +37,43 @@
             <h1 class="text-center" th:text="#{stats.head}">Statistika</h1>
         </div>
 
+        <div class="user-search-box">
+            <form id="userSearchForm" th:action="@{statistika/searchUsers}" method="post">
+                <div class="row">
+                    <div class="col-lg-8 col-lg-push-2">
+                        <div class="input-group">
+                            <input type="text"
+                                   class="form-control"
+                                   placeholder="Search"
+                                   name="searchQuery"
+                                   id="searchQuery"
+                                   th:value="${query}"
+                            />
+                            <div class="input-group-btn">
+                                <button class="btn btn-primary" type="submit">
+                                    <span class="glyphicon glyphicon-search"></span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
         <div class="row"> <!----Siit algab konteineri rida---->
             <div class="col-lg-12"> <!-----Siit algab konteineri veerg---->
                 <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
                     <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
                         <ul class="nav nav-tabs"> <!----tabide valiku list--->
-                            <li class="active"><a href="#users" id="users-tab" data-toggle="tab" th:text="#{stats.users}">Kasutajad</a></li>
+                            <li class="active"><a href="#users" id="users-tab" data-toggle="tab"
+                                                  th:text="#{stats.users}">Kasutajad</a></li>
                             <li><a href="#log" id="log-tab" data-toggle="tab" th:text="#{stats.log}">Logi</a></li>
-                            <li><a href="#top-browser" id="topBrowser-tab" data-toggle="tab" th:text="#{stats.topBrowser}">Statistika</a></li>
-                            <li><a href="#top-os" id="topOs-tab" data-toggle="tab" th:text="#{stats.topOs}">Statistika</a></li>
-                            <li><a href="#top-landing" id="topLanding-tab" data-toggle="tab" th:text="#{stats.topLanding}">Statistika</a></li>
+                            <li><a href="#top-browser" id="topBrowser-tab" data-toggle="tab"
+                                   th:text="#{stats.topBrowser}">Statistika</a></li>
+                            <li><a href="#top-os" id="topOs-tab" data-toggle="tab"
+                                   th:text="#{stats.topOs}">Statistika</a></li>
+                            <li><a href="#top-landing" id="topLanding-tab" data-toggle="tab"
+                                   th:text="#{stats.topLanding}">Statistika</a></li>
                         </ul>
                     </div>
                     <div class="panel-body"> <!----paneeli keha--->

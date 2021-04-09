@@ -37,15 +37,15 @@
         </div>
 
         <div class="search-box">
-            <form th:action="@{rentimine/searchOffers}" method="post">
+            <form id="searchForm" th:action="@{rentimine/searchOffers}" method="post">
                 <div class="row">
                     <div class="col-lg-6 col-lg-push-2">
                         <div class="input-group">
                             <input type="text"
                                    class="form-control"
                                    placeholder="Search"
-                                   name="offerQuery"
-                                   id="offerQuery"
+                                   name="searchQuery"
+                                   id="searchQuery"
                                    th:value="${query}"
                             />
                             <div class="input-group-btn">
@@ -63,9 +63,26 @@
             <div class="panel with-nav-tabs panel-primary"> <!----tekitame tabide paneeli--->
                 <div class="panel-heading"> <!----paneeli päis, kus on paneelide valik--->
                     <ul class="nav nav-tabs"> <!----tabide valiku list--->
-                        <li class="active"><a href="#pakkumised" id="pakkumised-tab" data-toggle="tab"
-                                              th:text="#{rent.offers}">Pakkumised</a></li>
-                        <li><a href="#soovid" id="log-tab" data-toggle="tab" th:text="#{rent.wishes}">Soovid</a></li>
+                        <li class="active">
+                            <a href="#pakkumised"
+                               id="pakkumised-tab"
+                               data-toggle="tab"
+                               onclick="useOfferQuery();"
+                               th:text="#{rent.offers}"
+                            >
+                                Pakkumised
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#soovid"
+                               id="log-tab"
+                               data-toggle="tab"
+                               onclick="useWishQuery();"
+                               th:text="#{rent.wishes}"
+                            >
+                                Soovid
+                            </a>
+                        </li>
                         <li><a href="#sinu-pakkumised" id="sinu-pakkumised-tab" data-toggle="tab"
                                th:text="#{rent.myoffers}">Sinu pakkumised</a></li>
                         <li><a href="#sinu-soovid" id="sinu-soovid-tab" data-toggle="tab" th:text="#{rent.mywishes}">Sinu

@@ -37,3 +37,12 @@ VALUES (1, 999, 'Banana', 'Just banana', 2, 'Tartu', '12.12.2012', '1');
 
 INSERT INTO OFFERS (offer_id, user_id, item_name, item_desc, price, location, time, rent_period)
 VALUES (2, 9999, 'Hammer', 'Just hammer', 3, 'Tartu', '12.12.2012', '1');
+
+INSERT INTO WISHES (wish_id, user_id, item_name, item_desc, location, time, rent_period)
+VALUES (1, 999, 'Vacuum', 'The best vacuum money can buy', 'Tartu', '8.2.2010', '2');
+
+INSERT INTO WISHES (wish_id, user_id, item_name, item_desc, location, time, rent_period)
+VALUES (2, 9999, 'Nails', 'A bunch of nails', 'Tartu', '10.11.2014', '99');
+
+INSERT INTO WISHES (wish_id, user_id, item_name, item_desc, location, time, rent_period)
+VALUES (3, 9999, 'Cheap vacuum', 'For free please?', 'Tartu', '8.12.2020', '2');

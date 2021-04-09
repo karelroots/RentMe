@@ -84,22 +84,28 @@ public class RentService {
         wishRepository.delete(wish);
     }
 
-    public List<Offer> getOffersList(String query) {
+    public List<Offer> getOffers(String query) {
         List<Offer> offers = query != null ? getOffersContaining(query) : offerRepository.findAll();
 
         for (Offer offer : offers) {
             // lisame pakkumisele kasutaja id-le vastava kasutajanime
-            offer.setUserName(userRepository.findById(offer.getUserId()).getUsername());
+            User user = userRepository.findById(offer.getUserId());
+            if (user != null) {
+                offer.setUserName(user.getUsername());
+            }
         }
         return offers;
     }
 
-    public List<Wish> getWishesList() {
-        List<Wish> wishes = wishRepository.findAll();
+    public List<Wish> getWishes(String query) {
+        List<Wish> wishes = query != null ? getWishesContaining(query) : wishRepository.findAll();
 
-        for(Wish wish:wishes) {
+        for (Wish wish : wishes) {
             // lisame soovile kasutaja id-le vastava kasutajanime
-            wish.setUserName(userRepository.findById(wish.getUserId()).getUsername());
+            User user = userRepository.findById(wish.getUserId());
+            if (user != null) {
+                wish.setUserName(user.getUsername());
+            }
         }
 
         return wishes;
@@ -169,11 +175,19 @@ public class RentService {
         wishRepository.save(wish);
     }
 
-    public List<Offer> getOffersContaining(String searchQuery) {
+    private List<Offer> getOffersContaining(String searchQuery) {
         List<Offer> allOffers = offerRepository.findAll();
         return allOffers.stream()
                         .filter(offer -> offer.getItemName().toLowerCase()
                                               .contains(searchQuery.toLowerCase()))
+                        .collect(toList());
+    }
+
+    private List<Wish> getWishesContaining(String searchQuery) {
+        List<Wish> allWishes = wishRepository.findAll();
+        return allWishes.stream()
+                        .filter(wish -> wish.getItemName().toLowerCase()
+                                            .contains(searchQuery.toLowerCase()))
                         .collect(toList());
     }
 }
