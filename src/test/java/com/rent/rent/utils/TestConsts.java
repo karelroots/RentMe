@@ -1,6 +1,7 @@
 package com.rent.rent.utils;
 
 import com.project.rent.model.Offer;
+import com.project.rent.model.User;
 import com.project.rent.model.Wish;
 
 import java.util.List;
@@ -41,4 +42,29 @@ public class TestConsts {
     public static final List<Wish> WITHOUT_VACUUM_WISHES = ALL_WISHES.stream()
                                                                      .filter(wish -> !VACUUM_WISHES.contains(wish))
                                                                      .collect(toUnmodifiableList());
+    public static final String USER1_EMAIL = "test@rent.me";
+    public static final User USER1 = User.builder()
+                                         .active(1)
+                                         .id(1)
+                                         .password("123")
+                                         .email(USER1_EMAIL)
+                                         .username("normaluser")
+                                         .build();
+    public static final User USER2 = User.builder()
+                                         .active(1)
+                                         .id(2)
+                                         .password("123")
+                                         .email("admin@rent.me")
+                                         .username("adminuser")
+                                         .build();
+    public static final User USER3 = User.builder()
+                                         .active(1)
+                                         .id(3)
+                                         .password("123")
+                                         .email("tst@rent.me")
+                                         .username("anothernormaluser")
+                                         .build();
+    public static final List<User> ALL_USERS = List.of(USER1, USER2);
+    public static final List<User> FILTERED_USERS = List.of(USER1);
+    public static final List<User> OTHER_USERS = List.of(USER2, USER3);
 }

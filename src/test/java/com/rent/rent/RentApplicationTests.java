@@ -1,10 +1,13 @@
 package com.rent.rent;
 
 import com.project.rent.model.Offer;
+import com.project.rent.model.User;
 import com.project.rent.model.Wish;
 import com.project.rent.repository.OfferRepository;
+import com.project.rent.repository.UserRepository;
 import com.project.rent.repository.WishRepository;
 import com.project.rent.service.RentService;
+import com.project.rent.service.UserService;
 import com.rent.rent.utils.TestConsts;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,14 +24,18 @@ import static org.mockito.Mockito.doReturn;
 public class RentApplicationTests {
 
 	private RentService rentService;
+	private UserService userService;
 	@Mock
 	private OfferRepository offerRepository;
 	@Mock
 	private WishRepository wishRepository;
+	@Mock
+	private UserRepository userRepository;
 
 	@Before
 	public void setUp() {
-		rentService = new RentService(offerRepository, wishRepository, null, null, null, null);
+		rentService = new RentService(offerRepository, wishRepository, userRepository, null, null, null);
+		userService = new UserService(userRepository, null, null);
 	}
 
 	@Test
@@ -84,6 +91,33 @@ public class RentApplicationTests {
 												 TestConsts.WITHOUT_VACUUM_WISHES.stream().anyMatch(
 														 wish2 -> wish1.getItemName()
 																	   .equals(wish2.getItemName()))));
+	}
+
+	@Test
+	// TDD Cycle 3
+	public void givenValidSearchQuery_whenGetUsersCalled_thenOnlyUsersMatchingSearchQueryReturned() {
+		// Assign
+		String searchQuery = "test@rent.me";
+
+		doReturn(TestConsts.ALL_USERS).when(userRepository).findAll();
+
+		// Act
+		List<User> users = userService.getUsers(searchQuery);
+
+		// Assert
+		assertTrue(
+				TestConsts.FILTERED_USERS.stream()
+										 .allMatch(user1 ->
+														   users.stream().anyMatch(
+																   user2 ->
+																		   user1.getEmail()
+																				.equals(user2.getEmail()))));
+		assertTrue(
+				users.stream()
+					 .noneMatch(user1 ->
+										TestConsts.OTHER_USERS.stream().anyMatch(
+												user2 -> user1.getEmail()
+															  .equals(user2.getEmail()))));
 	}
 
 }
